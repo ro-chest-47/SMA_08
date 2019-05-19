@@ -1,0 +1,50 @@
+JFDML JFormDesigner: "7.0.0.0.194" Java: "1.8.0_202-release" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "this"
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnAdjust"
+				"text": "ADJUST"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 35
+				"y": 40
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnMode"
+				"text": "MODE"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 35
+				"y": 260
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnReset"
+				"text": "RESET"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 490
+				"y": 40
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnStart"
+				"text": "START"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 490
+				"y": 260
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+				name: "panel1"
+				"border": new javax.swing.border.LineBorder( sfield java.awt.Color black, 1, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 110
+				"y": 40
+				"height": 250
+				"width": 380
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 95, 60 )
+			"size": new java.awt.Dimension( 695, 525 )
+		} )
+	}
+}
