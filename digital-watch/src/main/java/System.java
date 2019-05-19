@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import javax.jws.WebParam;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.border.LineBorder;
@@ -28,11 +30,45 @@ public class System extends JFrame {
     private Tide tide;
     private Moonphase moonphase;
     private int userInput; //int값인지 불확실
-    private int currentMode; //int값인지 불확실
+    private String currentMode; //원래 int값인데 String으로 일단 수정
     private boolean buzzByAlarm;
 
+    /*
+    새롭게 필요해 보이는 필드들
+     */
+//    private String[] selectedModes; //원래 String[]인데 arraylist로 수정
+    private ArrayList<String> selectedModes = new ArrayList<>();     //modeselector로 넘겨줄선택된 모드들을 나타냄, 그러니까 현재 선택된 모드들
+    private TimeDB timeDB; //System이 TimeDB에서 값을 받아오는게 존재
+
+
     public System() {
+
         initComponents();
+        modeSelector=new ModeSelector(); //초기모드 설정을 모드셀렉터에서 진행함
+    }
+
+    /*
+    새롭게 추가된 메서드들
+     */
+
+    //액션리스너의 경우 버튼에 직접 다는게 가능하긴함
+    private void btnAdjustActionPerformed(ActionEvent e) {
+        // TODO add your code here
+        //currnetMode가 timekeeping일경우 adjust버튼을 누른다면
+        reqAdjustTime(); //으로 진행
+
+    }
+
+    private void btnResetActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
+    private void btnModeActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
+    private void btnStartActionPerformed(ActionEvent e) {
+        // TODO add your code here
     }
 
     private void initComponents() {
@@ -50,47 +86,27 @@ public class System extends JFrame {
 
         //---- btnAdjust ----
         btnAdjust.setText("ADJUST");
+        btnAdjust.addActionListener(e -> btnAdjustActionPerformed(e));
         contentPane.add(btnAdjust);
         btnAdjust.setBounds(new Rectangle(new Point(35, 40), btnAdjust.getPreferredSize()));
-        btnAdjust.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
 
         //---- btnMode ----
         btnMode.setText("MODE");
+        btnMode.addActionListener(e -> btnModeActionPerformed(e));
         contentPane.add(btnMode);
         btnMode.setBounds(new Rectangle(new Point(35, 260), btnMode.getPreferredSize()));
-        btnMode.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
 
         //---- btnReset ----
         btnReset.setText("RESET");
+        btnReset.addActionListener(e -> btnResetActionPerformed(e));
         contentPane.add(btnReset);
         btnReset.setBounds(new Rectangle(new Point(490, 40), btnReset.getPreferredSize()));
-        btnReset.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
 
         //---- btnStart ----
         btnStart.setText("START");
+        btnStart.addActionListener(e -> btnStartActionPerformed(e));
         contentPane.add(btnStart);
         btnStart.setBounds(new Rectangle(new Point(490, 260), btnStart.getPreferredSize()));
-        btnStart.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
 
         //======== panel1 ========
         {
@@ -184,7 +200,9 @@ public class System extends JFrame {
     }
 
     public void reqAdjustTime(){
+        //timekeeping모드에서 adjust버튼을 누르면 이쪽으로
 
+        //timeDB.getTime()메서드 실행
     }
 
     public void endAdjustTime(){
@@ -255,9 +273,46 @@ public class System extends JFrame {
 
     }
 
+    //현재모드 말고 다른 모드를 선택하고 싶을때 실행
+    //mode select화면으로 진입하는 메서드
     public void reqModeSelect(){
 
     }
 
+    //mode select화면에서 모드 셀렉트를 종료하고 빠져나올때 쓰는 메서드
+    //modeslect화면을 종료할때 modeselect에 바뀐 모드들을 적용하기 위해 modeselect에 현재 선택된 모드들을 보냄
+    public void endSelectMode(){
+        modeSelector.setSettingModeList(selectedModes);
+    }
+
+
+    /*
+    클래스 다이어그래에 없던 메서드들 추가
+     */
+
+    //mode select 페이즈에서 원하는 모드를 선택한 경우 그 모드가 존재하는경우 넣고 존재하지 않으면 패스
+    private void addModetoList(String mode){
+        //리스트의 현재 사이즈만큼 반복을 하는데
+        for(int i=0;i<selectedModes.size();i++){
+            //현재 선택하려고 하는 모드가 리스트안에 존재 하지 않는다면 if문 수행
+            if(!selectedModes.get(i).equals(mode)){
+                //리스트 안에 존재하지 않는다면 선택한 모드에 현재 선택한 모드 추가
+                selectedModes.add(mode);
+            }
+        }
+    }
+
+    //mode select 페이즈에서 모드를 선택해제 한경우 그 모드가 존재하는 경우 삭제하고 존재하지 않으면 break;
+    private void deleteModefromList(String mode){
+        //리스트의 현재 사이즈만큼 반복을 하는데
+        for(int i=0;i<selectedModes.size();i++){
+            //현재 선택하려고하는 모드가 리스트 안에 존재한다면 if문 수행
+            if(selectedModes.get(i).equals(mode)){
+                //리스트 안에 존재하는 선택해제한 모드를 제거함
+                selectedModes.remove(i);
+                break;
+            }
+        }
+    }
 
 }
