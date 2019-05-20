@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="digitalwatch:test" external.linked.project.path="$MODULE_DIR$/../../digitalwatch" external.root.project.path="$MODULE_DIR$/../../digitalwatch" external.system.id="GRADLE" external.system.module.group="Modeling-8" external.system.module.type="sourceSet" external.system.module.version="1.0-SNAPSHOT" type="JAVA_MODULE" version="4">
+  <component name="ExternalSystem" linkedProjectPath="$MODULE_DIR$/../../digitalwatch" rootProjectPath="$MODULE_DIR$/../../digitalwatch" />
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+    <output-test url="file://$MODULE_DIR$/../../digitalwatch/build/classes/java/test" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../digitalwatch/src/test">
+      <sourceFolder url="file://$MODULE_DIR$/../../digitalwatch/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../digitalwatch/src/test/resources" type="java-test-resource" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="digitalwatch.main" />
+    <orderEntry type="library" name="Gradle: junit:junit:4.12" level="project" />
+    <orderEntry type="library" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
+  </component>
+  <component name="TestModuleProperties" production-module="digitalwatch.main" />
+</module>
