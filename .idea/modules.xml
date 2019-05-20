@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Digital-Watch.iml" filepath="$PROJECT_DIR$/Digital-Watch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MODELING-8.digital-watch.main.iml" filepath="$PROJECT_DIR$/.idea/modules/MODELING-8.digital-watch.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MODELING-8.digital-watch.test.iml" filepath="$PROJECT_DIR$/.idea/modules/MODELING-8.digital-watch.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/digital-watch.iml" filepath="$PROJECT_DIR$/.idea/modules/digital-watch.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/digital-watch.main.iml" filepath="$PROJECT_DIR$/.idea/modules/digital-watch.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/digital-watch.test.iml" filepath="$PROJECT_DIR$/.idea/modules/digital-watch.test.iml" />
