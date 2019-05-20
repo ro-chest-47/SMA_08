@@ -4,6 +4,8 @@
     <bytecodeTargetLevel>
       <module name="digitalwatch.main" target="1.8" />
       <module name="digitalwatch.test" target="1.8" />
+      <module name="MODELING-8.digital-watch.main" target="1.8" />
+      <module name="MODELING-8.digital-watch.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
