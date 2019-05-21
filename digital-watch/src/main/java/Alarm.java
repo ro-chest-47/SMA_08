@@ -1,22 +1,23 @@
+/*
 public class Alarm  {
     public int alarmHour[]={0,0,0,0};
     public int alarmMinute[]={0,0,0,0};
     public int alarmSecond[]={0,0,0,0};
-    public int i =0;
+    public int i = 0;
     public int buzzerState;
 
     /*public Alarm() {
         alarmHour = 0;
         alarmMinute = 0;
         alarmSecond = 0;
-    }*/
+    }
 
-    public Alarm( int alarmH, int alarmM, int alarmS) {
+    public Alarm(int alarmH, int alarmM, int alarmS) {
         addAlarm(alarmH,alarmM,alarmS);
     }
 
     public static void main(String[] args) {
-        new Alarm();
+        //new Alarm(,,);
     }
 
     public void showAlarm() {
@@ -25,20 +26,20 @@ public class Alarm  {
 
     public void addAlarm(int alarmH,int alarmM,int alarmS) {
         if ((alarmH >= 0) && (alarmH <= 24))
-            alarmHour = alarmH;
+            alarmHour[i] = alarmH;
         else
             System.out.println("Error Alarm Time");
 
         if ((alarmM >= 0) && (alarmM <= 59))
-            alarmMinute = alarmM;
+            alarmMinute[i] = alarmM;
         else
             System.out.println("Error Alarm Time");
 
         if ((alarmS >= 0) && (alarmS <= 59))
-            alarmSecond = alarmS;
+            alarmSecond[i] = alarmS;
         else
             System.out.println("Error Alarm Time");
-        i++
+        i++;
     }
 
     public void nextAlarm() {
@@ -56,10 +57,10 @@ public class Alarm  {
         while (buzzerState==1){
             System.out.println("buzz");
         }
-
     }
 
     public void stopAlarm() {
 
     }
 }
+*/
