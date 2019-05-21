@@ -300,7 +300,7 @@ public class SystemUI extends JFrame {
                     }
                     //alarm상태이고 alarm설정상태일경우 start버튼을 누르면 설정하는 알람의 현재 커서의 위치값 증가
                     else if(alaramAdjustState && !buzzByAlarm){
-                        increaseTime();
+                        increaseAlarmTime();
                     }
                 }
                 else if(currentMode.equals("Stopwatch")){
@@ -445,6 +445,14 @@ public class SystemUI extends JFrame {
                 cursorState=3;
             }
         }
+        //Alarm모드에서 커서 증가
+        //만약 second까지 조정가능하다면 굳이 따로 할필요 없음
+        //Timer와 동일하게 때문에 || currentMode.equals("Alarm") 하면됨
+        else if(currentMode.equals("Alarm")){
+            if(cursorState>4){
+                cursorState=3;
+            }
+        }
     }
 
     //setTimer단계를 끝낼때 쓰는 메서드
@@ -528,13 +536,26 @@ public class SystemUI extends JFrame {
 
     }
 
+    //다음 알람을 요청하기 위한 메서드
     private void reqNextAlarm(){
-        //나중에 구현해야함
+        //알람에서 가져온 알람리스트를 저장
+        //alarmList=alarm.getAlarmList();/
+
+        //알람리스트의 크기가 1보다 클경우 << 알람리스트에 알람이 존재할 경우
+        if(alarmList.length>1){
+            //알람에서 다음 알람을 가져와서(리턴값 존재) 내부에 표시를 해야하는데....
+            //이걸 어떻게 해야할까
+            //alarm.getNextList();
+        }
     }
 
     //alarm화면에서  adjust버튼을 누르면 실행
     private void reqAddAlarm(){
         //만약 알람리스트에 알람이 가득 차있을경우
+
+        //알람에서 알람리스트를 가져옴
+        //alarmList=alarm.getAlarmList();
+
         if(alarmList.length>=4){
             //알람을 더이상 추가할수없다는 메세지 출력하기
             alarmCanAddState=false;
@@ -548,15 +569,36 @@ public class SystemUI extends JFrame {
     }
 
     private void endAddAlarm(){
+        //알람에 현재 수정한 알람을 집어넣음
+        //alarm.addAlarm(hour, minute); <<알람에 전달해주는 인자는 임의로 선택한것
+
         this.alaramAdjustState=false;
         alarmCanAddState=false;
     }
 
+    //현재 설정된 알람을 제거한다는 메서드
     private void reqDeleteAlarm(){
-        //(대충 현재 설정된 알람을 제거한다는 코드)
+        //현재 알람리스트에 설정된 알람들을 불러옴
+        //alarmList=alarm.getAlarmList();
+
+        if(alarmList.length==0){
+            //알람리스트에 아무것도 없다면 에러를 출력
+        }
+        //알람리스트에 아무것도 없는게 아닌 뭐라도 있다면
+        else{
+            //현재 있는 알람을 제거하라고 시킴
+            //alarm.deleteAlarm()   ;
+        }
     }
 
+    //알람이 울릴때 stopAlarm을 누르면 알람이 정지됨
     private void reqStopAlarm(){
+        //근데 이게 이미 리스너쪽에서 한번 조건문을 통과한거라 여기쓴 조건이 별로 의미가 없음
+        if(buzzByAlarm){
+            //alarm.stopAlarm();
+        }
+
+        //알람을 껐으니 알람스테이트도 false로
         this.buzzByAlarm=false;
     }
 
@@ -676,4 +718,33 @@ public class SystemUI extends JFrame {
             }
         }
     }
+
+    //알람의 increaseTime을 수정 하는 동작이 살짝 다름
+    private void increaseAlarmTime(){
+        //현재커서위치의 값
+        //curState=0=year   cursorState=1=month     cursorState=2=day
+        //cursorState=3=hour    cursorState=4=minute    cursorState=5=second
+        //dayOfWeek=요일은 유저가 설정 불가능 << 알아서 계산해주는게 좋을듯
+
+        if(cursorState==3){
+            hour++;
+            if(hour>23){
+                hour=0;
+            }
+        }
+        else if(cursorState==4){
+            minute++;
+            if(minute>59){
+                minute=0;
+            }
+        }
+        //second는 설정 불가능으로 하기로 했었나???? << 기억이 잘 안남
+        else if(cursorState==5){
+            second++;
+            if(second>59){
+                second=0;
+            }
+        }
+    }
+
 }
