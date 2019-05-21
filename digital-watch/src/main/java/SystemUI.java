@@ -28,9 +28,6 @@ public class SystemUI extends JFrame {
 
 
     private ModeSelector modeSelector;
-    /*
-    아직 클래스 적용안됨
-     */
     private Alarm[] alarmList;
     private Tide[] tideList;
     private Timer timer;
@@ -52,7 +49,7 @@ public class SystemUI extends JFrame {
     private boolean timekeepingAdjustState=false; //timekeeping에서 adjust버튼을 누를경우 state가 true로 바뀌어 시간을 조정중임을 알림
     private boolean timerAdjustState=false; //timer에서 adjust버튼을 누를경우 state가 true로 바뀌면서 timer조정가능
     private int timerRunState=0; //시퀀스다이어그램상에서 int이길래 일단 int로 설정 근데 boolean이 더 맞는것같음
-    private boolean timerZeroState=false; //startTimer에서 등장하는 변수
+    private int timerZeroState=0; //startTimer에서 등장하는 변수 << boolean이여야 할것같은데 일단 int
     private boolean alaramAdjustState=false; //alarm에서 adjust버튼을 누를경우 state가 true로 바뀌면서 alarm조정가능
     private boolean alarmCanAddState=false; //alarm에 alarm을 더 추가시킬 수 있을경우
     private boolean stopwatchAdjustState = false; //stopwatch를 조정중일때
@@ -75,18 +72,19 @@ public class SystemUI extends JFrame {
 
     public SystemUI() {
         //각월에 맞는 day를 초기화
-        monthMap.put(1, 31);
-        monthMap.put(2, 29);
-        monthMap.put(3, 31);
-        monthMap.put(4, 30);
-        monthMap.put(5, 31);
-        monthMap.put(6, 30);
-        monthMap.put(7, 31);
-        monthMap.put(8, 31);
-        monthMap.put(9, 30);
-        monthMap.put(10, 31);
-        monthMap.put(11, 30);
-        monthMap.put(12, 31);
+        //이 값을 TimeDB로 부터 가져오는것으로 바꿈 << 이 값을 대체 어디서 가져와야할까? 일단은 timekeeping이랑  관련된곳
+//        monthMap.put(1, 31);
+//        monthMap.put(2, 29);
+//        monthMap.put(3, 31);
+//        monthMap.put(4, 30);
+//        monthMap.put(5, 31);
+//        monthMap.put(6, 30);
+//        monthMap.put(7, 31);
+//        monthMap.put(8, 31);
+//        monthMap.put(9, 30);
+//        monthMap.put(10, 31);
+//        monthMap.put(11, 30);
+//        monthMap.put(12, 31);
 
         setContentPane(mainPanel);
 
@@ -227,11 +225,11 @@ public class SystemUI extends JFrame {
                         //뭔가 들어갈게 있겠지
                     }
                     //현재 timer가 zero이고 adjust단계가 아닐경우
-                    if(timerZeroState && !timerAdjustState){
+                    if(timerZeroState==0 && !timerAdjustState){
                         reqResetTimer();
                     }
                     //zero가 아니고 adjust단계도 아닐경우
-                    else if(!timerZeroState && !timerAdjustState){
+                    else if(timerZeroState==1 && !timerAdjustState){
                         reqPauseTimer();
                     }
                 }
@@ -305,7 +303,7 @@ public class SystemUI extends JFrame {
                 }
                 else if(currentMode.equals("Stopwatch")){
                     //stopwatch가 조정가능상태가 아닐경우 start가능
-                    if(!stopwatchAdjustState){
+                    if(!stopwatchAdjustState && stopwatchRunState==0){
                         reqStartStopwatch();
                     }
                     //stopwatch가 동작중이고 시간조정모드가 아닐경우 start버튼을 누르면 일시정지
@@ -323,17 +321,23 @@ public class SystemUI extends JFrame {
         setVisible(true);
     }
 
-
     //timeDB로부터 가져온 시간을 1초마다 업데이트해줌
     private void showTime(){
         //timeDB.getThread() << 이렇게 쓰는게 맞나?
+
+        //showTime이 gui에 어떤식으로 적용되나 슈도코드
+        //textViewYear.setText(year);
+        //textViewMonth.setText(month);
+        //textViewDay.setText(day);
+        //textViewHour.setText(hour);
+        //textViewMinute.s etText(minute);
+        //textViewSecond.setText(second);
     }
 
     //현재 커서 위치에 있는 값을 증가시킴
-    //사용하는 모드들 = TimeKeeping, Timer
+    //사용하는 모드들 = TimeKeeping
     private void increaseTime(){
         //현재 커서에 있는 숫자를 일단 증가시키고 제어문에서 비교
-        //currentNumber++;
 
         //현재커서위치의 값
         //curState=0=year   cursorState=1=month     cursorState=2=day
@@ -341,12 +345,12 @@ public class SystemUI extends JFrame {
         //dayOfWeek=요일은 유저가 설정 불가능 << 알아서 계산해주는게 좋을듯
         //second는 설정불가능하게 하자고 합의 했던 기억
         //현재 adjusttime기준으로 코드 작성중이므로 다른 곳에서 increatTime실행시 바뀔수 있음
-        switch (cursorState){ //<< if문 쓰는게 나을뻔 했음 제ㅔㅔㅔㅔㅔㅔㅔㅔㅔㄴㄴㄴㄴㄴㄴㄵㅈㅈ자자ㅏㅏㅏㅏㅏㅏㅇㅇㅇㅇㅇ
+        switch (cursorState){
             //현재 커서의 위치가 year에 가있는 경우
             case 0:
                 year++;
-                //year를 2999보다 높게 또는 2010보다 작게 설정하려고하면 year=2010로 고정
-                if(year>2999 || year<2010){
+                //year를 2100보다 높게 또는 2010보다 작게 설정하려고하면 year=2010로 고정 <<최대 연도는 2100년임
+                if(year>2100){
                     year=2010;
                 }
                 break;
@@ -355,10 +359,6 @@ public class SystemUI extends JFrame {
                 //month의 범위를 정상적인 범위로 한정
                 //month가 12보다 커지려고 하면 1로 고정
                 if(month > 12) {
-                    month = 12;
-                }
-                //month가 1보다 작아지려고 하면 12로 고정
-                else if(month <1) {
                     month = 1;
                 }
                 break;
@@ -368,29 +368,19 @@ public class SystemUI extends JFrame {
                 limitedDay=monthMap.get(month); //현재 month에 맞는 day를 limitedday에 저장
                 //user가 설정하려는 day가 제한된 day를 넘어가려고 하면 day=1;로 초기화
                 if(day>limitedDay) {
-                    day=limitedDay;
-                }
-                //user가 설정하려고하는 day가 1보다 낮아지려고하면 limitedday로 초기화
-                else if(day<1) {
                     day=1;
                 }
                 break;
             case 3:
                 hour++;
-                //설정하려는 시간이 24보다 커질경우
+                //설정하려는 시간이 23보다 커질경우
                 if(hour>23){
-                    hour=23;
-                }
-                else if(hour<0){
                     hour=0;
                 }
                 break;
             case 4:
                 minute++;
                 if(minute>59){
-                    minute=59;
-                }
-                else if(minute<0){
                     minute=0;
                 }
                 break;
@@ -400,34 +390,47 @@ public class SystemUI extends JFrame {
             default:
                 break;
         }
+
+        //increaseTime 기능을 수행후 gui세팅
+        showTime();
     }
 
-    public void showTimer(){
-
+    //timer를 gui상에서 보여주자!
+    private void showTimer(){
+        //timer를 gui상에서 보여주기 위한 슈도코드
+        //textViewHour.setText(hour);
+        //textViewMinute.setTexT(minute);
+        //textViewSecond.setTexT(second);
     }
 
     //전제조건도 다 맞춤
     //adjustsate=false일경우 진행되는 상황
     private void reqSetTimer(){
-        //timerRunState=timer.getRunState()
+        timerRunState=timer.getRunState();
 
         //timer가 작동중일경우 일단 동작중인 timer를 pause시킴
         if(timerRunState==1){
-            reqPauseTimer();
+            //타이머의 퍼즈타이머를 작동 시키고 runstat=0으로 만들어야함
+            timer.pauseTimer();
+            timerRunState=0;
+            //아래꺼는 무시
             //리턴값이 주어져있음, 여기서 timerRunState의 값을 0으로 만들어야함
             //timerRunState=reqPauseTimer();
         }
 
         //타이머를 변경하겠다고 요청했으므로 adjustState도 true로 바꿈
         this.timerAdjustState=true;
-    }
 
-    public void increaseTimer(){
-
+        //메서드를 끝내고 Timer를 gui로 적용
+        showTimer();
     }
 
     //현재 커서를 바꿔주는 기능
     private void changeCursor(){
+        //현재커서위치의 값
+        //curState=0=year   cursorState=1=month     cursorState=2=day
+        //cursorState=3=hour    cursorState=4=minute    cursorState=5=second
+
         //일단 커서를 증가시키고
         cursorState++;
 
@@ -437,6 +440,8 @@ public class SystemUI extends JFrame {
             if(cursorState>5){
                 cursorState=0;
             }
+            //Timekeeing 모드동작을 수행했으므로 showTime()
+            showTime();
         }
         //Timer모드에서 커서를 증가시켰을때
         else if(currentMode.equals("Timer")){
@@ -444,6 +449,8 @@ public class SystemUI extends JFrame {
             if(cursorState>5){
                 cursorState=3;
             }
+            //Tiemr에서 동작을 수행했으므로 showTimer()
+            showTimer();
         }
         //Alarm모드에서 커서 증가
         //만약 second까지 조정가능하다면 굳이 따로 할필요 없음
@@ -452,16 +459,28 @@ public class SystemUI extends JFrame {
             if(cursorState>4){
                 cursorState=3;
             }
+            //Alarm에서 동작을 수행했으므로 showAlarm();
+            showAlarm();
         }
     }
 
     //setTimer단계를 끝낼때 쓰는 메서드
     private void endSetTimer(){
         //timdDB에다가 현재 설정한 timer값을 전달해줌
-        //timeDB.setTimer(hour, minute, second); <<원래 인자 설정이 안되어있음
+
+        //	public TimeDB() {  <<참고용
+        //		setTime("2010 01 01 00 00");
+        //	}
+        String setTimeString = year+" "+month+" "+day+" "+hour+" "+minute;
+
+        //timeDB에 현재 시간정보를 넘겨줌
+        timeDB.setTime(setTimeString);
 
         //마지막으로 timer adjust를 끝냈으니 adjust단계가 종료되었다는 의미
         this.timerAdjustState=false;
+
+        //Timer쪽 동작이 끝났으니 timer를 보여주자
+        showTimer();
     }
 
     //adjust time 상태로 진입
@@ -469,69 +488,95 @@ public class SystemUI extends JFrame {
         //timekeeping모드에서 adjust버튼을 누르면 이쪽으로
 
         //timeDB.getTime()메서드 실행
-        //getTime으로 읽어온 값들을
-        //year, month, day, hour, minute, second에 저장시킴
+        //getTime으로 읽어온 값들을 저장시킴 넘어오는 값은 second까지
+        String currentTime=timeDB.getTime();
+        String[] tmpArray=currentTime.split(" ");
+
+        //Stirng으로 받아온 현재 시간을 int값으로 파싱해서 저장하자
+        year=Integer.parseInt(tmpArray[0]);
+        month=Integer.parseInt(tmpArray[1]);
+        day=Integer.parseInt(tmpArray[2]);
+        minute=Integer.parseInt(tmpArray[3]);
+        second=Integer.parseInt(tmpArray[4]);
 
         //Adjsuttime으로 들어왔다면 timekeepingAdajsutState를 true로 바꾸고
         if(!timekeepingAdjustState){
             this.timekeepingAdjustState=true;
         }
 
+        //Timekeeping단계이므로 showTime을 실행해 gui업데이트
+        showTime();
     }
 
     //현재 adjust페이즈일경우 그걸 종료시키는것
     private void endAdjustTime(){
-        //timeDB에 현재 수정한 year, month, day, dayofWeek(?) hour, minute, second를 전달
-        //timeDB.setTime();
+        //timeDB에 현재 수정한 year, month, day, hour, minute을 전달 second는 전달해 봤자 0으로 초기화
+        String currntTime=year+" "+month+" "+day+" "+hour+" "+minute;
+
+        timeDB.setTime(currntTime);
 
         //그리고 adjustState=false로 만들며 phase종료
         if(timekeepingAdjustState){
             this.timekeepingAdjustState=false;
         }
+
+        //역시 showTime으로 gui업데이트
+        showTime();
     }
 
     //전제조건들을 만족하면 timer를 시작하는 메서드
     private void reqStartTimer(){
         //timerZeroState=true; << timer의 현재상태가 0이고
-        //timerZeroState=timer.getZeroState()
+        timerZeroState=timer.getZeroState();
         //timerRunState=0; runstate도 0이어야지
-        //timerRunState==timer.getRunState();
+        timerRunState=timer.getRunState();
 
         //if문을 실행
-        if(timerZeroState && timerRunState==0){
+        if(timerZeroState==0 && timerRunState==0){
             //timer를 시작하라고 전달
-            //timer.startTimer();
+            timer.startTimer();
         }
 
         //그리고 타이머가 동작중이므로 runstate를 true로 바꿈
-        //timerRunState=timer.startTimer(); <<startTimer의 리턴값을 1로 줘서 sytstem의 timerRunState를 바꾸는것도 좋은 방법일듯?
+        //timerRunState=timer.startTimer(); <<startTimer의 리턴값을 1로 줘서 sytstem의 timerRunState를 바꾸는것도 좋은 방법일듯? 이 방법은 실제 구현된건 아님
         timerRunState=1;
+
+        //여기서 showTimer가 들어가야 될지 잘 모르겠음 startTimer를 하면 지속적으로 시간을 업데이트해줘야 하기 때문
+        //showTimer();
     }
 
     //reset을 시켜주면 타이머의 시간을 0으로 초기화
     //timer의 시간이 00:00:00이여도 상관없이 0으로 << 이게 편함
     private void reqResetTimer(){
         //현재 타이머가 동작중인가를 확인
-        //timerRunState=timer.getRunState();
+        timerRunState=timer.getRunState();
 
         //현재 타이머가 동작중이라면
         if(timerRunState==1){
             //일단 timer를 pause시킴
-            //timer.puaseTimer();
+            timer.pauseTimer();
         }
 
         //그다음에 reset시키라고 메세지 보냄
-        //timer.resetTimer();
+        timer.resetTimer();
 
         //일단 리셋시켰으니 run이 아니고 zero는 맞고
         timerRunState=0;
-        timerZeroState=true;
+        timerZeroState=1;
+
+        //timer를 리셋시켰으니 그 화면을 표시
+        showTimer();
     }
 
-    public void showAlarm(){
-
+    private void showAlarm(){
+        //gui에서 변해야 하는 값을 일단 슈도코드로 << 틀린게 있을수도 있음
+        //어....알람에 loop를 하기로 안했던것같은데 << 기억이 나지 않음
+        //textViewHour.setText(hour);
+        //textViewminute.setTExt(minute);
     }
 
+    //add Alarm시퀀스에서 사용되는건데 현재 코드상에서 딱히 들어갈곳이 없어보임
+    //없어도 되는 메서드 일지도?
     public void showAlarmSetting(){
 
     }
@@ -545,8 +590,15 @@ public class SystemUI extends JFrame {
         if(alarmList.length>1){
             //알람에서 다음 알람을 가져와서(리턴값 존재) 내부에 표시를 해야하는데....
             //이걸 어떻게 해야할까
+            //일단 showAlarm으로 맨 하단의 hour와 minute을 표시하고
+            //다른 메서드를 통해 알람 상단의 다른 알람을 표시할까 << 이게 showAlarmSetting()인가?
             //alarm.getNextList();
+            //ex) textViewTopAlarmHour.setText(nextAlarmTextHour); <<슈도코드
+            //      textViewTopAlarmMinute.setTExT(newAlarmTextMinute);
         }
+
+        //메서드의 마지막을 showAlarm으로 장식
+        showAlarm();
     }
 
     //alarm화면에서  adjust버튼을 누르면 실행
@@ -566,14 +618,21 @@ public class SystemUI extends JFrame {
             alarmCanAddState=true;
             alaramAdjustState=true;
         }
+
+        //여기서는 showAlarm이 필요없을것같긴한데 일단 심심하므로 추가
+        showAlarm();
     }
 
+    //알람 수정을 끝낼때 동작되는 메서드
     private void endAddAlarm(){
         //알람에 현재 수정한 알람을 집어넣음
         //alarm.addAlarm(hour, minute); <<알람에 전달해주는 인자는 임의로 선택한것
 
         this.alaramAdjustState=false;
         alarmCanAddState=false;
+
+        //여기도 showAlarm이 필요 없을것 같긴한데 일단 넣음
+        showAlarm();
     }
 
     //현재 설정된 알람을 제거한다는 메서드
@@ -589,28 +648,54 @@ public class SystemUI extends JFrame {
             //현재 있는 알람을 제거하라고 시킴
             //alarm.deleteAlarm()   ;
         }
+
+        //일단 자연스럽게 맨 마지막에 showAlarm을 삽입<< 여기도 필요없을것같긴한데?
+        showAlarm();
     }
 
     //알람이 울릴때 stopAlarm을 누르면 알람이 정지됨
     private void reqStopAlarm(){
-        //근데 이게 이미 리스너쪽에서 한번 조건문을 통과한거라 여기쓴 조건이 별로 의미가 없음
+        //근데 이게 이미 리스너쪽에서 한번 조건문을 통과한거라 여기쓴 조건이 별로 의미가 없음 << 궁금하면 확인할것
         if(buzzByAlarm){
             //alarm.stopAlarm();
         }
 
         //알람을 껐으니 알람스테이트도 false로
         this.buzzByAlarm=false;
+
+        //필요없지만 매우자연스러운 showAlarm삽입
+        showAlarm();
     }
 
-    public void showStopwatch(){
-
+    private void showStopwatch(){
+        //gui에 필요할것같은 요소들을 슈도코드로 작성
+        //textViewHour.setText(hour);
+        //textViewMinute.setTExT(minute);
+        //textVioewSecond.setTExT(second);
+        //여기 밑에부분은 아마도 stopwatch에서 가져온 데이터를 record된 데이터를 출력
+        //textViewTopRecrod.setText(hour);
+        //textViewTopRecord.setTExt(minute);
+        //textViewTopRecored.setText(second);
     }
 
-    public void reqStartStopwatch(){
+    //스탑워치를 시작하자
+    private void reqStartStopwatch(){
+        stopwatchRunState=stopwatch.getRunState();
 
+        //이미 리스터단계에서 runState=0이 맞는지 한번 거르고 왔음
+        //스탑워치가 동작중이 아닐경우 스탑워치를 실행시킴
+        if(stopwatchRunState==0){
+            stopwatch.startStopwatch();
+        }
+
+        //스탑워치를 실행시켰으니 런스테이트는 1로
+        stopwatchRunState=1;
+
+        //실시간으로 show를 시켜야해서 그냥 showStopwatch가 될것같진 않음
+        showStopwatch();
     }
 
-    public void reqRecordStopwatch(){
+    private void reqRecordStopwatch(){
         //현재 스탑워치의 시간을 stopwatch로 보내서 저장하게 해주는 기능
     }
 
@@ -682,12 +767,17 @@ public class SystemUI extends JFrame {
         //timerRunState=timer.getRunState();
 
         //timer가 0이고 동작중이지 않을경우 조건문 실행
-        if(timerZeroState && timerRunState==0 ){
+        if(timerZeroState==0 && timerRunState==0 ){
             //timer.pauseTimer();
         }
 
 
     }
+
+    //increaseTimer 이름을 increaseTimerTime으로 바꿈
+//    public void increaseTimer(){
+//
+//    }
 
     //increseTime은 TimeKeeping과 겹치는 메서드인데 동작이 조금 다름
     //일단 새로운 increase메서드를 만듬
