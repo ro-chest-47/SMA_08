@@ -1,6 +1,9 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -54,6 +57,7 @@ public class SystemUI extends JFrame {
     private boolean alarmCanAddState=false; //alarm에 alarm을 더 추가시킬 수 있을경우
     private boolean stopwatchAdjustState = false; //stopwatch를 조정중일때
     private int stopwatchRunState=0; //시퀀스다이어그램상에서 int이길래 일단 int로 설정 근데 boolean이 더 맞는것같음
+    private int stopwatchZeroState=0; // 제로스테이트가 시퀀스다이어그램상에서는 존재 왠지 boolean으로 하고싶음
     private int year;
     private int month;
     private int day;
@@ -63,7 +67,6 @@ public class SystemUI extends JFrame {
     private int second;
     private int cursorState; //현재 커서가 어디 위치인지 나타내주는 커서스테이트
     private HashMap<Integer, Integer> monthMap= new HashMap<>(); //각 월에 맞는 day를 매핑시켜준 hashmap << 근데 윤달을 계산하면 달라질수도있음 timekeeping에 들어가야하는게 아닌가 싶긴한데....
-
 
     public static void main(String[] args){
         SystemUI systemUI = new SystemUI();
@@ -137,6 +140,10 @@ public class SystemUI extends JFrame {
                         reqRecordStopwatch();
                     }
                 }
+                //모드 셀렉터상태일때에 관한 조건문도 필요 <<유스케이스를 추가해야하나?
+                else if(currentMode.equals("ModeSelector")){
+                    //현재모드가 모드셀렉터이고 adjust버튼을 클릭한다면
+                }
             }
         });
         btnMode.addActionListener(new ActionListener() {
@@ -194,12 +201,30 @@ public class SystemUI extends JFrame {
                     //tide모드일때 mode버튼을 누르면 다음 mode로 넘어감
                     //(대충 다음 모드로 간다는 코드)
                 }
-                else{
+                else if(currentMode.equals("Moonphsae")){
                     //moonphase모드일때 mode버튼을 누르면 다음 mode로 넘어감
                     //(대충 다음 모드로 간다는 코드)
                 }
+                //모드 셀렉터상태일때에 관한 조건문도 필요 <<유스케이스를 추가해야하나?
+                else if(currentMode.equals("ModeSelector")){
+                    //모드셀렉터상태일때 mode버튼을 누른다면?
+                }
             }
         });
+        //mode버튼을 길게 눌렀을때 <<일단 고민만해보기, 스레드 써야할것같아서 고민이 많아짐
+        //자바 자체적으로 longClickListener가 없음
+        btnMode.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+            }
+        });
+
         btnReset.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -255,6 +280,23 @@ public class SystemUI extends JFrame {
                 else if(currentMode.equals("Stopwatch")){
                     //reset버튼을 누를경우 stopwatch가 동작중일때는 일단 일시정지
                     //동작중이지 않을때는 바로 시간 초기화
+
+                    //현재 스탑워치의 조정모드일경우
+                    if(stopwatchAdjustState){
+                        //단순히 조정중이던 스탑워치의 현재커서 위치의 숫자만 초기화
+                    }
+                    //현재 스탑워치가 조정모드가 아닐경우 스탑워치가 동작중이던 말던간에 리셋 or 일시정지
+                    else if(!stopwatchAdjustState){
+                        reqResestStopwatch();
+                    }
+                }
+                /*
+                moonphase와 tide는 딱히 reset버튼에서 할게없음
+                 */
+
+                //모드 셀렉터상태일때에 관한 조건문도 필요 <<유스케이스를 추가해야하나?
+                else if(currentMode.equals("ModeSelector")){
+                    //모드셀렉터상태고 reset버튼을 눌렀다면
                 }
             }
         });
@@ -315,10 +357,19 @@ public class SystemUI extends JFrame {
                     //Tide모드이고 start버튼을 누르면 다음 tide를 표시
                     reqNextTide();
                 }
+                /*
+                moonphase모드일때 start버튼을 누를일이 없음
+                 */
+
+                //모드 셀렉터상태일때에 관한 조건문도 필요 <<유스케이스를 추가해야하나?
+                else if(currentMode.equals("ModeSelector")){
+                    //모드셀렉터상태일때 start버튼을 누른다면
+                }
             }
         });
 
         setVisible(true);
+
     }
 
     //timeDB로부터 가져온 시간을 1초마다 업데이트해줌
@@ -695,30 +746,97 @@ public class SystemUI extends JFrame {
         showStopwatch();
     }
 
+    //현재 스탑워치의 시간을 stopwatch로 보내서 저장하게 해주는 기능
     private void reqRecordStopwatch(){
-        //현재 스탑워치의 시간을 stopwatch로 보내서 저장하게 해주는 기능
+        stopwatchRunState=stopwatch.getRunState();
+
+        //스탑워치가 동작중일경우 조건문 실행
+        if(stopwatchRunState==1){
+            String tmp=stopwatch.recordStopwatch();
+            String[] tmpArray=tmp.split(" ");
+
+            //받아오는 타입 return currentTime << currentTime을 받아옴
+            //String time= Integer.toString(this.hours)+" "+Integer.toString(this.minutes)+" "+Integer.toString(this.seconds)+" "+Integer.toString(this.times);
+
+            hour=Integer.parseInt(tmpArray[0]);
+            minute=Integer.parseInt(tmpArray[1]);
+            second=Integer.parseInt(tmpArray[2]);
+            //times는 어떤건지 잘 몰라서 일단 가져오긴 하는데 지역변수로만 남겨둠
+            int times = Integer.parseInt(tmpArray[3]);
+        }
+
+        //시간을 기록했으니 기록한시간을 표시해주자
+        showStopwatch();
     }
 
-    public void reqPauseStopwatch(){
+    //스탑워치를 일시정지 시키자
+    private  void reqPauseStopwatch(){
+        //참고, 이미 리스너 단계에서 한번거름
+        stopwatchRunState=stopwatch.getRunState();
 
+        //스탑워치가 작동중이니 일단 일시정지
+        if(stopwatchRunState==1){
+            stopwatch.pauseStopwatch();
+            //일시정지 시켰으니 runState=0으로
+            stopwatchRunState=0;
+        }
+
+        //시간을 일시정지 시켰으니 stopwatch갱신
+        showStopwatch();
     }
 
-    public void reqResestStopwatch(){
+    private void reqResestStopwatch(){
+        //스탑워치가 동작중인지 확인
+        stopwatchRunState=stopwatch.getRunState();
+        //스탑워치의 시간이 0인지 확인
+        stopwatchZeroState=stopwatch.getZeroSate();
 
+        //현재 스탑워치의 시간이 0이고 << 스탑워치의 시간이 0이 아닐때 reset을 시켜줘야하는게 아닌가 싶음
+        if(stopwatchZeroState==0){
+            //스탑워치가 동작중이라면 일단 pause시킴
+            if(stopwatchRunState==1){
+                stopwatch.pauseStopwatch();
+            }
+
+            stopwatch.resetStopwatch();
+        }
+
+        //reset시켰으니 show하기
+        showStopwatch();
     }
 
-    public void reqNextTide(){
+    //다음 tide를 불러오는 메서드
+    //현재 타이드는 String[]으로 하기로 함
+    private void reqNextTide(){
+        //tidelist를 가져와 현재 system의 tidelist에 적용시키고 <<굳이 tidelist를 가져올 필요가 있을까?라는 의문
+        //tideList=tide.getTideList();
+        //다음 tide를 가져와 현재 타이드에 적용시킴
+        //currentTide=tide.getNextTide();
 
+        //다음 tide를 요청했으니 show로 보여주기
+        showTide();
     }
 
     public void showMoonphase(){
-
+        //ui가 어떻게 만들어질지 모르니 일단 슈도코드로 작성
+        //currentMoon에 표시해야할 타이드를 2차원배열로 저장
+        //일단 10x10배열이라 가정, 배열안에 1이 들어간경우 검은색을 칠하고 그게 아닌경우 하얀색을 칠함
+//        for(int i=0;i< 10;i++){
+//            for(int j=0; j<10;j++){
+//                if(currentTide[i][j]==1) {
+//                    showMoonGUI[i][j].setBackground(Color.black);
+//                }
+//                else{
+//                    showMoonGUI[i][j].setBackground(Color.white);
+//                }
+//            }
+//        }
     }
 
     //현재모드 말고 다른 모드를 선택하고 싶을때 실행
     //mode select화면으로 진입하는 메서드
     public void reqModeSelect(){
-
+        //현재 자바 자체저긍로 longClickListener가 없어서 고민
     }
 
     //mode select화면에서 모드 셀렉트를 종료하고 빠져나올때 쓰는 메서드
@@ -837,4 +955,20 @@ public class SystemUI extends JFrame {
         }
     }
 
+    //이거 있어야할것같은데 없음
+    private void showTide(){
+        //ui가 어떻게 만들어질지 모르니 일단 슈도코드로 작성
+        //currentTide에 표시해야할 타이드를 2차원배열로 저장
+        //일단 10x10배열이라 가정, 배열안에 1이 들어간경우 검은색을 칠하고 그게 아닌경우 하얀색을 칠함
+//        for(int i=0;i< 10;i++){
+//            for(int j=0; j<10;j++){
+//                if(currentTide[i][j]==1) {
+//                    showTideGUI[i][j].setBackground(Color.black);
+//                }
+//                else{
+//                    showTideGUI[i][j].setBackground(Color.white);
+//                }
+//            }
+//        }
+    }
 }
