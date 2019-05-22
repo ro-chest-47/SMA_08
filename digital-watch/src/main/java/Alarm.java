@@ -1,4 +1,7 @@
 /*
+싱글톤
+ */
+/*
 public class Alarm  {
     public int alarmHour[]={0,0,0,0};
     public int alarmMinute[]={0,0,0,0};
@@ -14,10 +17,6 @@ public class Alarm  {
 
     public Alarm(int alarmH, int alarmM, int alarmS) {
         addAlarm(alarmH,alarmM,alarmS);
-    }
-
-    public static void main(String[] args) {
-        //new Alarm(,,);
     }
 
     public void showAlarm() {
