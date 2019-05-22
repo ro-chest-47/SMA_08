@@ -21,6 +21,7 @@ public class TimeKeeping {
 	private static class LazyHolder{
 		private static final TimeKeeping INSTANCE = new TimeKeeping();
 	}
+
 	
 	public void setTime(String time) {
 		String[] times = time.split("\\s");
