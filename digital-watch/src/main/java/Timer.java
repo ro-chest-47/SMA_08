@@ -12,12 +12,20 @@ public class Timer extends Thread {
 	
 	private int time =0;
 	
-	public Timer() {
+	private Timer() {
 		setTimer("0 0 0");
 	}
 	
-	public Timer(String time) {
+	private Timer(String time) {
 		setTimer(time);
+	}
+	
+	public static Timer getInstance() {
+		return LazyHolder.INSTANCE;
+	}
+	
+	private static class LazyHolder{
+		private static final Timer INSTANCE = new Timer();
 	}
 	
 	public void startUpdateTime(Thread timeThread) {
@@ -40,7 +48,6 @@ public class Timer extends Thread {
 	
 	public void pauseTimer() {
 		thread.interrupt();
-		//System.out.println(this.getTime());
 		this.runState=0;
 		if(this.getTime().equals("0 0 0"))
 			zeroState=1;
@@ -58,11 +65,6 @@ public class Timer extends Thread {
 		}
 		else zeroState=0;
 	}
-	/*
-	public void startTimer(Thread timeThread) {
-		this.runState=1;
-		startUpdateTime(timeThread);
-	}*/
 	
 	public void startTimer() {
 		thread = new Timer(this.getTime());
@@ -105,7 +107,6 @@ public class Timer extends Thread {
 	public void run() {
 		while(true) {
 			try {
-				//System.out.println(this.getTime());
 				if(this.time==0)
 					System.out.println(this.getTime());
 				

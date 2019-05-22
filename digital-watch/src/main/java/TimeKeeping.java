@@ -1,15 +1,21 @@
-
 public class TimeKeeping {
 	private int year;
 	private int month;
 	private int day;
-	private String dayOfWeek[];
 	private int hour;
 	private int minute;
 	private int second;
 	
-	public TimeKeeping(TimeDB timeDB) {
+	private TimeKeeping(TimeDB timeDB) {
 		setTime(timeDB.getTime());
+	}
+	
+	public static TimeKeeping getInstance() {
+		return LazyHolder.INSTANCE;
+	}
+	
+	private static class LazyHolder{
+		private static final TimeKeeping INSTANCE = new TimeKeeping();
 	}
 	
 	public void setTime(String time) {
