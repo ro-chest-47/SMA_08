@@ -40,7 +40,7 @@ public class SystemUI extends JFrame {
     private Tide tide;
     private Moonphase moonphase;
     private int userInput; //int값인지 불확실
-    private String currentMode; //원래 int값인데 String으로 일단 수정
+    private String currentMode="TimeKeeping"; //원래 int값인데 String으로 일단 수정
     private boolean buzzByAlarm =false; //알람 부저 스테이트
 
     /*
@@ -48,6 +48,8 @@ public class SystemUI extends JFrame {
      */
 //    private String[] selectedModes; //원래 String[]인데 arraylist로 수정
     private ArrayList<String> selectedModes = new ArrayList<>();     //modeselector로 넘겨줄선택된 모드들을 나타냄, 그러니까 현재 선택된 모드들
+    private ArrayList<String> deleteModeList = new ArrayList<>(); //지워야할 리스트를 전달
+    private ArrayList<String> createModeList = new ArrayList<>(); //생성해야할 리스트를 전달
     private TimeDB timeDB; //System이 TimeDB에서 값을 받아오는게 존재
     private boolean timekeepingAdjustState=false; //timekeeping에서 adjust버튼을 누를경우 state가 true로 바뀌어 시간을 조정중임을 알림
     private boolean timerAdjustState=false; //timer에서 adjust버튼을 누를경우 state가 true로 바뀌면서 timer조정가능
@@ -58,6 +60,7 @@ public class SystemUI extends JFrame {
     private boolean stopwatchAdjustState = false; //stopwatch를 조정중일때
     private int stopwatchRunState=0; //시퀀스다이어그램상에서 int이길래 일단 int로 설정 근데 boolean이 더 맞는것같음
     private int stopwatchZeroState=0; // 제로스테이트가 시퀀스다이어그램상에서는 존재 왠지 boolean으로 하고싶음
+    private String modeSelectorCurrentMode;
     private int year;
     private int month;
     private int day;
@@ -91,7 +94,12 @@ public class SystemUI extends JFrame {
 
         setContentPane(mainPanel);
 
-        modeSelector=new ModeSelector(); //초기모드 설정을 모드셀렉터에서 진행함
+        modeSelector=new ModeSelector("TimeKeeping", "Timer", "Alarm", "Stopwatch"); //초기모드 설정
+        //모드셀렉터를 위해 추가시킴
+        selectedModes.add("TimeKeeping");
+        selectedModes.add("Timer");
+        selectedModes.add("Alarm");
+        selectedModes.add("Stopwatch");
 
         btnAdjust.addActionListener(new ActionListener() {
             @Override
@@ -143,6 +151,7 @@ public class SystemUI extends JFrame {
                 //모드 셀렉터상태일때에 관한 조건문도 필요 <<유스케이스를 추가해야하나?
                 else if(currentMode.equals("ModeSelector")){
                     //현재모드가 모드셀렉터이고 adjust버튼을 클릭한다면
+                    endSelectMode();
                 }
             }
         });
@@ -208,6 +217,9 @@ public class SystemUI extends JFrame {
                 //모드 셀렉터상태일때에 관한 조건문도 필요 <<유스케이스를 추가해야하나?
                 else if(currentMode.equals("ModeSelector")){
                     //모드셀렉터상태일때 mode버튼을 누른다면?
+                    //모드 셀렉트 단계에서 다음 모드를 누르는 경우를 위해 새롭게 추가시킨 메서드
+                    //기본 메서드들 6개를 차례로 돌아가며 리턴
+                    reqModeSelectNextMode();
                 }
             }
         });
@@ -364,6 +376,8 @@ public class SystemUI extends JFrame {
                 //모드 셀렉터상태일때에 관한 조건문도 필요 <<유스케이스를 추가해야하나?
                 else if(currentMode.equals("ModeSelector")){
                     //모드셀렉터상태일때 start버튼을 누른다면
+                    //현재 모드를 선택하거나 선택해제
+                    selectMode();
                 }
             }
         });
@@ -834,15 +848,21 @@ public class SystemUI extends JFrame {
     }
 
     //현재모드 말고 다른 모드를 선택하고 싶을때 실행
-    //mode select화면으로 진입하는 메서드
+    //mode select화면으로 진입하는 메서드 모드버튼을 3초간 누르면 들어감
     public void reqModeSelect(){
         //현재 자바 자체저긍로 longClickListener가 없어서 고민
+        //모드셀럭터의 맨 처음화면은 TimeKeeping으로 해놓음
+        modeSelectorCurrentMode="TimeKeeping";
+        //showModeSelectorTimeKeeping(); <<아마도?
     }
 
     //mode select화면에서 모드 셀렉트를 종료하고 빠져나올때 쓰는 메서드
     //modeslect화면을 종료할때 modeselect에 바뀐 모드들을 적용하기 위해 modeselect에 현재 선택된 모드들을 보냄
-    public void endSelectMode(){
+    //다이어그램 수정필요 넘겨줘야하는 값이 늘어났음
+    private void endSelectMode(){
         modeSelector.setSettingModeList(selectedModes);
+        modeSelector.setCreateList(createModeList);
+        modeSelector.setDeleteList(deleteModeList);
     }
 
 
@@ -850,29 +870,33 @@ public class SystemUI extends JFrame {
     클래스 다이어그래에 없던 메서드들 추가
      */
 
-    //mode select 페이즈에서 원하는 모드를 선택한 경우 그 모드가 존재하는경우 넣고 존재하지 않으면 패스
-    private void addModetoList(String mode){
-        //리스트의 현재 사이즈만큼 반복을 하는데
-        for(int i=0;i<selectedModes.size();i++){
-            //현재 선택하려고 하는 모드가 리스트안에 존재 하지 않는다면 if문 수행
-            if(!selectedModes.get(i).equals(mode)){
-                //리스트 안에 존재하지 않는다면 선택한 모드에 현재 선택한 모드 추가
-                selectedModes.add(mode);
-            }
+    //모드셀럭터에서 현재 모드를 선택 또는 해제 한다면 작동하는 메서드
+    //이거 시퀀스다이어그램 수정필요
+    private void selectMode(){
+        //선택한 모드안에 현재 모드가 들어있다면
+        if(selectedModes.contains(modeSelectorCurrentMode)){
+            deleteModefromList();
+        }
+        //선택한 모드가 현재 모드 안에 없다면
+        else{
+            addModetoList();
         }
     }
 
-    //mode select 페이즈에서 모드를 선택해제 한경우 그 모드가 존재하는 경우 삭제하고 존재하지 않으면 break;
-    private void deleteModefromList(String mode){
-        //리스트의 현재 사이즈만큼 반복을 하는데
-        for(int i=0;i<selectedModes.size();i++){
-            //현재 선택하려고하는 모드가 리스트 안에 존재한다면 if문 수행
-            if(selectedModes.get(i).equals(mode)){
-                //리스트 안에 존재하는 선택해제한 모드를 제거함
-                selectedModes.remove(i);
-                break;
-            }
-        }
+    //mode select 페이즈에서 원하는 모드를 선택한 경우 그 모드를 추가
+    //수정필요 전달해야하는 리스트가 더 늘엇음
+    //선택한모드가 현재 모드 안에 없다면 새로 생성해야 하는것이므로 createModeList에 추가
+    private void addModetoList(){
+        selectedModes.add(modeSelectorCurrentMode);
+        createModeList.add(modeSelectorCurrentMode);
+    }
+
+    //mode select 페이즈에서 모드를 선택해제 한경우 그 모드를 삭제
+    //수정필요 전달해야 하는 리스트가 더 늘었음
+    //선택한 모드가 현재 모드안에 있다면 제거해야하는 것이므로 deleteModeList에 추가
+    private void deleteModefromList(){
+        selectedModes.remove(modeSelectorCurrentMode);
+        deleteModeList.add(modeSelectorCurrentMode);
     }
 
     //시퀀스에는 있는데 클래스다이어그램에는 없는건가?
@@ -909,20 +933,20 @@ public class SystemUI extends JFrame {
         //dayOfWeek=요일은 유저가 설정 불가능 << 알아서 계산해주는게 좋을듯
         if(cursorState==3){
             hour++;
-            if(hour>99){
-                hour=99;
+            if(hour>24){
+                hour=0;
             }
         }
         else if(cursorState==4){
             minute++;
             if(minute>59){
-                minute=59;
+                minute=0;
             }
         }
         else if(cursorState==5){
             second++;
             if(second>59){
-                second=59;
+                second=0;
             }
         }
     }
@@ -953,6 +977,12 @@ public class SystemUI extends JFrame {
                 second=0;
             }
         }
+    }
+
+    //모드셀렉터모드에서 다음 모드를 요청하기위한 메서드
+    private void reqModeSelectNextMode(){
+        //모드셀렉터단계에서 현재 모드를 보내면 다음모드를 가져와서 modeSelectorCurrentMode에 저장
+        modeSelectorCurrentMode=modeSelector.getDefaultNextMode(modeSelectorCurrentMode); // << 새로추가 시킨 메서드
     }
 
     //이거 있어야할것같은데 없음
