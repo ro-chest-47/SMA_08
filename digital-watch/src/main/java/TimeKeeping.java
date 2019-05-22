@@ -9,7 +9,11 @@ public class TimeKeeping {
 	private TimeKeeping(TimeDB timeDB) {
 		setTime(timeDB.getTime());
 	}
-	
+
+	private TimeKeeping() {
+
+	}
+
 	public static TimeKeeping getInstance() {
 		return LazyHolder.INSTANCE;
 	}
