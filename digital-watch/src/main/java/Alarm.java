@@ -16,15 +16,33 @@ public class Alarm  {
     private int currentHour=Integer.parseInt(currH);
     private int currentMinute=Integer.parseInt(currM);
 
+    //싱글턴위해 추가
+    private static Alarm instance;
+
     Alarm(){
         this.showAlarm();
         this.addAlarm();
         //this.nextAlarm();
     }
 
-    public static void main(String[] args) {
-        new Alarm();
+
+    //싱글턴위해 ㅜㅊ가
+    public static Alarm getInstance(){
+        if(instance==null){
+            instance=new Alarm();
+        }
+        return instance;
     }
+
+    //싱글턴위해 추가
+    public static void deleteInstance(){
+        instance=null;
+    }
+
+
+//    public static void main(String[] args) {
+//        new Alarm();
+//    }
 
     public void showAlarm() {
         System.out.println(alarmHour[i]+":"+alarmMinute[i]);
