@@ -459,7 +459,6 @@ public class Tide {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        tide=estide;
     }
 
     public void nextTide(){
