@@ -107,8 +107,17 @@ public class SystemUI extends JFrame implements Runnable{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 700, 500);
 
+        //각 객체 가져오기
+        timekeeping=TimeKeeping.getInstance();
+        timer=Timer.getInstance();
+        stopwatch=Stopwatch.getInstance();
+        alarm=Alarm.getInstance();
+        //timeDB초기화
+        timeDB=TimeDB.getInstance();
+
         lblFirst.setText("Timekeeping");
-        showTime();
+//        showTime();
+        t.start();
 
         modeSelector = new ModeSelector("TimeKeeping", "Timer", "Alarm", "Stopwatch"); //초기모드 설정
         //모드셀렉터를 위해 추가시킴
@@ -124,7 +133,9 @@ public class SystemUI extends JFrame implements Runnable{
                     //adjust 페이즈가 아닐경우 adjusttime으로 진행
                     if (!timekeepingAdjustState) {
                         //currnetMode가 timekeeping일경우 adjust버튼을 누른다면
+                        System.out.println("reqAdajusttime");
                         reqAdjustTime(); //으로 진행
+
                     }
                     //adjust페이즈 일경우 adjustbuttofn을 누르면 adjust페이즈를 종료
                     else {
