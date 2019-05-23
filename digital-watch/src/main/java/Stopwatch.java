@@ -3,19 +3,27 @@ public class Stopwatch extends Thread{
 	private static int minutes;
 	private static int seconds;
 	
-	private int runState =0;
+	private int runState=0;
 	private int zeroState=0;
 	
 	private static int times = 0;
 	
 	private Thread thread;
 	
-	public Stopwatch() {
-
+	private Stopwatch() {
+		
 	}
 	
-	public Stopwatch(String time) {
+	private Stopwatch(String time) {
 		setStopwatch(time);
+	}
+	
+	public static Stopwatch getInstance() {
+		return LazyHolder.INSTANCE;
+	}
+	
+	private static class LazyHolder{
+		private static final Stopwatch INSTANCE= new Stopwatch();
 	}
 	
 	public void startUpdateTime(Thread timeThread) {
@@ -31,7 +39,7 @@ public class Stopwatch extends Thread{
 	}
 	
 	public String getTime() {
-		String time= Integer.toString(hours)+" "+Integer.toString(minutes)+" "+Integer.toString(seconds)+" "+Integer.toString(times);
+		String time= Integer.toString(this.hours)+" "+Integer.toString(this.minutes)+" "+Integer.toString(this.seconds)+" "+Integer.toString(this.times);
 		
 		return time;
 	}
@@ -66,11 +74,6 @@ public class Stopwatch extends Thread{
 	
 	public void resetStopwatch() {
 		setStopwatch("0 0 0 0");
-		/*this.hours=0;
-		this.minutes=0;
-		this.seconds=0;
-		this.times=0;
-		*/
 		zeroState=1;
 	}
 	

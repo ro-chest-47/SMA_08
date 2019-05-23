@@ -1,25 +1,45 @@
+import java.util.HashMap;
 
 public class TimeDB extends Thread{
-	private int year;
-	private int month;
-	private int day;
-	private String dayOfWeek[];
-	private int hour;
-	private int minute;
-	private int second;
+	private static int year;
+	private static int month;
+	private static int day;
+	private static int hour;
+	private static int minute;
+	private static int second;
 	
 	private Thread thread;
 	
-//	private TRO timeThread;
-	
 	private int time =0;
+
+	private HashMap<Integer, Integer> monthMap = new HashMap<>();
 	
-	public TimeDB() {
+	private TimeDB() {
 		setTime("2010 01 01 00 00");
+        monthMap.put(1, 31);
+        monthMap.put(2, 28);
+        monthMap.put(3, 31);
+        monthMap.put(4, 30);
+        monthMap.put(5, 31);
+        monthMap.put(6, 30);
+        monthMap.put(7, 31);
+        monthMap.put(8, 31);
+        monthMap.put(9, 30);
+        monthMap.put(10, 31);
+        monthMap.put(11, 30);
+        monthMap.put(12, 31);
 	}
 	
-	public TimeDB(String time) {
+	private TimeDB(String time) {
 		setTime(time);
+	}
+	
+	public static TimeDB getInstance() {
+		return LazyHolder.INSTANCE;
+	}
+	
+	private static class LazyHolder{
+		private static final TimeDB INSTANCE= new TimeDB();
 	}
 	
 	public void setTime(String time) {
@@ -32,6 +52,23 @@ public class TimeDB extends Thread{
 		this.hour=Integer.parseInt(times[3]);
 		this.minute=Integer.parseInt(times[4]);
 		this.second=0;
+		
+		setMonthMap(this.year);
+		
+	}
+	
+	public void setMonthMap(int year) {
+		//그레고리력 규칙 참고
+		if(year%4==0) {
+			if(year%100!=0)
+				monthMap.put(2, 29);
+			else {
+				if(year%400==0)
+					monthMap.put(2, 29);
+				else monthMap.put(2, 28);
+			}
+		}
+		else monthMap.put(2, 28);
 	}
 	
 	public String getTime() {
@@ -59,7 +96,19 @@ public class TimeDB extends Thread{
 			this.hour=0;
 			this.day++;
 		}
-		//
+		if(this.day>monthMap.get(this.month)) {
+			this.day=1;
+			this.month++;
+		}
+		if(this.month>12) {
+			this.month=1;
+			this.year++;
+			setMonthMap(this.year);
+		}
+		if(this.year>2100) {
+			this.year=2100;
+			thread.interrupt();
+		}
 		
 	}
 	
