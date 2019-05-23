@@ -3,8 +3,8 @@ import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
 public class Moonphase {
-    private String stdtime="2010 01 01 00 00 0"; //기준시간
-    private String currtime="2019 05 22 00 00 0"; //현재시간
+    private String stdtime="2010 01 01 00 00 00"; //기준시간
+    private String currtime="2019 05 22 00 00 00"; //현재시간
     private int moon; //달 분류번호
     private int[][] moongraphic0={
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},

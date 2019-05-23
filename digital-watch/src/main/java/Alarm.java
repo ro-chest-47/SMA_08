@@ -1,43 +1,48 @@
 /*
 싱글톤
  */
-/*
-public class Alarm  {
-    public int alarmHour[]={0,0,0,0};
-    public int alarmMinute[]={0,0,0,0};
-    public int alarmSecond[]={0,0,0,0};
-    public int i = 0;
-    public int buzzerState;
+import java.util.*;
 
-    /*public Alarm() {
-        alarmHour = 0;
-        alarmMinute = 0;
-        alarmSecond = 0;
+public class Alarm  {
+    private int alarmHour[]={0,0,0,0};
+    private int alarmMinute[]={0,0,0,0};
+    private int buzzerState;
+    private int alarmH;
+    private int alarmM;
+    private int i=0;
+    private String currtime="2019 05 24 00 00 00";
+    private String currH = currtime.substring(11,13);
+    private String currM = currtime.substring(14,16);
+    private int currentHour=Integer.parseInt(currH);
+    private int currentMinute=Integer.parseInt(currM);
+
+    Alarm(){
+        this.showAlarm();
+        this.addAlarm();
+        //this.nextAlarm();
     }
 
-    public Alarm(int alarmH, int alarmM, int alarmS) {
-        addAlarm(alarmH,alarmM,alarmS);
+    public static void main(String[] args) {
+        new Alarm();
     }
 
     public void showAlarm() {
-
+        System.out.println(alarmHour[i]+":"+alarmMinute[i]);
     }
 
-    public void addAlarm(int alarmH,int alarmM,int alarmS) {
-        if ((alarmH >= 0) && (alarmH <= 24))
+    public void addAlarm() {
+        if ((alarmH >= 0) && (alarmH <= 24)) {
             alarmHour[i] = alarmH;
-        else
+        }
+        else {
             System.out.println("Error Alarm Time");
-
-        if ((alarmM >= 0) && (alarmM <= 59))
+        }
+        if ((alarmM >= 0) && (alarmM <= 59)) {
             alarmMinute[i] = alarmM;
-        else
+        }
+        else {
             System.out.println("Error Alarm Time");
-
-        if ((alarmS >= 0) && (alarmS <= 59))
-            alarmSecond[i] = alarmS;
-        else
-            System.out.println("Error Alarm Time");
+        }
         i++;
     }
 
@@ -50,11 +55,10 @@ public class Alarm  {
     }
 
     public void buzzAlarm() {
-        if (alarmHour == hour && alarmMinute == minute && alarmSecond == second) {
-            buzzerState=1;
-        }
-        while (buzzerState==1){
-            System.out.println("buzz");
+        for(int j=0;j<4;j++){
+            if (alarmHour[j] == currentHour && alarmMinute[j] == currentMinute) {
+                buzzerState = 1;
+            }
         }
     }
 
@@ -62,4 +66,3 @@ public class Alarm  {
 
     }
 }
-*/
