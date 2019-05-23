@@ -54,22 +54,36 @@ public class ModeSelector {
         deleteMode.setDeleteList(deleteList);
     }
 
-    //getSettingModeList로 바꾸고 arrayList로  수정
-//    public String[] getModeList(){
-//        return this.settingModeList;
-//    }
-    public ArrayList<String> getSettingModeList(){
+    //ArrayList로 수정함
+    //근데 시스템쪽에서 현재설정된 모드를 계속 유지하는상태<< selectedModeList라는 이름으로
+    //이게 굳이 필요한지 잘 모르겠음 << 일단 왔다갔다 하는게 그럴듯하긴함
+    public ArrayList<String> getModeList(){
         return this.settingModeList;
     }
 
-    public String getNextMode() {
-        return null;
+    public String getNextMode(String currentMode) {
+        //설정된 모드리스트 안에서 현재선택한모드의 위치를 찾음
+        int index=settingModeList.indexOf(currentMode);
+        //인덱스의 위치에 +1을 더하고
+        index++;
+
+        //근데 만약 인덱스가 3보다 커져버리면 0으로 옮기기
+        //0 -> 1 -> 2 -> 3 -> 0 으로 되게
+        if(index>3){
+            index=0;
+        }
+
+        //그리고 인덱스 위치의 현재 모드정보를 가져와
+        //String으로 리턴시켜줌
+        return settingModeList.get(index);
     }
 
     /*
     임시로
     클래스다이어그램에 없는 새로 추가된 메서드들
      */
+
+
 
     //System에서 현재 모드를 주면 모드셀렉터에서는 다음모드를 돌려줌 6개 전부다 실행
     public String getDefaultNextMode(String currentMode){
