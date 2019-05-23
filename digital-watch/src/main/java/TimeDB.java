@@ -7,16 +7,15 @@ public class TimeDB extends Thread{
 	private static int hour;
 	private static int minute;
 	private static int second;
-	
+
 	private Thread thread;
-	
+
 	private int time =0;
 
 	private HashMap<Integer, Integer> monthMap = new HashMap<>();
-	
+
 	private TimeDB() {
-		setTime("2010 01 01 00 00");
-        monthMap.put(1, 31);
+        /*monthMap.put(1, 31);
         monthMap.put(2, 28);
         monthMap.put(3, 31);
         monthMap.put(4, 30);
@@ -27,38 +26,39 @@ public class TimeDB extends Thread{
         monthMap.put(9, 30);
         monthMap.put(10, 31);
         monthMap.put(11, 30);
-        monthMap.put(12, 31);
+        monthMap.put(12, 31);*/
+		setTime("2010 1 1 0 0");
 	}
-	
+
 	private TimeDB(String time) {
 		setTime(time);
 	}
-	
+
 	public static TimeDB getInstance() {
 		return LazyHolder.INSTANCE;
 	}
-	
+
 	private static class LazyHolder{
 		private static final TimeDB INSTANCE= new TimeDB();
 	}
-	
+
 	public void setTime(String time) {
 
 		String[] times = time.split("\\s");
-		
+
 		this.year=Integer.parseInt(times[0]);
 		this.month=Integer.parseInt(times[1]);
 		this.day=Integer.parseInt(times[2]);
 		this.hour=Integer.parseInt(times[3]);
 		this.minute=Integer.parseInt(times[4]);
 		this.second=0;
-		
+
 		setMonthMap(this.year);
-		
+
 	}
-	
+
 	public void setMonthMap(int year) {
-		//±×·¹°í¸®·Â ±ÔÄ¢ Âü°í
+		//ê·¸ë ˆê³ ë¦¬ë ¥ ê·œì¹™ ì°¸ê³ 
 		if(year%4==0) {
 			if(year%100!=0)
 				monthMap.put(2, 29);
@@ -69,15 +69,27 @@ public class TimeDB extends Thread{
 			}
 		}
 		else monthMap.put(2, 28);
+		monthMap.put(1, 31);
+
+		monthMap.put(3, 31);
+		monthMap.put(4, 30);
+		monthMap.put(5, 31);
+		monthMap.put(6, 30);
+		monthMap.put(7, 31);
+		monthMap.put(8, 31);
+		monthMap.put(9, 30);
+		monthMap.put(10, 31);
+		monthMap.put(11, 30);
+		monthMap.put(12, 31);
 	}
-	
+
 	public String getTime() {
 		String time= Integer.toString(year)+" "+Integer.toString(month)+" "+Integer.toString(day)+" "+Integer.toString(hour)+" "+Integer.toString(minute)+" "+Integer.toString(second);
-		
+
 		return time;
 	}
-	
-//	@Override
+
+	//	@Override
 	public void updateTime() {
 		this.time++;
 		if(this.time==100) {
@@ -96,31 +108,32 @@ public class TimeDB extends Thread{
 			this.hour=0;
 			this.day++;
 		}
-		if(this.day>monthMap.get(this.month)) {
-			this.day=1;
+
+		if(this.day > monthMap.get(this.month)) {
+			this.day= 1;
 			this.month++;
 		}
-		if(this.month>12) {
+		if(this.month > 12) {
 			this.month=1;
 			this.year++;
 			setMonthMap(this.year);
 		}
-		if(this.year>2100) {
-			this.year=2100;
+		if(this.year > 2100) {
+			this.year= 2100;
 			thread.interrupt();
 		}
-		
+
 	}
-	
+
 	public void startUpdateTime() {
 		thread = new TimeDB(this.getTime());
 		thread.start();
 	}
-	
+
 	public void pauseTimeDB() {
 		thread.interrupt();
 	}
-	
+
 	public void run() {
 		while(true) {
 			try {
@@ -130,8 +143,8 @@ public class TimeDB extends Thread{
 				Thread.sleep(10);
 			}catch (InterruptedException e) {break;}
 		}
-		
+
 	}
-	
-	
+
+
 }
