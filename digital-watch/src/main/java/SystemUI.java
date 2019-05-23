@@ -110,7 +110,7 @@ public class SystemUI extends JFrame {
                         //currnetMode가 timekeeping일경우 adjust버튼을 누른다면
                         reqAdjustTime(); //으로 진행
                     }
-                    //adjust페이즈 일경우 adjustbutton을 누르면 adjust페이즈를 종료
+                    //adjust페이즈 일경우 adjustbuttofn을 누르면 adjust페이즈를 종료
                     else{
                         endAdjustTime();
                     }
@@ -166,7 +166,7 @@ public class SystemUI extends JFrame {
                     }
                     //timekeeping모드이고 adjusttime이 아닐때 mode버튼 누르면 다음 모드로 감
                     else{
-                        //(대충 다음 모드로 간다는 코드)
+                        reqNextMode();
                     }
                 }
                 else if(currentMode.equals("Timer")){
@@ -177,7 +177,7 @@ public class SystemUI extends JFrame {
                     }
                     //timer모드이고 settimer모드가 아닐때 mode버튼을 누르면 다음모드로 감
                     else{
-                        //(대충 다음 모드로 간다는 코드)
+                        reqNextMode();
                     }
                 }
                 else if(currentMode.equals("Alarm")){
@@ -193,7 +193,7 @@ public class SystemUI extends JFrame {
                     }
                     //alarm모드이고 alarm설정상태가 아닐때 mode버튼을 누르면 다음 모드로
                     else if(!alaramAdjustState && !buzzByAlarm) {
-                        //(대충 다음 모드로 간다는 코드)
+                        reqNextMode();
                     }
                 }
                 else if(currentMode.equals("Stopwatch")){
@@ -203,16 +203,16 @@ public class SystemUI extends JFrame {
                     }
                     //stopwatch모드이고 adjust중이 아닐고 작동중이 아닐때 모드버튼을 누르면 다음 모드로 감
                     else if(!stopwatchAdjustState && stopwatchRunState==0){
-                        //(대충 다음 모드로 간다는 코드)
+                        reqNextMode();
                     }
                 }
                 else if(currentMode.equals("Tide")){
                     //tide모드일때 mode버튼을 누르면 다음 mode로 넘어감
-                    //(대충 다음 모드로 간다는 코드)
+                    reqNextMode();
                 }
                 else if(currentMode.equals("Moonphsae")){
                     //moonphase모드일때 mode버튼을 누르면 다음 mode로 넘어감
-                    //(대충 다음 모드로 간다는 코드)
+                    reqNextMode();
                 }
                 //모드 셀렉터상태일때에 관한 조건문도 필요 <<유스케이스를 추가해야하나?
                 else if(currentMode.equals("ModeSelector")){
@@ -912,8 +912,6 @@ public class SystemUI extends JFrame {
         if(timerZeroState==0 && timerRunState==0 ){
             //timer.pauseTimer();
         }
-
-
     }
 
     //increaseTimer 이름을 increaseTimerTime으로 바꿈
@@ -1000,5 +998,14 @@ public class SystemUI extends JFrame {
 //                }
 //            }
 //        }
+    }
+
+    //이거 next mode시퀀스 다이어그램에는 존재
+    //어떤 모드에서던지 adjust단계가 아닐경우 다음모드가 무엇인지를 알아와서 다음 모드로 바꿔줌
+    private void reqNextMode(){
+        //모드셀렉터에서 현재선택된 모드들을 가져옴
+        selectedModes=modeSelector.getModeList();
+        //그리고 다음모드가 무엇인지 얻어옴
+        currentMode=modeSelector.getNextMode(currentMode);
     }
 }
