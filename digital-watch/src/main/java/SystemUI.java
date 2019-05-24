@@ -118,6 +118,7 @@ public class SystemUI extends JFrame implements Runnable{
         timeDB.startUpdateTime();
 
         lblFirst.setText("Timekeeping");
+        lblSecond.setText("");
         t.start();
 
         modeSelector = new ModeSelector("TimeKeeping", "Timer", "Alarm", "Stopwatch"); //초기모드 설정
@@ -386,15 +387,9 @@ public class SystemUI extends JFrame implements Runnable{
 
     //timeDB로부터 가져온 시간을 1초마다 업데이트해줌
     private void showTime() {
-        //timeDB.getThread() << 이렇게 쓰는게 맞나?
-
-        //showTime이 gui에 어떤식으로 적용되나 슈도코드
-        //textViewYear.setText(year);
-        //textViewMonth.setText(month);
-        //textViewDay.setText(day);
-        //textViewHour.setText(hour);
-        //textViewMinute.s etText(minute);
-        //textViewSecond.setText(second);
+        lblSecond.setVisible(false);
+        lblThird.setVisible(true);
+        lblFourth.setVisible(true);
     }
 
     //현재 커서 위치에 있는 값을 증가시킴
@@ -464,7 +459,9 @@ public class SystemUI extends JFrame implements Runnable{
         //textViewHour.setText(hour);
         //textViewMinute.setTexT(minute);
         //textViewSecond.setTexT(second);
-
+        lblSecond.setVisible(false);
+        lblThird.setVisible(false);
+        lblFourth.setVisible(false);
     }
 
     //전제조건도 다 맞춤
@@ -641,6 +638,9 @@ public class SystemUI extends JFrame implements Runnable{
         //어....알람에 loop를 하기로 안했던것같은데 << 기억이 나지 않음
         //textViewHour.setText(hour);
         //textViewminute.setTExt(minute);
+        lblSecond.setVisible(true);
+        lblThird.setVisible(true);
+        lblFourth.setVisible(true);
     }
 
     //add Alarm시퀀스에서 사용되는건데 현재 코드상에서 딱히 들어갈곳이 없어보임
@@ -744,6 +744,9 @@ public class SystemUI extends JFrame implements Runnable{
         //textViewTopRecrod.setText(hour);
         //textViewTopRecord.setTExt(minute);
         //textViewTopRecored.setText(second);
+        lblSecond.setVisible(false);
+        lblThird.setVisible(false);
+        lblFourth.setVisible(false);
     }
 
     //스탑워치를 시작하자
@@ -837,6 +840,9 @@ public class SystemUI extends JFrame implements Runnable{
     }
 
     public void showMoonphase() {
+        lblSecond.setVisible(false);
+        lblThird.setVisible(false);
+        lblFourth.setVisible(false);
         //ui가 어떻게 만들어질지 모르니 일단 슈도코드로 작성
         //currentMoon에 표시해야할 타이드를 2차원배열로 저장
         //일단 10x10배열이라 가정, 배열안에 1이 들어간경우 검은색을 칠하고 그게 아닌경우 하얀색을 칠함
@@ -1076,6 +1082,9 @@ public class SystemUI extends JFrame implements Runnable{
 
     //이거 있어야할것같은데 없음
     private void showTide() {
+        lblSecond.setVisible(false);
+        lblThird.setVisible(true);
+        lblFourth.setVisible(false);
         //ui가 어떻게 만들어질지 모르니 일단 슈도코드로 작성
         //currentTide에 표시해야할 타이드를 2차원배열로 저장
         //일단 10x10배열이라 가정, 배열안에 1이 들어간경우 검은색을 칠하고 그게 아닌경우 하얀색을 칠함
@@ -1101,7 +1110,7 @@ public class SystemUI extends JFrame implements Runnable{
         lblFirst.setText(currentMode);
 
         if(currentMode.equals("TimeKeeping")) {
-            lblSecond.setVisible(true);
+            lblSecond.setVisible(false);
             lblThird.setVisible(true);
             lblFourth.setVisible(true);
         }
@@ -1143,18 +1152,12 @@ public class SystemUI extends JFrame implements Runnable{
         while(true) {
 
             if(currentMode.equals("TimeKeeping")) {
-                Calendar cal = Calendar.getInstance(); //현재시간정보가 캘린더 클래스로 전달됨.
-                String str = String.format("%02d:%02d:%02d",
-                        cal.get(Calendar.HOUR_OF_DAY),
-                        cal.get(Calendar.MINUTE),
-                        cal.get(Calendar.SECOND));
-                String yr = String.format("%04d", cal.get(Calendar.YEAR));
-                String mon = String.format("%02d", cal.get(Calendar.MONTH));
 
                 tm=timeDB.getTime(); //이렇게 해야되는데 안불러와짐
-                lblTime.setText(tm);
-                lblThird.setText(yr);
-                lblFourth.setText(mon);
+                String[]str=tm.split(" ");
+                lblTime.setText(str[3]+":"+str[4]+":"+str[5]);
+                lblThird.setText(str[0]);
+                lblFourth.setText(str[1]+"/"+str[2]);
             }
             else if(currentMode.equals("Timer")) {
                 tm=timer.getTime();
