@@ -115,7 +115,7 @@ public class SystemUI extends JFrame implements Runnable{
 //        alarm=Alarm.getInstance();
         //timeDB초기화
         timeDB=TimeDB.getInstance();
-        timeDB.start();
+        timeDB.startUpdateTime();
 
         lblFirst.setText("Timekeeping");
         t.start();
