@@ -536,10 +536,10 @@ public class SystemUI extends JFrame implements Runnable{
         //	public TimeDB() {  <<참고용
         //		setTime("2010 01 01 00 00");
         //	}
-        String setTimeString = year + " " + month + " " + day + " " + hour + " " + minute;
+        String setTimeString = hour+" "+minute+" "+second;
 
         //timeDB에 현재 시간정보를 넘겨줌
-        timeDB.setTime(setTimeString);
+        timer.setTimer(setTimeString);
 
         //마지막으로 timer adjust를 끝냈으니 adjust단계가 종료되었다는 의미
         this.timerAdjustState = false;
