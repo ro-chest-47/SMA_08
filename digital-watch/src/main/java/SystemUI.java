@@ -115,7 +115,6 @@ public class SystemUI extends JFrame implements Runnable{
 //        alarm=Alarm.getInstance();
         //timeDB초기화
         timeDB=TimeDB.getInstance();
-        timeDB.startUpdateTime();
 
         lblFirst.setText("Timekeeping");
         t.start();
@@ -255,7 +254,6 @@ public class SystemUI extends JFrame implements Runnable{
             public void actionPerformed(ActionEvent e) {
                 if (currentMode.equals("TimeKeeping")) {
                     //뭔가 들어갈게 있겠지
-                    reqModeSelect();
                 } else if (currentMode.equals("Timer")) {
 
                     //일단보류
@@ -693,7 +691,7 @@ public class SystemUI extends JFrame implements Runnable{
     //알람 수정을 끝낼때 동작되는 메서드
     private void endAddAlarm() {
         //알람에 현재 수정한 알람을 집어넣음
-        //Alarm.addAlarm(hour, minute); <<알람에 전달해주는 인자는 임의로 선택한것
+        //alarm.addAlarm(hour, minute); <<알람에 전달해주는 인자는 임의로 선택한것
 
         this.alaramAdjustState = false;
         alarmCanAddState = false;
@@ -763,22 +761,24 @@ public class SystemUI extends JFrame implements Runnable{
 
     //현재 스탑워치의 시간을 stopwatch로 보내서 저장하게 해주는 기능
     private void reqRecordStopwatch() {
+        lblSecond.setText(stopwatch.getTime());
+        lblSecond.setVisible(true);
 //        stopwatchRunState = stopwatch.getRunState();
 
-        //스탑워치가 동작중일경우 조건문 실행
-        if (stopwatchRunState == 1) {
-            String tmp = stopwatch.recordStopwatch();
-            String[] tmpArray = tmp.split(" ");
-
-            //받아오는 타입 return currentTime << currentTime을 받아옴
-            //String time= Integer.toString(this.hours)+" "+Integer.toString(this.minutes)+" "+Integer.toString(this.seconds)+" "+Integer.toString(this.times);
-
-            hour = Integer.parseInt(tmpArray[0]);
-            minute = Integer.parseInt(tmpArray[1]);
-            second = Integer.parseInt(tmpArray[2]);
-            //times는 어떤건지 잘 몰라서 일단 가져오긴 하는데 지역변수로만 남겨둠
-            int times = Integer.parseInt(tmpArray[3]);
-        }
+//        //스탑워치가 동작중일경우 조건문 실행
+//        if (stopwatchRunState == 1) {
+//            String tmp = stopwatch.recordStopwatch();
+//            String[] tmpArray = tmp.split(" ");
+//
+//            //받아오는 타입 return currentTime << currentTime을 받아옴
+//            //String time= Integer.toString(this.hours)+" "+Integer.toString(this.minutes)+" "+Integer.toString(this.seconds)+" "+Integer.toString(this.times);
+//
+//            hour = Integer.parseInt(tmpArray[0]);
+//            minute = Integer.parseInt(tmpArray[1]);
+//            second = Integer.parseInt(tmpArray[2]);
+//            //times는 어떤건지 잘 몰라서 일단 가져오긴 하는데 지역변수로만 남겨둠
+//            int times = Integer.parseInt(tmpArray[3]);
+//        }
 
         //시간을 기록했으니 기록한시간을 표시해주자
         showStopwatch();
@@ -852,14 +852,9 @@ public class SystemUI extends JFrame implements Runnable{
     //현재모드 말고 다른 모드를 선택하고 싶을때 실행
     //mode select화면으로 진입하는 메서드 모드버튼을 3초간 누르면 들어감
     public void reqModeSelect() {
-           //현재 자바 자체저긍로 longClickListener가 없어서 고민
+        //현재 자바 자체저긍로 longClickListener가 없어서 고민
         //모드셀럭터의 맨 처음화면은 TimeKeeping으로 해놓음
-        currentMode="ModeSelector";
         modeSelectorCurrentMode = "TimeKeeping";
-        lblFirst.setText("TimeKeeping");
-        lblFourth.setVisible(false);
-        lblThird.setText("check");
-        lblTime.setText("TimeKeeping");
         //showModeSelectorTimeKeeping(); <<아마도?
     }
 
@@ -870,7 +865,6 @@ public class SystemUI extends JFrame implements Runnable{
         modeSelector.setSettingModeList(selectedModes);
         modeSelector.setCreateList(createModeList);
         modeSelector.setDeleteList(deleteModeList);
-        currentMode="TimeKeeping";
     }
 
 
@@ -887,16 +881,7 @@ public class SystemUI extends JFrame implements Runnable{
         }
         //선택한 모드가 현재 모드 안에 없다면
         else {
-                  //선택된 모드리스트가 4보다 크려고 한다면 에러
-            if(selectedModes.size()>=4){
-                lblTime.setText("Error choose under 4");
-            }
-            //선택한모드가 현재 모드안에 없고 현재 선택된 모드가 3개일경우
-            else{
-                addModetoList();
-                lblFourth.setText("check");
-            }
-
+            addModetoList();
         }
     }
 
@@ -904,54 +889,16 @@ public class SystemUI extends JFrame implements Runnable{
     //수정필요 전달해야하는 리스트가 더 늘엇음
     //선택한모드가 현재 모드 안에 없다면 새로 생성해야 하는것이므로 createModeList에 추가
     private void addModetoList() {
-       
         selectedModes.add(modeSelectorCurrentMode);
-        System.out.print("selectedModeList : ");
-        for(int i=0;i<selectedModes.size();i++){
-            System.out.print(selectedModes.get(i)+" ");
-        }
-        System.out.println();
-
-        System.out.print("createModeList : ");
         createModeList.add(modeSelectorCurrentMode);
-        for(int i=0;i<createModeList.size();i++){
-            System.out.print(createModeList.get(i)+" ");
-        }
-        System.out.println();
-
-        deleteModeList.remove(modeSelectorCurrentMode);
-        System.out.print("deletModeList : ");
-        for(int i=0;i<deleteModeList.size();i++){
-            System.out.print(deleteModeList.get(i)+" ");
-        }
-        System.out.println();
     }
 
     //mode select 페이즈에서 모드를 선택해제 한경우 그 모드를 삭제
     //수정필요 전달해야 하는 리스트가 더 늘었음
     //선택한 모드가 현재 모드안에 있다면 제거해야하는 것이므로 deleteModeList에 추가
     private void deleteModefromList() {
-       
-        System.out.print("selectedModeList : ");
         selectedModes.remove(modeSelectorCurrentMode);
-        for(int i=0;i<selectedModes.size();i++){
-            System.out.print(selectedModes.get(i)+" ");
-        }
-        System.out.println();
-
-        System.out.print("deleteModeLIst : ");
         deleteModeList.add(modeSelectorCurrentMode);
-        for(int i=0;i<deleteModeList.size();i++){
-            System.out.print(deleteModeList.get(i)+" ");
-        }
-        System.out.println();
-
-        System.out.print("CreateModeLIst : ");
-        createModeList.remove(modeSelectorCurrentMode);
-        for(int i=0;i<createModeList.size();i++){
-            System.out.print(createModeList.get(i)+" ");
-        }
-        System.out.println();
     }
 
     //시퀀스에는 있는데 클래스다이어그램에는 없는건가?
@@ -1033,42 +980,6 @@ public class SystemUI extends JFrame implements Runnable{
     private void reqModeSelectNextMode() {
         //모드셀렉터단계에서 현재 모드를 보내면 다음모드를 가져와서 modeSelectorCurrentMode에 저장
         modeSelectorCurrentMode = modeSelector.getDefaultNextMode(modeSelectorCurrentMode); // << 새로추가 시킨 메서드
-        
-        lblFirst.setText(modeSelectorCurrentMode);
-        lblSecond.setVisible(false);
-        lblFourth.setVisible(true);
-
-        if (selectedModes.contains(modeSelectorCurrentMode)) {
-            lblFourth.setText("check");
-        }
-        //선택한 모드가 현재 모드 안에 없다면
-        else {
-            lblFourth.setText("uncheck");
-        }
-        lblThird.setVisible(false);
-
-        switch(modeSelectorCurrentMode){
-            case "TimeKeeping":
-                lblTime.setText("TimeKeeping");
-                break;
-            case "Timer":
-                lblTime.setText("Time");
-                break;
-            case "Alarm":
-                lblTime.setText("Alarm");
-                break;
-            case "Stopwatch":
-            lblTime.setText("Stopwatch");
-                break;
-            case "Tide":
-               lblTime.setText("Tide");
-                break;
-            case "Moonphase":
-             lblTime.setText("Moonphase");
-                break;
-            default:
-                break;
-        }
     }
 
     //이거 있어야할것같은데 없음
