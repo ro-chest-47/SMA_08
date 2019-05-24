@@ -83,6 +83,7 @@ public class SystemUI extends JFrame implements Runnable{
     private int second;
     private int cursorState; //현재 커서가 어디 위치인지 나타내주는 커서스테이트
     private HashMap<Integer, Integer> monthMap = new HashMap<>(); //각 월에 맞는 day를 매핑시켜준 hashmap << 근데 윤달을 계산하면 달라질수도있음 timekeeping에 들어가야하는게 아닌가 싶긴한데....
+    private int modeFlag=0; //어떤 모드에서든지 4번 누르면 모드셀렉터화면으로 가게 하기 위한 flag임
 
     public static void main(String[] args) {
         SystemUI systemUI = new SystemUI();
@@ -194,6 +195,8 @@ public class SystemUI extends JFrame implements Runnable{
                     }
                     //timekeeping모드이고 adjusttime이 아닐때 mode버튼 누르면 다음 모드로 감
                     else {
+                        //다음모드로 갈때 modeFlog=0으로 초기화
+                        modeFlag=0;
                         reqNextMode();
                     }
                 } else if (currentMode.equals("Timer")) {
@@ -204,6 +207,8 @@ public class SystemUI extends JFrame implements Runnable{
                     }
                     //timer모드이고 settimer모드가 아닐때 mode버튼을 누르면 다음모드로 감
                     else {
+                        //다음모드로 갈때 modeFlog=0으로 초기화
+                        modeFlag=0;
                         reqNextMode();
                     }
                 } else if (currentMode.equals("Alarm")) {
@@ -219,14 +224,22 @@ public class SystemUI extends JFrame implements Runnable{
                     }
                     //alarm모드이고 alarm설정상태가 아닐때 mode버튼을 누르면 다음 모드로
                     else if (!alaramAdjustState && !buzzByAlarm) {
+                        //다음모드로 갈때 modeFlog=0으로 초기화
+                        modeFlag=0;
                         reqNextMode();
                     }
                 } else if (currentMode.equals("Stopwatch")) {
+                    //다음모드로 갈때 modeFlog=0으로 초기화
+                    modeFlag=0;
                     reqNextMode();
                 } else if (currentMode.equals("Tide")) {
+                    //다음모드로 갈때 modeFlog=0으로 초기화
+                    modeFlag=0;
                     //tide모드일때 mode버튼을 누르면 다음 mode로 넘어감
                     reqNextMode();
                 } else if (currentMode.equals("Moonphase")) {
+                    //다음모드로 갈때 modeFlog=0으로 초기화
+                    modeFlag=0;
                     //moonphase모드일때 mode버튼을 누르면 다음 mode로 넘어감
                     reqNextMode();
                 }
@@ -257,11 +270,21 @@ public class SystemUI extends JFrame implements Runnable{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (currentMode.equals("TimeKeeping")) {
-                    //뭔가 들어갈게 있겠지
-                    reqModeSelect();
+//                    reqModeSelect();
+                    //timeKeeing모드에서 reset버튼을 4번누를경우 Modeselect화면으로 전환
+                    modeFlag++;
+                    if(modeFlag==4){
+                        reqModeSelect();
+                        modeFlag=0;
+                    }
 
                 } else if (currentMode.equals("Timer")) {
-
+                    //Timer모드에서 reset버튼을 4번누를경우 Modeselect화면으로 전환
+                    modeFlag++;
+                    if(modeFlag==4){
+                        reqModeSelect();
+                        modeFlag=0;
+                    }
                     //일단보류
 
                     //Timer모드이긴한데 현재 타이머가 돌아가는중일경우 reset버튼을 누르면 일단 타이머를 멈춤
@@ -287,6 +310,13 @@ public class SystemUI extends JFrame implements Runnable{
                         reqPauseTimer();
                     }
                 } else if (currentMode.equals("Alarm")) {
+                    //Alarm모드에서 reset버튼을 4번누를경우 Modeselect화면으로 전환
+                    modeFlag++;
+                    if(modeFlag==4){
+                        reqModeSelect();
+                        modeFlag=0;
+                    }
+
                     //알람모드에서 알람이 울리고 있는 경우 stopAlarm이 가능
                     //알람모드의 어떤 상태이던지 간에 stopAlarm이 먼저임
                     //즉 알람을 설정하는 상태여도 알람이 울리면 어떤 버튼을 누르던지 알람을 끔
@@ -305,11 +335,30 @@ public class SystemUI extends JFrame implements Runnable{
                         //(대충 알람을 시간을 0으로 초기화한다는 내용)
                     }
                 } else if (currentMode.equals("Stopwatch")) {
+                    //stopwatch모드에서 reset버튼을 4번누를경우 Modeselect화면으로 전환
+                    modeFlag++;
+                    if(modeFlag==4){
+                        reqModeSelect();
+                        modeFlag=0;
+                    }
                     reqResetStopwatch();
                 }
-                /*
-                moonphase와 tide는 딱히 reset버튼에서 할게없음
-                 */
+                else if(currentMode.equals("Tide")){
+                    //tide모드에서 reset버튼을 4번누를경우 Modeselect화면으로 전환
+                    modeFlag++;
+                    if(modeFlag==4){
+                        reqModeSelect();
+                        modeFlag=0;
+                    }
+                }
+                else if(currentMode.equals("Moonphase")){
+                    //mmonphase모드에서 reset버튼을 4번누를경우 Modeselect화면으로 전환
+                    modeFlag++;
+                    if(modeFlag==4){
+                        reqModeSelect();
+                        modeFlag=0;
+                    }
+                }
 
                 //모드 셀렉터상태일때에 관한 조건문도 필요 <<유스케이스를 추가해야하나?
                 else if (currentMode.equals("ModeSelector")) {
@@ -705,13 +754,19 @@ public class SystemUI extends JFrame implements Runnable{
         //현재 알람리스트에 설정된 알람들을 불러옴
         //alarmList=alarm.getAlarmList();
 
-        if (alarmList.length == 0) {
-            //알람리스트에 아무것도 없다면 에러를 출력
-        }
-        //알람리스트에 아무것도 없는게 아닌 뭐라도 있다면
-        else {
-            //현재 있는 알람을 제거하라고 시킴
-            //alarm.deleteAlarm()   ;
+        //알람에 아무것도 설정되어있지 않은경우 nullpointexception임
+        try {
+
+            if (alarmList.length == 0) {
+                //알람리스트에 아무것도 없다면 에러를 출력
+            }
+            //알람리스트에 아무것도 없는게 아닌 뭐라도 있다면
+            else {
+                //현재 있는 알람을 제거하라고 시킴
+                //alarm.deleteAlarm()   ;
+            }
+        } catch (NullPointerException e){
+            lblTime.setText("No Set Alarm");
         }
 
         //일단 자연스럽게 맨 마지막에 showAlarm을 삽입<< 여기도 필요없을것같긴한데?

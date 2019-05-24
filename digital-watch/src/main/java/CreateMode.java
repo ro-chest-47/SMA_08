@@ -37,7 +37,7 @@ public class CreateMode {
                     Tide.getInstance();
                     break;
                 case "Moonphase":
-                    //Moonphase.getInstance();
+                    Moonphase.getInstance();
                     break;
                     default:
                         break;
