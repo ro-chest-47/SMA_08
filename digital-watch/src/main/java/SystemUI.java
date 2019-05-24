@@ -169,9 +169,9 @@ public class SystemUI extends JFrame implements Runnable{
                     }
                 } else if (currentMode.equals("Stopwatch")) {
                     //stopwatch가 동작중이고 현재 조정가능한 상태가 아닐때 adjust버튼을 누르면 레코드 가능
-                    if (stopwatchRunState == 1) {
+                    //if (stopwatchRunState == 1) {
                         reqRecordStopwatch();
-                    }
+                    //}
                 }
                 //모드 셀렉터상태일때에 관한 조건문도 필요 <<유스케이스를 추가해야하나?
                 else if (currentMode.equals("ModeSelector")) {
