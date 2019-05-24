@@ -38,9 +38,9 @@ public class SystemUI extends JFrame implements Runnable{
     private JPanel card1;
     private JPanel card2;
     private JPanel card3;
-    private JLabel lblTide;
     private JLabel lblMoon;
     private JPanel card;
+    private JLabel lblTide;
 
 
     private ModeSelector modeSelector;
@@ -90,6 +90,7 @@ public class SystemUI extends JFrame implements Runnable{
     private int cursorState; //현재 커서가 어디 위치인지 나타내주는 커서스테이트
     private HashMap<Integer, Integer> monthMap = new HashMap<>(); //각 월에 맞는 day를 매핑시켜준 hashmap << 근데 윤달을 계산하면 달라질수도있음 timekeeping에 들어가야하는게 아닌가 싶긴한데....
     private int modeFlag=0; //어떤 모드에서든지 4번 누르면 모드셀렉터화면으로 가게 하기 위한 flag임
+    private ImageIcon img;
 
     public static void main(String[] args) {
         SystemUI systemUI = new SystemUI();
@@ -99,8 +100,6 @@ public class SystemUI extends JFrame implements Runnable{
     public SystemUI() {
         //각월에 맞는 day를 초기화
         //이 값을 TimeDB로 부터 가져오는것으로 바꿈 << 이 값을 대체 어디서 가져와야할까? 일단은 timekeeping이랑  관련된곳
-
-        ImageIcon img;
 
         t=new Thread(this);
 
@@ -116,6 +115,8 @@ public class SystemUI extends JFrame implements Runnable{
         //timeDB초기화
         timeDB=TimeDB.getInstance();
         timeDB.startUpdateTime();
+
+        moonphase=Moonphase.getInstance();
 
         lblFirst.setText("Timekeeping");
         t.start();
@@ -885,6 +886,10 @@ public class SystemUI extends JFrame implements Runnable{
         card1.setVisible(false);
         card2.setVisible(false);
         card3.setVisible(true);
+
+        img=new ImageIcon(this.getClass().getResource(moonphase.showMoonphase())); // 달 모양 표시
+        lblMoon.setIcon(img);
+        lblMoon.setVisible(true);
 
         lblSecond.setVisible(false);
         lblThird.setVisible(false);

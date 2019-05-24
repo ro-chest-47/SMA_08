@@ -6,14 +6,14 @@ public class Moonphase {
     private String stdtime="2010 01 01 00 00 00"; //기준시간
     private String currtime="2019 05 22 00 00 00"; //현재시간
     private int moon; //달 분류번호
-    private String moongraphic0 = ("../../../moongraphic/newmoon.jpg"); //삭(달안보임)의 그래픽 정보
-    private String moongraphic1 = ("../../../moongraphic/waxingcrescent.jpg"); //초승달의 그래픽 정보
-    private String moongraphic2 = ("../../../moongraphic/firstquarter.jpg"); //상현달의 그래픽 정보
-    private String moongraphic3 = ("../../../moongraphic/waxinggibbous.jpg"); //열하룻달의 그래픽정보
-    private String moongraphic4 = ("../../../moongraphic/fullmoon.jpg"); //보름달의 그래픽정보
-    private String moongraphic5 = ("../../../moongraphic/waninggibbous.jpg"); //열이렛달의 그래픽 정보
-    private String moongraphic6 = ("../../../moongraphic/lastquarter.jpg"); //하현달의 그래픽 정보
-    private String moongraphic7 = ("../../../moongraphic/waningcrescent.jpg"); //그믐달의 그래픽 정보
+    private String moongraphic0 = ("/newmoon.jpg"); //삭(달안보임)의 그래픽 정보
+    private String moongraphic1 = ("/waxingcrescent.jpg"); //초승달의 그래픽 정보
+    private String moongraphic2 = ("/firstquarter.jpg"); //상현달의 그래픽 정보
+    private String moongraphic3 = ("/waxinggibbous.jpg"); //열하룻달의 그래픽정보
+    private String moongraphic4 = ("/fullmoon.jpg"); //보름달의 그래픽정보
+    private String moongraphic5 = ("/waninggibbous.jpg"); //열이렛달의 그래픽 정보
+    private String moongraphic6 = ("/lastquarter.jpg"); //하현달의 그래픽 정보
+    private String moongraphic7 = ("/waningcrescent.jpg"); //그믐달의 그래픽 정보
 
 //    Moonphase(){
 //        this.calculateMoonphase();

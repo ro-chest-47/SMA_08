@@ -471,13 +471,13 @@ public class Tide {
     }
 
     public void nextTide(){
-        if(button2==0){
-            tide=estide;
-        }
-        else if(button2==1){
-            tide=wtide;
-            button2=0;
-        }
+//        if(button2==0){
+//            tide=estide;
+//        }
+//        else if(button2==1){
+//            tide=wtide;
+//            button2=0;
+//        }
     }
 }
 
