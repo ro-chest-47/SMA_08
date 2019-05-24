@@ -938,17 +938,17 @@ public class SystemUI extends JFrame implements Runnable{
         //curState=0=year   cursorState=1=month     cursorState=2=day
         //cursorState=3=hour    cursorState=4=minute    cursorState=5=second 단, second는 무조건 0으로 초기화
         //dayOfWeek=요일은 유저가 설정 불가능 << 알아서 계산해주는게 좋을듯
-        if (cursorState == 3) {
+        if (cursorState == 0) {
             hour++;
             if (hour > 24) {
                 hour = 0;
             }
-        } else if (cursorState == 4) {
+        } else if (cursorState == 1) {
             minute++;
             if (minute > 59) {
                 minute = 0;
             }
-        } else if (cursorState == 5) {
+        } else if (cursorState == 2) {
             second++;
             if (second > 59) {
                 second = 0;
@@ -963,24 +963,24 @@ public class SystemUI extends JFrame implements Runnable{
         //cursorState=3=hour    cursorState=4=minute    cursorState=5=second
         //dayOfWeek=요일은 유저가 설정 불가능 << 알아서 계산해주는게 좋을듯
 
-        if (cursorState == 3) {
+        if (cursorState == 0) {
             hour++;
             if (hour > 23) {
                 hour = 0;
             }
-        } else if (cursorState == 4) {
+        } else if (cursorState == 1) {
             minute++;
             if (minute > 59) {
                 minute = 0;
             }
         }
         //second는 설정 불가능으로 하기로 했었나???? << 기억이 잘 안남
-        else if (cursorState == 5) {
+        /*else if (cursorState == 5) {
             second++;
             if (second > 59) {
                 second = 0;
             }
-        }
+        }*/
     }
 
     //모드셀렉터모드에서 다음 모드를 요청하기위한 메서드
