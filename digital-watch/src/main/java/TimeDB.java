@@ -141,7 +141,7 @@ public class TimeDB extends Thread{
 
 	public void run(){
 		updateTime();
-		System.out.println(this.getTime());
+		//System.out.println(this.getTime());
 
 
 	}

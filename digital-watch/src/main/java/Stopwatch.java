@@ -104,7 +104,7 @@ public class Stopwatch implements Runnable {
 	//@Override
 	public void run(){
 		updateTime();
-		System.out.println(this.getTime());
+		//System.out.println(this.getTime());
 
 
 	}
