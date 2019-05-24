@@ -116,7 +116,8 @@ public class SystemUI extends JFrame implements Runnable{
         timeDB=TimeDB.getInstance();
         timeDB.startUpdateTime();
 
-        moonphase=Moonphase.getInstance();
+        moonphase=Moonphase.getInstance();  // 임시로 가져온 객체
+        tide=Tide.getInstance();  // 임시로 가져온 객체
 
         lblFirst.setText("Timekeeping");
         t.start();
@@ -1130,11 +1131,15 @@ public class SystemUI extends JFrame implements Runnable{
         }
     }
 
-    //이거 있어야할것같은데 없음
     private void showTide() {
         card1.setVisible(false);
         card2.setVisible(true);
         card3.setVisible(false);
+
+        img=new ImageIcon(this.getClass().getResource(tide.showTide())); // 조수 모양 표시
+        lblTide.setIcon(img);
+        lblTide.setVisible(true);
+
         lblSecond.setVisible(false);
         lblThird.setVisible(true);
         lblFourth.setVisible(false);
