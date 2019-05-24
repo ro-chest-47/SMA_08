@@ -1,4 +1,7 @@
 import java.util.HashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class TimeDB extends Thread{
 	private static int year;
@@ -9,6 +12,8 @@ public class TimeDB extends Thread{
 	private static int second;
 
 	private Thread thread;
+	private TimeDB runnable;
+	ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
 
 	private int time =0;
 
@@ -126,25 +131,21 @@ public class TimeDB extends Thread{
 	}
 
 	public void startUpdateTime() {
-		thread = new TimeDB(this.getTime());
-		thread.start();
+		runnable = new TimeDB(getTime());
+		thread = new Thread(runnable);
+		service.scheduleAtFixedRate(runnable, 0, 10, TimeUnit.MILLISECONDS);
+		//thread.start();
 	}
 
-	public void pauseTimeDB() {
-		thread.interrupt();
-	}
+	public void pauseTimeDB(){ service.shutdown(); }
 
-	public void run() {
-		while(true) {
-			try {
-				updateTime();
-				if(this.time==0)
-					System.out.println(this.getTime());
-				Thread.sleep(10);
-			}catch (InterruptedException e) {break;}
-		}
+	public void run(){
+		updateTime();
+		System.out.println(this.getTime());
+
 
 	}
 
 
 }
+
