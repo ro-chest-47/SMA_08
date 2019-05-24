@@ -50,8 +50,8 @@ public class ModeSelector {
     //Sring[]에서 ArrayList로 변경했음
     public void setSettingModeList(ArrayList<String> settingModeList){
         this.settingModeList=settingModeList;
-        createMode.setCreateList(createList);
-        deleteMode.setDeleteList(deleteList);
+//         createMode.setCreateList(createList);
+//         deleteMode.setDeleteList(deleteList);
     }
 
     //ArrayList로 수정함
