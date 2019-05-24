@@ -392,7 +392,7 @@ public class Tide {
 
             long calDate = CurrentDate.getTime() - StandardDate.getTime(); //기준시간에서 현재시간까지의 시간 계산
             long calDateDays = calDate / (24*60*60*1000); //계산한 시간의 단위를 일수로 변경
-            int k= (int)(calDateDays%15)+(int)(calDateDays/60);
+            int k= (((int)(calDateDays%15)+(int)Math.floor(calDateDays/58))%15)-1;
 
             switch (k){
                 case 0:

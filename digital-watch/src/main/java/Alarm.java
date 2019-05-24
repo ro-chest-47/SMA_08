@@ -1,11 +1,11 @@
 import java.util.*;
 
 public class Alarm  {
-    private int alarmHour[]={25,25,25,25}; //4개의 알람시를 저장할 배열
+    private int alarmHour[]={24,24,24,24}; //4개의 알람시를 저장할 배열
     private int alarmMinute[]={60,60,60,60}; //4개의 알람분을 저장할 뱌열
     private int a_state; //알람 울리는지 상태 확인
-    private int alarmH;
-    private int alarmM;
+    private int alarmH; //최대 23시까지 알람 설정 가능
+    private int alarmM; //최대 59분까지 알람 설정 가능
     private int i=0;
     private int currentAlarm=0;
     private String currtime="2019 05 24 01 00 00"; //테스트용 현재시간
@@ -47,8 +47,8 @@ public class Alarm  {
      */
 
     public void showAlarm() {
-        if(alarmHour[0]==25 && alarmMinute[0]==60 && alarmHour[1]==25 && alarmMinute[1]==60
-                && alarmHour[2]==25 && alarmMinute[2]==60 && alarmHour[3]==25 && alarmMinute[3]==60){
+        if(alarmHour[0]==24 && alarmMinute[0]==60 && alarmHour[1]==24 && alarmMinute[1]==60
+                && alarmHour[2]==24 && alarmMinute[2]==60 && alarmHour[3]==24 && alarmMinute[3]==60){
             System.out.println("NO ALARM");
         } //알람 배열에 설정된 알람이 없으면 알람 없음을 출력
         else{
@@ -89,7 +89,7 @@ public class Alarm  {
         Scanner scan = new Scanner(System.in);
         int input = scan.nextInt();
         currentAlarm=input;
-        alarmHour[currentAlarm] = 25;
+        alarmHour[currentAlarm] = 24;
         alarmMinute[currentAlarm] = 60;
     } //입력한 알람번호의 알람을 지운다
 
