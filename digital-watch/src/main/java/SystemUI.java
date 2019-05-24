@@ -116,7 +116,6 @@ public class SystemUI extends JFrame implements Runnable{
         timeDB=TimeDB.getInstance();
 
         lblFirst.setText("Timekeeping");
-//        showTime();
         t.start();
 
         modeSelector = new ModeSelector("TimeKeeping", "Timer", "Alarm", "Stopwatch"); //초기모드 설정
@@ -133,12 +132,12 @@ public class SystemUI extends JFrame implements Runnable{
                     //adjust 페이즈가 아닐경우 adjusttime으로 진행
                     if (!timekeepingAdjustState) {
                         //currnetMode가 timekeeping일경우 adjust버튼을 누른다면
-                        System.out.println("reqAdajusttime");
+                        lblFirst.setText("AdjustTime");
                         reqAdjustTime(); //으로 진행
-
                     }
                     //adjust페이즈 일경우 adjustbuttofn을 누르면 adjust페이즈를 종료
                     else {
+                        lblFirst.setText(currentMode);
                         endAdjustTime();
                     }
                 } else if (currentMode.equals("Timer")) {
@@ -409,7 +408,7 @@ public class SystemUI extends JFrame implements Runnable{
         //textViewHour.setText(hour);
         //textViewMinute.s etText(minute);
         //textViewSecond.setText(second);
-        t.start();
+
     }
     @Override
     public void run() {
@@ -426,28 +425,20 @@ public class SystemUI extends JFrame implements Runnable{
                 String yr = String.format("%04d", cal.get(Calendar.YEAR));
                 String mon = String.format("%02d", cal.get(Calendar.MONTH));
 
-//            String tt=timeDB.getTime(); //이렇게 해야되는데 안불러와짐
+            String tt=timeDB.getTime(); //이렇게 해야되는데 안불러와짐
                 lblTime.setText(str);
                 lblThird.setText(yr);
                 lblFourth.setText(mon);
-                lblSecond.setVisible(true);
-                lblThird.setVisible(true);
-                lblFourth.setVisible(true);
-
             }
             else if(currentMode.equals("Timer")) {
-                String tm=timer.getTime();
+//                String tm=timer.getTime();
+                String tm="00:00:00";
                 lblTime.setText(tm);
-                lblSecond.setVisible(false);
-                lblThird.setVisible(false);
-                lblFourth.setVisible(false);
             }
             else if(currentMode.equals("StopWatch")) {
-                String tm=stopwatch.getTime();
+//                String tm=stopwatch.getTime();
+                String tm="00:00:00";
                 lblTime.setText(tm);
-                lblSecond.setVisible(false);
-                lblThird.setVisible(false);
-                lblFourth.setVisible(false);
             }
             try {
                 Thread.sleep(10);
@@ -530,6 +521,8 @@ public class SystemUI extends JFrame implements Runnable{
     //전제조건도 다 맞춤
     //adjustsate=false일경우 진행되는 상황
     private void reqSetTimer() {
+        lblFirst.setText("AdjustTimer");
+
         timerRunState = timer.getRunState();
 
         //timer가 작동중일경우 일단 동작중인 timer를 pause시킴
@@ -621,8 +614,6 @@ public class SystemUI extends JFrame implements Runnable{
         String currentTime = timeDB.getTime();
         String[] tmpArray = currentTime.split(" ");
 
-        lblFirst.setText("Adjust");
-
         //Stirng으로 받아온 현재 시간을 int값으로 파싱해서 저장하자
         year = Integer.parseInt(tmpArray[0]);
         month = Integer.parseInt(tmpArray[1]);
@@ -704,7 +695,7 @@ public class SystemUI extends JFrame implements Runnable{
         timerZeroState = 1;
 
         //timer를 리셋시켰으니 그 화면을 표시
-        showTimer();
+//        showTimer();
     }
 
     private void showAlarm() {
@@ -815,8 +806,6 @@ public class SystemUI extends JFrame implements Runnable{
         //textViewTopRecrod.setText(hour);
         //textViewTopRecord.setTExt(minute);
         //textViewTopRecored.setText(second);
-        lblThird.setText("");
-        lblFourth.setText("");
         t.start();
     }
 
@@ -916,7 +905,9 @@ public class SystemUI extends JFrame implements Runnable{
         //currentTide=tide.getNextTide();
 
         //다음 tide를 요청했으니 show로 보여주기
+//        lblSecond.setText(currentTide);
         showTide();
+
     }
 
     public void showMoonphase() {
@@ -1099,6 +1090,37 @@ public class SystemUI extends JFrame implements Runnable{
         //그리고 다음모드가 무엇인지 얻어옴
         currentMode = modeSelector.getNextMode(currentMode);
         lblFirst.setText(currentMode);
+
+        if(currentMode.equals("TimeKeeping")) {
+            lblSecond.setVisible(true);
+            lblThird.setVisible(true);
+            lblFourth.setVisible(true);
+        }
+        else if(currentMode.equals("Timer")) {
+            lblSecond.setVisible(false);
+            lblThird.setVisible(false);
+            lblFourth.setVisible(false);
+        }
+        else if(currentMode.equals("Stopwatch")) {
+            lblSecond.setVisible(false);
+            lblThird.setVisible(false);
+            lblFourth.setVisible(false);
+        }
+        else if(currentMode.equals("Alarm")) {
+            lblSecond.setVisible(true);
+            lblThird.setVisible(true);
+            lblFourth.setVisible(true);
+        }
+        else if(currentMode.equals("Tide")) {
+            lblSecond.setVisible(false);
+            lblThird.setVisible(true);
+            lblFourth.setVisible(false);
+        }
+        else if(currentMode.equals("Moonphase")) {
+            lblSecond.setVisible(false);
+            lblThird.setVisible(false);
+            lblFourth.setVisible(false);
+        }
     }
 
     private void createUIComponents() {
