@@ -9,174 +9,20 @@ public class Tide {
     private int estide;
     private int wtide;
     private int button2=0;
-    private int[][] tidegraphic0={
-            {0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
-            {0, 1, 1, 1, 0, 0, 0, 0, 0, 0},
-            {1, 1, 1, 1, 1, 0, 0, 0, 0, 0},
-            {1, 1, 1, 1, 1, 1, 0, 0, 0, 0},
-            {1, 1, 1, 1, 1, 1, 1, 0, 0, 0},
-            {1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0}
-    }; //9물의 그래픽 정보
-    private int[][] tidegraphic1={
-            {0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
-            {1, 1, 1, 0, 0, 0, 0, 0, 0, 0},
-            {1, 1, 1, 1, 0, 0, 0, 0, 0, 0},
-            {1, 1, 1, 1, 1, 0, 0, 0, 0, 0},
-            {1, 1, 1, 1, 1, 1, 0, 0, 0, 0},
-            {1, 1, 1, 1, 1, 1, 1, 0, 0, 0},
-            {1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0}
-    }; //10물의 그래픽 정보
-    private int[][] tidegraphic2={
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {1, 1, 0, 0, 0, 0, 0, 0, 0, 0},
-            {1, 1, 1, 0, 0, 0, 0, 0, 0, 0},
-            {1, 1, 1, 1, 0, 0, 0, 0, 0, 0},
-            {1, 1, 1, 1, 1, 0, 0, 0, 0, 0},
-            {1, 1, 1, 1, 1, 1, 0, 0, 0, 1},
-            {1, 1, 1, 1, 1, 1, 1, 0, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0}
-    }; //11물의 그래픽 정보
-    private int[][] tidegraphic3={
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {1, 1, 0, 0, 0, 0, 0, 0, 0, 0},
-            {1, 1, 1, 0, 0, 0, 0, 0, 0, 0},
-            {1, 1, 1, 1, 0, 0, 0, 0, 0, 1},
-            {1, 1, 1, 1, 1, 0, 0, 0, 1, 1},
-            {1, 1, 1, 1, 1, 1, 0, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0}
-    }; //12물의 그래픽 정보
-    private int[][] tidegraphic4={
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {1, 1, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 1, 1, 0, 0, 0, 0, 0, 1, 1},
-            {1, 1, 1, 1, 0, 0, 0, 1, 1, 1},
-            {1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0}
-    }; //13물의 그래픽 정보
-    private int[][] tidegraphic5={
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
-            {1, 1, 0, 0, 0, 0, 0, 1, 1, 1},
-            {1, 1, 1, 0, 0, 0, 1, 1, 1, 1},
-            {1, 1, 1, 1, 0, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0}
-    }; //동해 남해는 14물과 조금 서해는 조금과 무시의 그래픽 정보
-    private int[][] tidegraphic6={
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 1, 1, 1},
-            {1, 0, 0, 0, 0, 0, 1, 1, 1, 1},
-            {1, 1, 0, 0, 0, 1, 1, 1, 1, 1},
-            {1, 1, 1, 0, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0}
-    }; //1물의 그래픽 정보
-    private int[][] tidegraphic7={
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 1, 1, 1, 1, 1},
-            {1, 0, 0, 0, 1, 1, 1, 1, 1, 1},
-            {1, 1, 0, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0}
-    }; //2물의 그래픽 정보
-    private int[][] tidegraphic8={
-            {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
-            {0, 0, 0, 0, 0, 0, 0, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 1, 1, 1, 1, 1, 1},
-            {0, 0, 0, 1, 1, 1, 1, 1, 1, 1},
-            {1, 0, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0}
-    }; //3물의 그래픽 정보
-    private int[][] tidegraphic9={
-            {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
-            {0, 0, 0, 0, 0, 0, 1, 1, 1, 0},
-            {0, 0, 0, 0, 0, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 1, 1, 1, 1, 1, 1},
-            {0, 0, 0, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0}
-    }; //4물의 그래픽 정보
-    private int[][] tidegraphic10={
-            {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
-            {0, 0, 0, 0, 0, 1, 1, 1, 0, 0},
-            {0, 0, 0, 0, 1, 1, 1, 1, 1, 0},
-            {0, 0, 0, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0}
-    }; //5물의 그래픽 정보
-    private int[][] tidegraphic11={
-            {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
-            {0, 0, 0, 1, 1, 1, 1, 1, 0, 0},
-            {0, 0, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0}
-    }; //6물의 그래픽 정보
-    private int[][] tidegraphic12={
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-            {0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
-            {0, 0, 1, 1, 1, 1, 1, 0, 0, 0},
-            {0, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0}
-    }; //7물의 그래픽 정보
-    private int[][] tidegraphic13={
-            {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-            {0, 0, 1, 1, 1, 0, 0, 0, 0, 0},
-            {0, 1, 1, 1, 1, 1, 0, 0, 0, 0},
-            {1, 1, 1, 1, 1, 1, 1, 0, 0, 0},
-            {1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0}
-    }; //8물의 그래픽 정보
+    private String tidegraphic0 = ("../../../tidegraphic/t0.jpg"); //9물의 그래픽 정보
+    private String tidegraphic1 = ("../../../tidegraphic/t1.jpg"); //10물의 그래픽 정보
+    private String tidegraphic2 = ("../../../tidegraphic/t2.jpg"); //11물의 그래픽 정보
+    private String tidegraphic3 = ("../../../tidegraphic/t3.jpg"); //12물의 그래픽 정보
+    private String tidegraphic4 = ("../../../tidegraphic/t4.jpg"); //13물의 그래픽 정보
+    private String tidegraphic5 = ("../../../tidegraphic/t5.jpg");; //동해 남해는 14물과 조금 서해는 조금과 무시의 그래픽 정보
+    private String tidegraphic6 = ("../../../tidegraphic/t6.jpg"); //1물의 그래픽 정보
+    private String tidegraphic7 = ("../../../tidegraphic/t7.jpg"); //2물의 그래픽 정보
+    private String tidegraphic8 = ("../../../tidegraphic/t8.jpg"); //3물의 그래픽 정보
+    private String tidegraphic9 = ("../../../tidegraphic/t9.jpg"); //4물의 그래픽 정보
+    private String tidegraphic10 = ("../../../tidegraphic/t10.jpg"); //5물의 그래픽 정보
+    private String tidegraphic11 = ("../../../tidegraphic/t11.jpg"); //6물의 그래픽 정보
+    private String tidegraphic12 = ("../../../tidegraphic/t12.jpg"); //7물의 그래픽 정보
+    private String tidegraphic13 = ("../../../tidegraphic/t13.jpg"); //8물의 그래픽 정보
 
     private static Tide instance;
 //
@@ -197,191 +43,39 @@ public class Tide {
         instance=null;
     }
 
-    public void showTide() {
+    public String showTide() {
         switch(tide){
             case 0:
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(tidegraphic0[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                }
+                return tidegraphic0;
                 break;
             case 1:
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(tidegraphic1[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                }
-                break;
+                return tidegraphic1;
             case 2:
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(tidegraphic2[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                }
-                break;
+                return tidegraphic2;
             case 3:
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(tidegraphic3[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                }
-                break;
+                return tidegraphic3;
             case 4:
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(tidegraphic4[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                }
-                break;
+                return tidegraphic4;
             case 5:
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(tidegraphic5[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                }
-                break;
+                return tidegraphic5;
             case 6:
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(tidegraphic6[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                }
-                break;
+                return tidegraphic6;
             case 7:
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(tidegraphic7[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                }
-                break;
+                return tidegraphic7;
             case 8:
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(tidegraphic8[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                }
-                break;
+                return tidegraphic8;
             case 9:
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(tidegraphic9[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                }
-                break;
+                return tidegraphic9;
             case 10:
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(tidegraphic10[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                }
-                break;
+                return tidegraphic10;
             case 11:
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(tidegraphic11[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                }
-                break;
+                return tidegraphic11;
             case 12:
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(tidegraphic12[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                }
-                break;
+                return tidegraphic12;
             case 13:
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(tidegraphic13[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                }
-                break;
+                return tidegraphic13;
         }
+        return null;
     }
 
     public void calculateTide() {
