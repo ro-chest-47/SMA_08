@@ -102,7 +102,7 @@ public class Moonphase {
             {0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 1, 0, 0, 0, 0, 0}
     }; //그믐달의 그래픽 정보
-
+/*
     Moonphase(){
         this.calculateMoonphase();
         this.showMoonphase();

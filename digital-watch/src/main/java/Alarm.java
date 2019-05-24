@@ -16,7 +16,7 @@ public class Alarm  {
 
     //싱글턴위해 추가
     private static Alarm instance;
-
+/*
     Alarm(){
         this.showAlarm();
         this.addAlarm();
@@ -25,7 +25,7 @@ public class Alarm  {
         this.buzzAlarm();
         this.stopAlarm();
     }
-
+*/
 
     //싱글턴위해 추가
     public static Alarm getInstance(){
