@@ -111,7 +111,7 @@ public class SystemUI extends JFrame implements Runnable{
         timekeeping=TimeKeeping.getInstance();
         timer=Timer.getInstance();
         stopwatch=Stopwatch.getInstance();
-        alarm=Alarm.getInstance();
+//        alarm=Alarm.getInstance();
         //timeDB초기화
         timeDB=TimeDB.getInstance();
 
@@ -410,43 +410,7 @@ public class SystemUI extends JFrame implements Runnable{
         //textViewSecond.setText(second);
 
     }
-    @Override
-    public void run() {
-        int i=0;
-        // TODO Auto-generated method stub
-        while(true) {
 
-            if(currentMode.equals("TimeKeeping")) {
-                Calendar cal = Calendar.getInstance(); //현재시간정보가 캘린더 클래스로 전달됨.
-                String str = String.format("%02d:%02d:%02d",
-                        cal.get(Calendar.HOUR_OF_DAY),
-                        cal.get(Calendar.MINUTE),
-                        cal.get(Calendar.SECOND));
-                String yr = String.format("%04d", cal.get(Calendar.YEAR));
-                String mon = String.format("%02d", cal.get(Calendar.MONTH));
-
-            String tt=timeDB.getTime(); //이렇게 해야되는데 안불러와짐
-                lblTime.setText(str);
-                lblThird.setText(yr);
-                lblFourth.setText(mon);
-            }
-            else if(currentMode.equals("Timer")) {
-//                String tm=timer.getTime();
-                String tm="00:00:00";
-                lblTime.setText(tm);
-            }
-            else if(currentMode.equals("StopWatch")) {
-//                String tm=stopwatch.getTime();
-                String tm="00:00:00";
-                lblTime.setText(tm);
-            }
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     //현재 커서 위치에 있는 값을 증가시킴
     //사용하는 모드들 = TimeKeeping
@@ -515,7 +479,6 @@ public class SystemUI extends JFrame implements Runnable{
         //textViewHour.setText(hour);
         //textViewMinute.setTexT(minute);
         //textViewSecond.setTexT(second);
-        t.start();
     }
 
     //전제조건도 다 맞춤
@@ -533,12 +496,7 @@ public class SystemUI extends JFrame implements Runnable{
             //아래꺼는 무시
             //리턴값이 주어져있음, 여기서 timerRunState의 값을 0으로 만들어야함
             //timerRunState=reqPauseTimer();
-            try {
-                t.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            t.interrupt();
+
         }
 
         //타이머를 변경하겠다고 요청했으므로 adjustState도 true로 바꿈
@@ -657,7 +615,6 @@ public class SystemUI extends JFrame implements Runnable{
         if (timerZeroState == 0 && timerRunState == 0) {
             //timer를 시작하라고 전달
             timer.startTimer();
-            t.start();
 
         }
 
@@ -679,12 +636,7 @@ public class SystemUI extends JFrame implements Runnable{
         if (timerRunState == 1) {
             //일단 timer를 pause시킴
             timer.pauseTimer();
-            try {
-                t.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            t.interrupt();
+
         }
 
         //그다음에 reset시키라고 메세지 보냄
@@ -806,13 +758,11 @@ public class SystemUI extends JFrame implements Runnable{
         //textViewTopRecrod.setText(hour);
         //textViewTopRecord.setTExt(minute);
         //textViewTopRecored.setText(second);
-        t.start();
     }
 
     //스탑워치를 시작하자
     private void reqStartStopwatch() {
         stopwatchRunState = stopwatch.getRunState();
-
         //이미 리스터단계에서 runState=0이 맞는지 한번 거르고 왔음
         //스탑워치가 동작중이 아닐경우 스탑워치를 실행시킴
         if (stopwatchRunState == 0) {
@@ -859,12 +809,6 @@ public class SystemUI extends JFrame implements Runnable{
             stopwatch.pauseStopwatch();
             //일시정지 시켰으니 runState=0으로
             stopwatchRunState = 0;
-            try {
-                t.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            t.interrupt();
         }
 
         //시간을 일시정지 시켰으니 stopwatch갱신
@@ -882,12 +826,6 @@ public class SystemUI extends JFrame implements Runnable{
             //스탑워치가 동작중이라면 일단 pause시킴
             if (stopwatchRunState == 1) {
                 stopwatch.pauseStopwatch();
-                try {
-                    t.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                t.interrupt();
             }
             stopwatch.resetStopwatch();
         }
@@ -991,12 +929,6 @@ public class SystemUI extends JFrame implements Runnable{
         if (timerZeroState == 0 && timerRunState == 0) {
             //timer.pauseTimer();
         }
-        try {
-            t.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        t.interrupt();
     }
 
     //increaseTimer 이름을 increaseTimerTime으로 바꿈
@@ -1125,5 +1057,45 @@ public class SystemUI extends JFrame implements Runnable{
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
+    }
+
+    @Override
+    public void run() {
+        int i=0;
+        // TODO Auto-generated method stub
+        while(true) {
+
+            if(currentMode.equals("TimeKeeping")) {
+                Calendar cal = Calendar.getInstance(); //현재시간정보가 캘린더 클래스로 전달됨.
+                String str = String.format("%02d:%02d:%02d",
+                        cal.get(Calendar.HOUR_OF_DAY),
+                        cal.get(Calendar.MINUTE),
+                        cal.get(Calendar.SECOND));
+                String yr = String.format("%04d", cal.get(Calendar.YEAR));
+                String mon = String.format("%02d", cal.get(Calendar.MONTH));
+
+                String tt=timeDB.getTime(); //이렇게 해야되는데 안불러와짐
+                lblTime.setText(str);
+                lblThird.setText(yr);
+                lblFourth.setText(mon);
+            }
+            else if(currentMode.equals("Timer")) {
+//                String tm=timer.getTime();
+                String tm="00:00:00";
+                lblTime.setText(tm);
+            }
+            else if(currentMode.equals("StopWatch")) {
+                String tm=stopwatch.getTime();
+
+                System.out.println(tm);
+//                String tm="00:00:00";
+                lblTime.setText(tm);
+            }
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
