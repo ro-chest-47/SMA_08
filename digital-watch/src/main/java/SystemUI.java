@@ -69,8 +69,11 @@ public class SystemUI extends JFrame implements Runnable{
     private boolean stopwatchAdjustState = false; //stopwatch를 조정중일때
     private int stopwatchRunState = 0; //시퀀스다이어그램상에서 int이길래 일단 int로 설정 근데 boolean이 더 맞는것같음
     private int stopwatchZeroState = 1; // 제로스테이트가 시퀀스다이어그램상에서는 존재 왠지 boolean으로 하고싶음
+    private String stopwatchDefaultRecord="00 00 00 00";
     private String modeSelectorCurrentMode;
     private String tm;
+    private String[] str; // Timekeeping 정보 불러오는거
+    private String strr; // Timekeeping 포맷 나타내는거
     private int year;
     private int month;
     private int day;
@@ -106,7 +109,7 @@ public class SystemUI extends JFrame implements Runnable{
 
         setContentPane(mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 700, 500);
+        setBounds(100, 100, 800, 500);
 
         //각 객체 가져오기
         timekeeping=TimeKeeping.getInstance();
@@ -118,7 +121,6 @@ public class SystemUI extends JFrame implements Runnable{
         timeDB.startUpdateTime();
 
         lblFirst.setText("Timekeeping");
-        lblSecond.setText("");
         t.start();
 
         modeSelector = new ModeSelector("TimeKeeping", "Timer", "Alarm", "Stopwatch"); //초기모드 설정
@@ -387,7 +389,7 @@ public class SystemUI extends JFrame implements Runnable{
 
     //timeDB로부터 가져온 시간을 1초마다 업데이트해줌
     private void showTime() {
-        lblSecond.setVisible(false);
+        lblSecond.setVisible(true);
         lblThird.setVisible(true);
         lblFourth.setVisible(true);
     }
@@ -456,9 +458,6 @@ public class SystemUI extends JFrame implements Runnable{
     //timer를 gui상에서 보여주자!
     private void showTimer() {
         //timer를 gui상에서 보여주기 위한 슈도코드
-        //textViewHour.setText(hour);
-        //textViewMinute.setTexT(minute);
-        //textViewSecond.setTexT(second);
         lblSecond.setVisible(false);
         lblThird.setVisible(false);
         lblFourth.setVisible(false);
@@ -636,8 +635,6 @@ public class SystemUI extends JFrame implements Runnable{
     private void showAlarm() {
         //gui에서 변해야 하는 값을 일단 슈도코드로 << 틀린게 있을수도 있음
         //어....알람에 loop를 하기로 안했던것같은데 << 기억이 나지 않음
-        //textViewHour.setText(hour);
-        //textViewminute.setTExt(minute);
         lblSecond.setVisible(true);
         lblThird.setVisible(true);
         lblFourth.setVisible(true);
@@ -736,15 +733,8 @@ public class SystemUI extends JFrame implements Runnable{
     }
 
     private void showStopwatch() {
-        //gui에 필요할것같은 요소들을 슈도코드로 작성
-        //textViewHour.setText(hour);
-        //textViewMinute.setTExT(minute);
-        //textVioewSecond.setTExT(second);
-        //여기 밑에부분은 아마도 stopwatch에서 가져온 데이터를 record된 데이터를 출력
-        //textViewTopRecrod.setText(hour);
-        //textViewTopRecord.setTExt(minute);
-        //textViewTopRecored.setText(second);
-        lblSecond.setVisible(false);
+        lblSecond.setText(stopwatchDefaultRecord);
+        lblSecond.setVisible(true);
         lblThird.setVisible(false);
         lblFourth.setVisible(false);
     }
@@ -767,26 +757,8 @@ public class SystemUI extends JFrame implements Runnable{
 
     //현재 스탑워치의 시간을 stopwatch로 보내서 저장하게 해주는 기능
     private void reqRecordStopwatch() {
-        lblSecond.setText(stopwatch.getTime());
-
-//        stopwatchRunState = stopwatch.getRunState();
-
-//        //스탑워치가 동작중일경우 조건문 실행
-//        if (stopwatchRunState == 1) {
-//            String tmp = stopwatch.recordStopwatch();
-//            String[] tmpArray = tmp.split(" ");
-//
-//            //받아오는 타입 return currentTime << currentTime을 받아옴
-//            //String time= Integer.toString(this.hours)+" "+Integer.toString(this.minutes)+" "+Integer.toString(this.seconds)+" "+Integer.toString(this.times);
-//
-//            hour = Integer.parseInt(tmpArray[0]);
-//            minute = Integer.parseInt(tmpArray[1]);
-//            second = Integer.parseInt(tmpArray[2]);
-//            //times는 어떤건지 잘 몰라서 일단 가져오긴 하는데 지역변수로만 남겨둠
-//            int times = Integer.parseInt(tmpArray[3]);
-//        }
-
-        //시간을 기록했으니 기록한시간을 표시해주자
+        stopwatchDefaultRecord=stopwatch.getTime();
+        lblSecond.setText(stopwatchDefaultRecord);
         showStopwatch();
     }
 
@@ -843,19 +815,6 @@ public class SystemUI extends JFrame implements Runnable{
         lblSecond.setVisible(false);
         lblThird.setVisible(false);
         lblFourth.setVisible(false);
-        //ui가 어떻게 만들어질지 모르니 일단 슈도코드로 작성
-        //currentMoon에 표시해야할 타이드를 2차원배열로 저장
-        //일단 10x10배열이라 가정, 배열안에 1이 들어간경우 검은색을 칠하고 그게 아닌경우 하얀색을 칠함
-//        for(int i=0;i< 10;i++){
-//            for(int j=0; j<10;j++){
-//                if(currentTide[i][j]==1) {
-//                    showMoonGUI[i][j].setBackground(Color.black);
-//                }
-//                else{
-//                    showMoonGUI[i][j].setBackground(Color.white);
-//                }
-//            }
-//        }
     }
 
     //현재모드 말고 다른 모드를 선택하고 싶을때 실행
@@ -1085,19 +1044,6 @@ public class SystemUI extends JFrame implements Runnable{
         lblSecond.setVisible(false);
         lblThird.setVisible(true);
         lblFourth.setVisible(false);
-        //ui가 어떻게 만들어질지 모르니 일단 슈도코드로 작성
-        //currentTide에 표시해야할 타이드를 2차원배열로 저장
-        //일단 10x10배열이라 가정, 배열안에 1이 들어간경우 검은색을 칠하고 그게 아닌경우 하얀색을 칠함
-//        for(int i=0;i< 10;i++){
-//            for(int j=0; j<10;j++){
-//                if(currentTide[i][j]==1) {
-//                    showTideGUI[i][j].setBackground(Color.black);
-//                }
-//                else{
-//                    showTideGUI[i][j].setBackground(Color.white);
-//                }
-//            }
-//        }
     }
 
     //이거 next mode시퀀스 다이어그램에는 존재
@@ -1110,34 +1056,22 @@ public class SystemUI extends JFrame implements Runnable{
         lblFirst.setText(currentMode);
 
         if(currentMode.equals("TimeKeeping")) {
-            lblSecond.setVisible(false);
-            lblThird.setVisible(true);
-            lblFourth.setVisible(true);
+            showTime();
         }
         else if(currentMode.equals("Timer")) {
-            lblSecond.setVisible(false);
-            lblThird.setVisible(false);
-            lblFourth.setVisible(false);
+            showTimer();
         }
         else if(currentMode.equals("Stopwatch")) {
-            lblSecond.setVisible(true);
-            lblThird.setVisible(false);
-            lblFourth.setVisible(false);
+            showStopwatch();
         }
         else if(currentMode.equals("Alarm")) {
-            lblSecond.setVisible(true);
-            lblThird.setVisible(true);
-            lblFourth.setVisible(true);
+            showAlarm();
         }
         else if(currentMode.equals("Tide")) {
-            lblSecond.setVisible(false);
-            lblThird.setVisible(true);
-            lblFourth.setVisible(false);
+            showTide();
         }
         else if(currentMode.equals("Moonphase")) {
-            lblSecond.setVisible(false);
-            lblThird.setVisible(false);
-            lblFourth.setVisible(false);
+            showMoonphase();
         }
     }
 
@@ -1154,10 +1088,26 @@ public class SystemUI extends JFrame implements Runnable{
             if(currentMode.equals("TimeKeeping")) {
 
                 tm=timeDB.getTime(); //이렇게 해야되는데 안불러와짐
-                String[]str=tm.split(" ");
-                lblTime.setText(str[3]+":"+str[4]+":"+str[5]);
+                str=tm.split(" ");
+                strr=String.format("%02d:%02d:%02d",Integer.parseInt(str[3]),Integer.parseInt(str[4]),Integer.parseInt(str[5]));
+                lblTime.setText(strr);
+                if(str[1].equals("1")) str[1]="JANUARY";
+                else if(str[1].equals("2")) str[1]="FEBURARY";
+                else if(str[1].equals("3")) str[1]="MARCH";
+                else if(str[1].equals("4")) str[1]="APRIL";
+                else if(str[1].equals("5")) str[1]="MAY";
+                else if(str[1].equals("6")) str[1]="JUNE";
+                else if(str[1].equals("7")) str[1]="JULY";
+                else if(str[1].equals("8")) str[1]="AUGUST";
+                else if(str[1].equals("9")) str[1]="SEPTEMBER";
+                else if(str[1].equals("10")) str[1]="OCTOBER";
+                else if(str[1].equals("11")) str[1]="NOVEMBER";
+                else if(str[1].equals("12")) str[1]="DECEMBER";
+                else str[1]="이걸 보고있다면 버그임";
+
+                lblSecond.setText(str[1]);
                 lblThird.setText(str[0]);
-                lblFourth.setText(str[1]+"/"+str[2]);
+                lblFourth.setText(str[2]);
             }
             else if(currentMode.equals("Timer")) {
                 tm=timer.getTime();
@@ -1165,7 +1115,10 @@ public class SystemUI extends JFrame implements Runnable{
             }
             else if(currentMode.equals("Stopwatch")) {
                 tm=stopwatch.getTime();
-                lblTime.setText(tm);
+                str=tm.split(" ");
+                strr=String.format("%02d:%02d:%02d:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+                        Integer.parseInt(str[2]),Integer.parseInt(str[3]));
+                lblTime.setText(strr);
             }
             try {
                 t.sleep(10);
