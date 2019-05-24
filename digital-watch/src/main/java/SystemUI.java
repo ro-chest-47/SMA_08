@@ -691,7 +691,7 @@ public class SystemUI extends JFrame implements Runnable{
     //알람 수정을 끝낼때 동작되는 메서드
     private void endAddAlarm() {
         //알람에 현재 수정한 알람을 집어넣음
-        //alarm.addAlarm(hour, minute); <<알람에 전달해주는 인자는 임의로 선택한것
+        //Alarm.addAlarm(hour, minute); <<알람에 전달해주는 인자는 임의로 선택한것
 
         this.alaramAdjustState = false;
         alarmCanAddState = false;

@@ -102,16 +102,16 @@ public class Moonphase {
             {0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 1, 0, 0, 0, 0, 0}
     }; //그믐달의 그래픽 정보
-/*
-    Moonphase(){
-        this.calculateMoonphase();
-        this.showMoonphase();
-    }
-    /*
-    public static void main(String[] args) {
-        new Moonphase();
-    } //테스트용 코드 무시
-     */
+
+//    Moonphase(){
+//        this.calculateMoonphase();
+//        this.showMoonphase();
+//    }
+//
+//    public static void main(String[] args) {
+//        new Moonphase();
+//    } 테스트용 코드 무시
+
     public void showMoonphase() {
         switch(moon){
             case 0: //계산한 달 분류번호가 0번이면

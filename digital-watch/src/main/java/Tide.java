@@ -179,13 +179,13 @@ public class Tide {
     }; //8물의 그래픽 정보
 
     private static Tide instance;
-/*
-    private Tide(){
-        this.calculateTide();
-        this.nextTide();
-        this.showTide();
-    }
-*/
+//
+//    private Tide(){
+//        this.calculateTide();
+//        this.nextTide();
+//        this.showTide();
+//    }
+//
     public static Tide getInstance(){
         if(instance==null){
             instance=new Tide();
