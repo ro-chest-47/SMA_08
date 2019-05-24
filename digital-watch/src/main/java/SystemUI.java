@@ -35,6 +35,12 @@ public class SystemUI extends JFrame implements Runnable{
     private JPanel top;
     private JLabel lblThird;
     private JLabel lblFourth;
+    private JPanel card1;
+    private JPanel card2;
+    private JPanel card3;
+    private JLabel lblTide;
+    private JLabel lblMoon;
+    private JPanel card;
 
 
     private ModeSelector modeSelector;
@@ -94,18 +100,8 @@ public class SystemUI extends JFrame implements Runnable{
         //각월에 맞는 day를 초기화
         //이 값을 TimeDB로 부터 가져오는것으로 바꿈 << 이 값을 대체 어디서 가져와야할까? 일단은 timekeeping이랑  관련된곳
 
-//        monthMap.put(1, 31);
-//        monthMap.put(2, 29);
-//        monthMap.put(3, 31);
-//        monthMap.put(4, 30);
-//        monthMap.put(5, 31);
-//        monthMap.put(6, 30);
-//        monthMap.put(7, 31);
-//        monthMap.put(8, 31);
-//        monthMap.put(9, 30);
-//        monthMap.put(10, 31);
-//        monthMap.put(11, 30);
-//        monthMap.put(12, 31);
+        ImageIcon img;
+
         t=new Thread(this);
 
         setContentPane(mainPanel);
@@ -438,6 +434,9 @@ public class SystemUI extends JFrame implements Runnable{
 
     //timeDB로부터 가져온 시간을 1초마다 업데이트해줌
     private void showTime() {
+        card1.setVisible(true);
+        card2.setVisible(false);
+        card3.setVisible(false);
         lblSecond.setVisible(true);
         lblThird.setVisible(true);
         lblFourth.setVisible(true);
@@ -506,6 +505,9 @@ public class SystemUI extends JFrame implements Runnable{
 
     //timer를 gui상에서 보여주자!
     private void showTimer() {
+        card1.setVisible(true);
+        card2.setVisible(false);
+        card3.setVisible(false);
         //timer를 gui상에서 보여주기 위한 슈도코드
         lblSecond.setVisible(false);
         lblThird.setVisible(false);
@@ -682,6 +684,9 @@ public class SystemUI extends JFrame implements Runnable{
     }
 
     private void showAlarm() {
+        card1.setVisible(true);
+        card2.setVisible(false);
+        card3.setVisible(false);
         //gui에서 변해야 하는 값을 일단 슈도코드로 << 틀린게 있을수도 있음
         //어....알람에 loop를 하기로 안했던것같은데 << 기억이 나지 않음
         lblSecond.setVisible(true);
@@ -788,6 +793,9 @@ public class SystemUI extends JFrame implements Runnable{
     }
 
     private void showStopwatch() {
+        card1.setVisible(true);
+        card2.setVisible(false);
+        card3.setVisible(false);
         stopwatchDefaultRecord=stopwatch.getTime();
         str=stopwatchDefaultRecord.split(" ");
         strr=String.format("%02d:%02d:%02d:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
@@ -874,6 +882,10 @@ public class SystemUI extends JFrame implements Runnable{
     }
 
     public void showMoonphase() {
+        card1.setVisible(false);
+        card2.setVisible(false);
+        card3.setVisible(true);
+
         lblSecond.setVisible(false);
         lblThird.setVisible(false);
         lblFourth.setVisible(false);
@@ -882,14 +894,26 @@ public class SystemUI extends JFrame implements Runnable{
     //현재모드 말고 다른 모드를 선택하고 싶을때 실행
     //mode select화면으로 진입하는 메서드 모드버튼을 3초간 누르면 들어감
     public void reqModeSelect() {
+        card1.setVisible(true);
+        card2.setVisible(false);
+        card3.setVisible(false);
+
         //현재 자바 자체저긍로 longClickListener가 없어서 고민
         //모드셀럭터의 맨 처음화면은 TimeKeeping으로 해놓음
       currentMode="ModeSelector";
         modeSelectorCurrentMode = "Timer";
-        lblFirst.setText("Timer");
-        lblFourth.setVisible(false);
-        lblThird.setText("check");
+        lblFirst.setText(modeSelectorCurrentMode);
+        lblSecond.setVisible(false);
+        lblThird.setVisible(false);
+        lblFourth.setVisible(true);
         lblTime.setText("Timer");
+        if (selectedModes.contains(modeSelectorCurrentMode)) {
+            lblFourth.setText("[√] checked");
+        }
+        //선택한 모드가 현재 모드 안에 없다면
+        else {
+            lblFourth.setText("[  ] unchecked");
+        }
         //showModeSelectorTimeKeeping(); <<아마도?
     }
 
@@ -914,7 +938,7 @@ public class SystemUI extends JFrame implements Runnable{
         //선택한 모드안에 현재 모드가 들어있다면
         if (selectedModes.contains(modeSelectorCurrentMode)) {
             deleteModefromList();
-            lblFourth.setText("uncheck");   
+            lblFourth.setText("[  ] unchecked");
         }
         //선택한 모드가 현재 모드 안에 없다면
         else {
@@ -925,7 +949,7 @@ public class SystemUI extends JFrame implements Runnable{
             //선택한모드가 현재 모드안에 없고 현재 선택된 모드가 3개일경우
             else{
                 addModetoList();
-                lblFourth.setText("check");
+                lblFourth.setText("[√] checked");
             }
         }
     }
@@ -1066,16 +1090,16 @@ public class SystemUI extends JFrame implements Runnable{
 
         lblFirst.setText(modeSelectorCurrentMode);
         lblSecond.setVisible(false);
+        lblThird.setVisible(false);
         lblFourth.setVisible(true);
 
         if (selectedModes.contains(modeSelectorCurrentMode)) {
-            lblFourth.setText("check");
+            lblFourth.setText("[√] checked");
         }
         //선택한 모드가 현재 모드 안에 없다면
         else {
-            lblFourth.setText("uncheck");
+            lblFourth.setText("[  ] unchecked");
         }
-        lblThird.setVisible(false);
 
         switch(modeSelectorCurrentMode){
             case "TimeKeeping":
@@ -1103,6 +1127,9 @@ public class SystemUI extends JFrame implements Runnable{
 
     //이거 있어야할것같은데 없음
     private void showTide() {
+        card1.setVisible(false);
+        card2.setVisible(true);
+        card3.setVisible(false);
         lblSecond.setVisible(false);
         lblThird.setVisible(true);
         lblFourth.setVisible(false);
