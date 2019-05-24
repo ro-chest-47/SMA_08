@@ -24,6 +24,22 @@ public class Moonphase {
 //        new Moonphase();
 //    } 테스트용 코드 무시
 
+    private static Moonphase instance;
+
+    private Moonphase(){
+    }
+
+    public static Moonphase getInstance(){
+        if(instance==null){
+            instance=new Moonphase();
+        }
+        return instance;
+    }
+
+    public static void deleteInstance(){
+        instance=null;
+    }
+
     public String showMoonphase() {
         switch(moon){
             case 0: //계산한 달 분류번호가 0번이면

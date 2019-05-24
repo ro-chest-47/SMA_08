@@ -21,6 +21,9 @@ public class Alarm  {
 //        this.stopAlarm();
 //    }
 
+    private Alarm(){
+
+    }
 
     //싱글턴위해 추가
     public static Alarm getInstance(){

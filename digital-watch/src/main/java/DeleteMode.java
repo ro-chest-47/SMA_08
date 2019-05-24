@@ -21,7 +21,6 @@ public class DeleteMode {
             switch (deleteList.get(i)){
                 case "TimeKeeping":
                         //
-
                     break;
                 case "Timer":
                     //
@@ -33,11 +32,10 @@ public class DeleteMode {
                     //
                     break;
                 case "Tide":
-                    //Tide.getInstance();
                     Tide.deleteInstance();
                     break;
                 case "Moonphase":
-                    //Moonphsae.getInstance();
+                    Moonphase.deleteInstance();
                     break;
                     default:
                         break;
