@@ -870,6 +870,7 @@ public class SystemUI extends JFrame implements Runnable{
         modeSelector.setSettingModeList(selectedModes);
         modeSelector.setCreateList(createModeList);
         modeSelector.setDeleteList(deleteModeList);
+        currentMode="TimeKeeping";
     }
 
 
