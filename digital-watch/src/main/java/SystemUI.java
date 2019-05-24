@@ -115,6 +115,7 @@ public class SystemUI extends JFrame implements Runnable{
 //        alarm=Alarm.getInstance();
         //timeDB초기화
         timeDB=TimeDB.getInstance();
+        timeDB.startUpdateTime();
 
         lblFirst.setText("Timekeeping");
         t.start();
@@ -691,7 +692,7 @@ public class SystemUI extends JFrame implements Runnable{
     //알람 수정을 끝낼때 동작되는 메서드
     private void endAddAlarm() {
         //알람에 현재 수정한 알람을 집어넣음
-        //alarm.addAlarm(hour, minute); <<알람에 전달해주는 인자는 임의로 선택한것
+        //Alarm.addAlarm(hour, minute); <<알람에 전달해주는 인자는 임의로 선택한것
 
         this.alaramAdjustState = false;
         alarmCanAddState = false;
@@ -762,7 +763,7 @@ public class SystemUI extends JFrame implements Runnable{
     //현재 스탑워치의 시간을 stopwatch로 보내서 저장하게 해주는 기능
     private void reqRecordStopwatch() {
         lblSecond.setText(stopwatch.getTime());
-        lblSecond.setVisible(true);
+
 //        stopwatchRunState = stopwatch.getRunState();
 
 //        //스탑워치가 동작중일경우 조건문 실행
@@ -1019,7 +1020,7 @@ public class SystemUI extends JFrame implements Runnable{
             lblFourth.setVisible(false);
         }
         else if(currentMode.equals("Stopwatch")) {
-            lblSecond.setVisible(false);
+            lblSecond.setVisible(true);
             lblThird.setVisible(false);
             lblFourth.setVisible(false);
         }
@@ -1077,8 +1078,6 @@ public class SystemUI extends JFrame implements Runnable{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-            System.out.println("GUI Thread Running");
         }
     }
 }
