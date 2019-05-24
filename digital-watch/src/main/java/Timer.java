@@ -94,7 +94,7 @@ public class Timer extends Thread {
 		service = Executors.newSingleThreadScheduledExecutor();
 		runnable = new Timer(getTime());
 		thread = new Thread(runnable);
-		service.scheduleAtFixedRate(runnable, 0, 10, TimeUnit.MILLISECONDS);
+		service.scheduleAtFixedRate(runnable, 0, 100, TimeUnit.MILLISECONDS);
 		this.runState=1;
 		//startUpdateTime(thread);
 	}
