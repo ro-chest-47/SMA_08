@@ -1,8 +1,9 @@
 import java.util.*;
 
 public class Alarm  {
+    List<String> alarmList = new ArrayList<String>();
     private int alarmHour[]={24,24,24,24}; //4개의 알람시를 저장할 배열
-    private int alarmMinute[]={60,60,60,60}; //4개의 알람분을 저장할 뱌열
+    private int alarmMinute[]={60,60,60,60}; //4개의 알람분을 저장할 배열
     private int a_state; //알람 울리는지 상태 확인
     private int alarmH; //최대 23시까지 알람 설정 가능
     private int alarmM; //최대 59분까지 알람 설정 가능
@@ -57,7 +58,6 @@ public class Alarm  {
     }
 
     public void addAlarm() {
-        System.out.println("ADDALARM");
         Scanner scan = new Scanner(System.in);
         int input1 = scan.nextInt();
         int input2 = scan.nextInt();
@@ -77,7 +77,6 @@ public class Alarm  {
     }
 
     public void nextAlarm() {
-        System.out.println("NEXTALARM");
         Scanner scan = new Scanner(System.in);
         int input = scan.nextInt();
         currentAlarm=input; //입력한 알람번호의 알람을 현재 알람으로 설정
@@ -85,7 +84,6 @@ public class Alarm  {
     }
 
     public void deleteAlarm() {
-        System.out.println("DELALARM");
         Scanner scan = new Scanner(System.in);
         int input = scan.nextInt();
         currentAlarm=input;
