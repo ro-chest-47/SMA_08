@@ -6,102 +6,14 @@ public class Moonphase {
     private String stdtime="2010 01 01 00 00 00"; //기준시간
     private String currtime="2019 05 22 00 00 00"; //현재시간
     private int moon; //달 분류번호
-    private int[][] moongraphic0={
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    }; //삭(달안보임)의 그래픽 정보
-    private int[][] moongraphic1={
-            {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 1, 1, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 1, 1, 0},
-            {0, 0, 0, 0, 0, 0, 0, 1, 1, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 1, 1, 0},
-            {0, 0, 0, 0, 0, 0, 0, 1, 1, 0},
-            {0, 0, 0, 0, 0, 0, 1, 1, 0, 0},
-            {0, 0, 0, 0, 0, 1, 0, 0, 0, 0}
-    }; //초승달의 그래픽 정보
-    private int[][] moongraphic2={
-            {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 1, 1, 1, 0, 0},
-            {0, 0, 0, 0, 0, 1, 1, 1, 1, 0},
-            {0, 0, 0, 0, 0, 1, 1, 1, 1, 0},
-            {0, 0, 0, 0, 0, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 1, 1, 1, 1, 0},
-            {0, 0, 0, 0, 0, 1, 1, 1, 1, 0},
-            {0, 0, 0, 0, 0, 1, 1, 1, 0, 0},
-            {0, 0, 0, 0, 0, 1, 0, 0, 0, 0}
-    }; //상현달의 그래픽 정보
-    private int[][] moongraphic3={
-            {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 1, 1, 1, 0, 0},
-            {0, 0, 0, 1, 1, 1, 1, 1, 1, 0},
-            {0, 0, 0, 1, 1, 1, 1, 1, 1, 0},
-            {0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 0, 1, 1, 1, 1, 1, 1, 0},
-            {0, 0, 0, 1, 1, 1, 1, 1, 1, 0},
-            {0, 0, 0, 0, 1, 1, 1, 1, 0, 0},
-            {0, 0, 0, 0, 0, 1, 0, 0, 0, 0}
-    }; //열하룻달의 그래픽정보
-    private int[][] moongraphic4={
-            {0, 0, 0, 0, 1, 1, 0, 0, 0, 0},
-            {0, 0, 1, 1, 1, 1, 1, 1, 0, 0},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 0, 1, 1, 1, 1, 1, 1, 0, 0},
-            {0, 0, 0, 0, 1, 1, 0, 0, 0, 0}
-    }; //보름달의 그래픽정보
-    private int[][] moongraphic5={
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-            {0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
-            {0, 1, 1, 1, 1, 1, 1, 0, 0, 0},
-            {0, 1, 1, 1, 1, 1, 1, 0, 0, 0},
-            {1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-            {1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-            {0, 1, 1, 1, 1, 1, 1, 0, 0, 0},
-            {0, 1, 1, 1, 1, 1, 1, 0, 0, 0},
-            {0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0}
-    }; //열이렛달의 그래픽 정보
-    private int[][] moongraphic6={
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-            {0, 0, 1, 1, 1, 0, 0, 0, 0, 0},
-            {0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
-            {0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
-            {1, 1, 1, 1, 1, 0, 0, 0, 0, 0},
-            {1, 1, 1, 1, 1, 0, 0, 0, 0, 0},
-            {0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
-            {0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
-            {0, 0, 1, 1, 1, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0}
-    }; //하현달의 그래픽 정보
-    private int[][] moongraphic7={
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-            {0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
-            {0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
-            {0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
-            {1, 1, 0, 0, 0, 0, 0, 0, 0, 0},
-            {1, 1, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
-            {0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0}
-    }; //그믐달의 그래픽 정보
+    private String moongraphic0 = ("../../../moongraphic/newmoon.jpg"); //삭(달안보임)의 그래픽 정보
+    private String moongraphic1 = ("../../../moongraphic/waxingcrescent.jpg"); //초승달의 그래픽 정보
+    private String moongraphic2 = ("../../../moongraphic/firstquarter.jpg"); //상현달의 그래픽 정보
+    private String moongraphic3 = ("../../../moongraphic/waxinggibbous.jpg"); //열하룻달의 그래픽정보
+    private String moongraphic4 = ("../../../moongraphic/fullmoon.jpg"); //보름달의 그래픽정보
+    private String moongraphic5 = ("../../../moongraphic/waninggibbous.jpg"); //열이렛달의 그래픽 정보
+    private String moongraphic6 = ("../../../moongraphic/lastquarter.jpg"); //하현달의 그래픽 정보
+    private String moongraphic7 = ("../../../moongraphic/waningcrescent.jpg"); //그믐달의 그래픽 정보
 
 //    Moonphase(){
 //        this.calculateMoonphase();
@@ -112,113 +24,26 @@ public class Moonphase {
 //        new Moonphase();
 //    } 테스트용 코드 무시
 
-    public void showMoonphase() {
+    public String showMoonphase() {
         switch(moon){
             case 0: //계산한 달 분류번호가 0번이면
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(moongraphic0[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                } //삭을 그려준다
-                break;
+             return moongraphic0;
             case 1: //계산한 달번호가 1번이면
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(moongraphic1[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                } //초승달을 그려준다
-                break;
+                return moongraphic1; //초승달을 그려준다
             case 2: //계산한 달번호가 2번이면
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(moongraphic2[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                } //상현달을 그려준다
-                break;
+                return moongraphic2; //상현달을 그려준다
             case 3: //계산한 달번호가 3번이면
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(moongraphic3[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                } //열하룻달을 그려준다
-                break;
+                return moongraphic3; //열하룻달을 그려준다
             case 4: //계산한 달번호가 4번이면
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(moongraphic4[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                } //보름달을 그려본다
-                break;
+                return moongraphic4; //보름달을 그려준다
             case 5: //계산한 달번호가 5번이면
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(moongraphic5[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                } //열이렛달을 그려준다
-                break;
+                return moongraphic5; //열이렛달을 그려준다
             case 6: //계산한 달번호가 6번이면
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(moongraphic6[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                } //하현달을 그려준다
-                break;
+                return moongraphic6; //하현달을 그려준다
             case 7: //계산한 달번호가 7번이면
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
-                        if(moongraphic7[i][j] == 1) {
-                            System.out.print(" * ");
-                        }
-                        else {
-                            System.out.print("   ");
-                        }
-                    }
-                    System.out.print("\n");
-                } //그믐달을 그려준다
-                break;
+                return moongraphic7; //그믐달을 그려준다
         }
+        return null;
     }
 
     public void calculateMoonphase() {
