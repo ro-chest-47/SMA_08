@@ -68,7 +68,7 @@ public class SystemUI extends JFrame implements Runnable{
     private boolean alarmCanAddState = false; //alarm에 alarm을 더 추가시킬 수 있을경우
     private boolean stopwatchAdjustState = false; //stopwatch를 조정중일때
     private int stopwatchRunState = 0; //시퀀스다이어그램상에서 int이길래 일단 int로 설정 근데 boolean이 더 맞는것같음
-    private int stopwatchZeroState = 0; // 제로스테이트가 시퀀스다이어그램상에서는 존재 왠지 boolean으로 하고싶음
+    private int stopwatchZeroState = 1; // 제로스테이트가 시퀀스다이어그램상에서는 존재 왠지 boolean으로 하고싶음
     private String modeSelectorCurrentMode;
     private String tm;
     private int year;
@@ -168,7 +168,7 @@ public class SystemUI extends JFrame implements Runnable{
                     }
                 } else if (currentMode.equals("Stopwatch")) {
                     //stopwatch가 동작중이고 현재 조정가능한 상태가 아닐때 adjust버튼을 누르면 레코드 가능
-                    if (stopwatchRunState == 1 && !stopwatchAdjustState) {
+                    if (stopwatchRunState == 1) {
                         reqRecordStopwatch();
                     }
                 }
@@ -218,14 +218,7 @@ public class SystemUI extends JFrame implements Runnable{
                         reqNextMode();
                     }
                 } else if (currentMode.equals("Stopwatch")) {
-                    //stopwatch모드이고 작동중이지 않을때 mode버튼을 누르면  cursor가 바뀜 << 이 시나리오가 정의되어 있지 않은듯
-                    if (stopwatchAdjustState && stopwatchRunState == 0) {
-                        changeCursor();
-                    }
-                    //stopwatch모드이고 adjust중이 아닐고 작동중이 아닐때 모드버튼을 누르면 다음 모드로 감
-                    else if (!stopwatchAdjustState && stopwatchRunState == 0) {
-                        reqNextMode();
-                    }
+                    reqNextMode();
                 } else if (currentMode.equals("Tide")) {
                     //tide모드일때 mode버튼을 누르면 다음 mode로 넘어감
                     reqNextMode();
@@ -262,8 +255,8 @@ public class SystemUI extends JFrame implements Runnable{
                 if (currentMode.equals("TimeKeeping")) {
                     //뭔가 들어갈게 있겠지
                 } else if (currentMode.equals("Timer")) {
-                    /*
-                    일단보류
+
+                    //일단보류
 
                     //Timer모드이긴한데 현재 타이머가 돌아가는중일경우 reset버튼을 누르면 일단 타이머를 멈춤
                     //전제조건에 Tiemr의 시간이 00:00:00이어야 한다가 있음 << 이거는 추가 안함
@@ -274,7 +267,7 @@ public class SystemUI extends JFrame implements Runnable{
                     else{
                         reqResetTimer();
                     }
-                    */
+
                     //timer가 adjust단계일경우 reset버튼을 누른다면? << 이 경우는 아직 모르는듯?
                     if (timerAdjustState) {
                         //뭔가 들어갈게 있겠지
@@ -306,17 +299,7 @@ public class SystemUI extends JFrame implements Runnable{
                         //(대충 알람을 시간을 0으로 초기화한다는 내용)
                     }
                 } else if (currentMode.equals("Stopwatch")) {
-                    //reset버튼을 누를경우 stopwatch가 동작중일때는 일단 일시정지
-                    //동작중이지 않을때는 바로 시간 초기화
-
-                    //현재 스탑워치의 조정모드일경우
-                    if (stopwatchAdjustState) {
-                        //단순히 조정중이던 스탑워치의 현재커서 위치의 숫자만 초기화
-                    }
-                    //현재 스탑워치가 조정모드가 아닐경우 스탑워치가 동작중이던 말던간에 리셋 or 일시정지
-                    else if (!stopwatchAdjustState) {
-                        reqResestStopwatch();
-                    }
+                    reqResetStopwatch();
                 }
                 /*
                 moonphase와 tide는 딱히 reset버튼에서 할게없음
@@ -370,11 +353,11 @@ public class SystemUI extends JFrame implements Runnable{
                     }
                 } else if (currentMode.equals("Stopwatch")) {
                     //stopwatch가 조정가능상태가 아닐경우 start가능
-                    if (!stopwatchAdjustState && stopwatchRunState == 0) {
+                    if (stopwatchRunState == 0) {
                         reqStartStopwatch();
                     }
                     //stopwatch가 동작중이고 시간조정모드가 아닐경우 start버튼을 누르면 일시정지
-                    else if (stopwatchRunState == 1 && !stopwatchAdjustState) {
+                    else if (stopwatchRunState == 1) {
                         reqPauseStopwatch();
                     }
                 } else if (currentMode.equals("Tide")) {
@@ -409,9 +392,7 @@ public class SystemUI extends JFrame implements Runnable{
         //textViewHour.setText(hour);
         //textViewMinute.s etText(minute);
         //textViewSecond.setText(second);
-
     }
-
 
     //현재 커서 위치에 있는 값을 증가시킴
     //사용하는 모드들 = TimeKeeping
@@ -764,7 +745,7 @@ public class SystemUI extends JFrame implements Runnable{
 
     //스탑워치를 시작하자
     private void reqStartStopwatch() {
-        stopwatchRunState = stopwatch.getRunState();
+//        stopwatchRunState = stopwatch.getRunState();
         //이미 리스터단계에서 runState=0이 맞는지 한번 거르고 왔음
         //스탑워치가 동작중이 아닐경우 스탑워치를 실행시킴
         if (stopwatchRunState == 0) {
@@ -780,7 +761,7 @@ public class SystemUI extends JFrame implements Runnable{
 
     //현재 스탑워치의 시간을 stopwatch로 보내서 저장하게 해주는 기능
     private void reqRecordStopwatch() {
-        stopwatchRunState = stopwatch.getRunState();
+//        stopwatchRunState = stopwatch.getRunState();
 
         //스탑워치가 동작중일경우 조건문 실행
         if (stopwatchRunState == 1) {
@@ -804,7 +785,7 @@ public class SystemUI extends JFrame implements Runnable{
     //스탑워치를 일시정지 시키자
     private void reqPauseStopwatch() {
         //참고, 이미 리스너 단계에서 한번거름
-        stopwatchRunState = stopwatch.getRunState();
+//        stopwatchRunState = stopwatch.getRunState();
 
         //스탑워치가 작동중이니 일단 일시정지
         if (stopwatchRunState == 1) {
@@ -817,20 +798,20 @@ public class SystemUI extends JFrame implements Runnable{
         showStopwatch();
     }
 
-    private void reqResestStopwatch() {
+    private void reqResetStopwatch() {
         //스탑워치가 동작중인지 확인
-        stopwatchRunState = stopwatch.getRunState();
+//        stopwatchRunState = stopwatch.getRunState();
         //스탑워치의 시간이 0인지 확인
-        stopwatchZeroState = stopwatch.getZeroSate();
+//        stopwatchZeroState = stopwatch.getZeroSate();
 
         //현재 스탑워치의 시간이 0이고 << 스탑워치의 시간이 0이 아닐때 reset을 시켜줘야하는게 아닌가 싶음
-        if (stopwatchZeroState == 0) {
             //스탑워치가 동작중이라면 일단 pause시킴
-            if (stopwatchRunState == 1) {
-                stopwatch.pauseStopwatch();
-            }
-            stopwatch.resetStopwatch();
+        if (stopwatchRunState == 1) {
+            stopwatch.pauseStopwatch();
         }
+        stopwatchRunState=0;
+        stopwatchZeroState=1;
+        stopwatch.resetStopwatch();
 
         //reset시켰으니 show하기
         showStopwatch();
@@ -1094,6 +1075,8 @@ public class SystemUI extends JFrame implements Runnable{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+            System.out.println("GUI Thread Running");
         }
     }
 }
