@@ -855,7 +855,12 @@ public class SystemUI extends JFrame implements Runnable{
     public void reqModeSelect() {
         //현재 자바 자체저긍로 longClickListener가 없어서 고민
         //모드셀럭터의 맨 처음화면은 TimeKeeping으로 해놓음
-        modeSelectorCurrentMode = "TimeKeeping";
+      currentMode="ModeSelector";
+        modeSelectorCurrentMode = "Timer";
+        lblFirst.setText("Timer");
+        lblFourth.setVisible(false);
+        lblThird.setText("check");
+        lblTime.setText("Timer");
         //showModeSelectorTimeKeeping(); <<아마도?
     }
 
@@ -879,6 +884,7 @@ public class SystemUI extends JFrame implements Runnable{
         //선택한 모드안에 현재 모드가 들어있다면
         if (selectedModes.contains(modeSelectorCurrentMode)) {
             deleteModefromList();
+            lblFourth.setText("uncheck");   
         }
         //선택한 모드가 현재 모드 안에 없다면
         else {
