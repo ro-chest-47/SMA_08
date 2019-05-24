@@ -14,7 +14,7 @@ public class Stopwatch implements Runnable {
 
 	private Thread thread;
 	private Stopwatch runnable;
-	ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+	private ScheduledExecutorService service;
 
 	private Stopwatch() {
 
@@ -60,6 +60,7 @@ public class Stopwatch implements Runnable {
 	}
 
 	public void startStopwatch() {
+		service = Executors.newSingleThreadScheduledExecutor();
 		runnable = new Stopwatch(getTime());
 		thread = new Thread(runnable);
 		service.scheduleAtFixedRate(runnable, 0, 10, TimeUnit.MILLISECONDS);

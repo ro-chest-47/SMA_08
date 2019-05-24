@@ -13,7 +13,7 @@ public class TimeDB extends Thread{
 
 	private Thread thread;
 	private TimeDB runnable;
-	ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+	private ScheduledExecutorService service;
 
 	private int time =0;
 
@@ -131,6 +131,7 @@ public class TimeDB extends Thread{
 	}
 
 	public void startUpdateTime() {
+		service = Executors.newSingleThreadScheduledExecutor();
 		runnable = new TimeDB(getTime());
 		thread = new Thread(runnable);
 		service.scheduleAtFixedRate(runnable, 0, 10, TimeUnit.MILLISECONDS);

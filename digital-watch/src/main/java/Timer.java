@@ -13,7 +13,7 @@ public class Timer extends Thread {
 
 	private Thread thread;
 	private Timer runnable;
-	ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+	private ScheduledExecutorService service;
 
 	private int time =0;
 
@@ -91,6 +91,7 @@ public class Timer extends Thread {
 	}
 
 	public void startTimer() {
+		service = Executors.newSingleThreadScheduledExecutor();
 		runnable = new Timer(getTime());
 		thread = new Thread(runnable);
 		service.scheduleAtFixedRate(runnable, 0, 10, TimeUnit.MILLISECONDS);
