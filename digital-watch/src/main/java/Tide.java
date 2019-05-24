@@ -47,7 +47,6 @@ public class Tide {
         switch(tide){
             case 0:
                 return tidegraphic0;
-                break;
             case 1:
                 return tidegraphic1;
             case 2:
