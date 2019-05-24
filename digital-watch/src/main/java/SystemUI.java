@@ -69,7 +69,7 @@ public class SystemUI extends JFrame implements Runnable{
     private boolean stopwatchAdjustState = false; //stopwatch를 조정중일때
     private int stopwatchRunState = 0; //시퀀스다이어그램상에서 int이길래 일단 int로 설정 근데 boolean이 더 맞는것같음
     private int stopwatchZeroState = 1; // 제로스테이트가 시퀀스다이어그램상에서는 존재 왠지 boolean으로 하고싶음
-    private String stopwatchDefaultRecord="00 00 00 00";
+    private String stopwatchDefaultRecord="REC "+"00 00 00 00";
     private String modeSelectorCurrentMode;
     private String tm;
     private String[] str; // Timekeeping 정보 불러오는거
@@ -758,7 +758,7 @@ public class SystemUI extends JFrame implements Runnable{
     //현재 스탑워치의 시간을 stopwatch로 보내서 저장하게 해주는 기능
     private void reqRecordStopwatch() {
         stopwatchDefaultRecord=stopwatch.getTime();
-        lblSecond.setText(stopwatchDefaultRecord);
+        lblSecond.setText("REC "+stopwatchDefaultRecord);
         showStopwatch();
     }
 
