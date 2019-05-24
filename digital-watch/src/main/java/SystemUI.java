@@ -70,6 +70,7 @@ public class SystemUI extends JFrame implements Runnable{
     private int stopwatchRunState = 0; //시퀀스다이어그램상에서 int이길래 일단 int로 설정 근데 boolean이 더 맞는것같음
     private int stopwatchZeroState = 0; // 제로스테이트가 시퀀스다이어그램상에서는 존재 왠지 boolean으로 하고싶음
     private String modeSelectorCurrentMode;
+    private String tm;
     private int year;
     private int month;
     private int day;
@@ -479,6 +480,7 @@ public class SystemUI extends JFrame implements Runnable{
         //textViewHour.setText(hour);
         //textViewMinute.setTexT(minute);
         //textViewSecond.setTexT(second);
+
     }
 
     //전제조건도 다 맞춤
@@ -1074,25 +1076,21 @@ public class SystemUI extends JFrame implements Runnable{
                 String yr = String.format("%04d", cal.get(Calendar.YEAR));
                 String mon = String.format("%02d", cal.get(Calendar.MONTH));
 
-                String tt=timeDB.getTime(); //이렇게 해야되는데 안불러와짐
-                lblTime.setText(str);
+                tm=timeDB.getTime(); //이렇게 해야되는데 안불러와짐
+                lblTime.setText(tm);
                 lblThird.setText(yr);
                 lblFourth.setText(mon);
             }
             else if(currentMode.equals("Timer")) {
-//                String tm=timer.getTime();
-                String tm="00:00:00";
+                tm=timer.getTime();
                 lblTime.setText(tm);
             }
-            else if(currentMode.equals("StopWatch")) {
-                String tm=stopwatch.getTime();
-
-                System.out.println(tm);
-//                String tm="00:00:00";
+            else if(currentMode.equals("Stopwatch")) {
+                tm=stopwatch.getTime();
                 lblTime.setText(tm);
             }
             try {
-                Thread.sleep(10);
+                t.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
