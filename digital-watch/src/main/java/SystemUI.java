@@ -884,12 +884,6 @@ public class SystemUI extends JFrame implements Runnable{
         card2.setVisible(false);
         card3.setVisible(false);
 
-        tm=stopwatch.getTime();
-        str=tm.split(" ");
-        strr=String.format("%02d:%02d:%02d:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
-                Integer.parseInt(str[2]),Integer.parseInt(str[3]));
-        lblTime.setText(strr);
-
         stopwatchDefaultRecord=stopwatch.getTime();
         str=stopwatchDefaultRecord.split(" ");
         strr=String.format("%02d:%02d:%02d:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
@@ -1313,7 +1307,11 @@ public class SystemUI extends JFrame implements Runnable{
                 showTimer();
             }
             else if(currentMode.equals("Stopwatch")) {
-                showStopwatch();
+                tm=stopwatch.getTime();
+                str=tm.split(" ");
+                strr=String.format("%02d:%02d:%02d:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+                        Integer.parseInt(str[2]),Integer.parseInt(str[3]));
+                lblTime.setText(strr);
             }
             try {
                 t.sleep(10);
