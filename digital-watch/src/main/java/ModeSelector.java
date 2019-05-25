@@ -22,13 +22,6 @@ public class ModeSelector {
 
 
     public ModeSelector(){
-        //디폴트 모드 6개를 세팅
-//        defaultModeList.add("TimeKeeping");
-//        defaultModeList.add("Alarm");
-//        defaultModeList.add("Timer");
-//        defaultModeList.add("Stopwatch");
-//        defaultModeList.add("Tide");
-//        defaultModeList.add("Moonphase");
 
         createMode= new CreateMode();
         deleteMode=new DeleteMode();

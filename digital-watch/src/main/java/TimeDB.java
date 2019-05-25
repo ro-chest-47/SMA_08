@@ -94,6 +94,10 @@ public class TimeDB extends Thread{
 		return time;
 	}
 
+	public HashMap<Integer, Integer> getMonthMap(){
+		return this.monthMap;
+	}
+
 	//	@Override
 	public void updateTime() {
 		this.time++;

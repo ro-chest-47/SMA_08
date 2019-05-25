@@ -116,6 +116,9 @@ public class SystemUI extends JFrame implements Runnable{
         timeDB=TimeDB.getInstance();
         timeDB.startUpdateTime();
 
+        //연도의 초기값은 2010
+        timeDB.setMonthMap(2010);
+
         moonphase=Moonphase.getInstance();  // 임시로 가져온 객체
         tide=Tide.getInstance();  // 임시로 가져온 객체
 
@@ -525,6 +528,8 @@ public class SystemUI extends JFrame implements Runnable{
     private void increaseTime() {
         //현재 커서에 있는 숫자를 일단 증가시키고 제어문에서 비교
 
+
+
         //현재커서위치의 값
         //curState=0=year   cursorState=1=month     cursorState=2=day
         //cursorState=3=hour    cursorState=4=minute    cursorState=5=second 단, second는 무조건 0으로 초기화
@@ -539,6 +544,7 @@ public class SystemUI extends JFrame implements Runnable{
                 if (year > 2100) {
                     year = 2010;
                 }
+                timeDB.setMonthMap(year);
                 break;
             case 1:
                 month++;
