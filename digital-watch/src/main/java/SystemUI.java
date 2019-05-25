@@ -739,9 +739,9 @@ public class SystemUI extends JFrame implements Runnable{
 
     //현재 adjust페이즈일경우 그걸 종료시키는것
     private void endAdjustTime() {
-        //if(monthMap.get(month)<day){
-        //    day=monthMap.get(month);
-        //}
+        if(monthMap.get(month)<day){
+            day=monthMap.get(month);
+        }
         //timeDB에 현재 수정한 year, month, day, hour, minute을 전달 second는 전달해 봤자 0으로 초기화
         String currntTime = year + " " + month + " " + day + " " + hour + " " + minute;
 
