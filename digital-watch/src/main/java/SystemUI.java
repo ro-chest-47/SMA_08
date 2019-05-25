@@ -411,9 +411,9 @@ public class SystemUI extends JFrame implements Runnable{
                     else if (!alaramAdjustState && !buzzByAlarm) {
                         reqNextAlarm();
                     }
-                    //alarm상태이고 alarm설정상태일경우 start버튼을 누르면 설정하는 알람의 현재 커서의 위치값 증가
+                    //alarm상태이고 alarm설정상태일경우 start버튼을 누르면 알람을 설정할수 있게
                     else if (alaramAdjustState && !buzzByAlarm) {
-                        increaseAlarmTime();
+                        endAddAlarm();
                     }
                 } else if (currentMode.equals("Stopwatch")) {
                     //stopwatch가 조정가능상태가 아닐경우 start가능
@@ -907,7 +907,7 @@ public class SystemUI extends JFrame implements Runnable{
     private void endAddAlarm() {
         //알람에 현재 수정한 알람을 집어넣음
         try {
-            alarm.addAlarm(hour, minute); //<<알람에 전달해주는 인자는 임의로 선택한것
+            increaseAlarmTime(); //알람시간을 받아서 설정
         } catch (NullPointerException e){
 
         }
