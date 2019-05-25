@@ -442,47 +442,8 @@ public class SystemUI extends JFrame implements Runnable{
         lblThird.setVisible(true);
         lblFourth.setVisible(true);
 
-        tm=timeDB.getTime(); //이렇게 해야되는데 안불러와짐
+        tm=timeDB.getTime();
         str=tm.split(" ");
-        strr=String.format("%02d:%02d:%02d",Integer.parseInt(str[3]),Integer.parseInt(str[4]),Integer.parseInt(str[5]));
-        lblTime.setText(strr);
-
-//        if(lblFirst.getText().equals("AdjustTimer")){
-//            if(cursorState==0){
-//                strr=String.format("[%02d]:%02d:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
-//                        Integer.parseInt(str[2]));
-//                lblTime.setText(strr);
-//            }
-//            else if(cursorState==1){
-//                strr=String.format("%02d:[%02d]:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
-//                        Integer.parseInt(str[2]));
-//                lblTime.setText(strr);
-//            }
-//            else if(cursorState==2){
-//                strr=String.format("%02d:%02d:[%02d]",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
-//                        Integer.parseInt(str[2]));
-//                lblTime.setText(strr);
-//            }
-//            else if(cursorState==3){
-//                strr=String.format("%02d:%02d:[%02d]",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
-//                        Integer.parseInt(str[2]));
-//                lblTime.setText(strr);
-//            }
-//            else if(cursorState==4){
-//                strr=String.format("%02d:%02d:[%02d]",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
-//                        Integer.parseInt(str[2]));
-//                lblTime.setText(strr);
-//            }
-//            else if(cursorState==5){
-//                strr=String.format("%02d:%02d:[%02d]",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
-//                        Integer.parseInt(str[2]));
-//                lblTime.setText(strr);
-//            }
-//        }
-//        else
-//            strr=String.format("%02d:%02d:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
-//                    Integer.parseInt(str[2]));
-//        lblTime.setText(strr);
 
         if(str[1].equals("1")) str[1]="JANUARY";
         else if(str[1].equals("2")) str[1]="FEBRUARY";
@@ -498,9 +459,65 @@ public class SystemUI extends JFrame implements Runnable{
         else if(str[1].equals("12")) str[1]="DECEMBER";
         else str[1]="이걸 보고있다면 버그임";
 
-        lblSecond.setText(str[1]);
-        lblThird.setText(str[0]);
-        lblFourth.setText(str[2]);
+        if(timekeepingAdjustState){
+            if(cursorState==0){
+                strr=String.format("%02d:%02d:%02d",Integer.parseInt(str[3]),Integer.parseInt(str[4]),
+                        Integer.parseInt(str[5]));
+                lblTime.setText(strr);
+                lblSecond.setText(str[1]);
+                lblThird.setText("["+str[0]+"]");
+                lblFourth.setText(str[2]);
+            }
+            else if(cursorState==1){
+                strr=String.format("%02d:%02d:%02d",Integer.parseInt(str[3]),Integer.parseInt(str[4]),
+                        Integer.parseInt(str[5]));
+                lblTime.setText(strr);
+                lblSecond.setText("["+str[1]+"]");
+                lblThird.setText(str[0]);
+                lblFourth.setText(str[2]);
+            }
+            else if(cursorState==2){
+                strr=String.format("%02d:%02d:%02d",Integer.parseInt(str[3]),Integer.parseInt(str[4]),
+                        Integer.parseInt(str[5]));
+                lblTime.setText(strr);
+                lblSecond.setText(str[1]);
+                lblThird.setText(str[0]);
+                lblFourth.setText("["+str[2]+"]");
+            }
+            else if(cursorState==3){
+                strr=String.format("[%02d]:%02d:%02d",Integer.parseInt(str[3]),Integer.parseInt(str[4]),
+                        Integer.parseInt(str[5]));
+                lblTime.setText(strr);
+                lblSecond.setText(str[1]);
+                lblThird.setText(str[0]);
+                lblFourth.setText(str[2]);
+            }
+            else if(cursorState==4){
+                strr=String.format("%02d:[%02d]:%02d",Integer.parseInt(str[3]),Integer.parseInt(str[4]),
+                        Integer.parseInt(str[5]));
+                lblTime.setText(strr);
+                lblSecond.setText(str[1]);
+                lblThird.setText(str[0]);
+                lblFourth.setText(str[2]);
+            }
+            else if(cursorState==5){
+                strr=String.format("%02d:%02d:[%02d]",Integer.parseInt(str[3]),Integer.parseInt(str[4]),
+                        Integer.parseInt(str[5]));
+                lblTime.setText(strr);
+                lblSecond.setText(str[1]);
+                lblThird.setText(str[0]);
+                lblFourth.setText(str[2]);
+            }
+        }
+        else {
+            strr = String.format("%02d:%02d:%02d", Integer.parseInt(str[3]), Integer.parseInt(str[4]),
+                    Integer.parseInt(str[5]));
+            lblTime.setText(strr);
+            lblSecond.setText(str[1]);
+            lblThird.setText(str[0]);
+            lblFourth.setText(str[2]);
+        }
+
     }
 
     //현재 커서 위치에 있는 값을 증가시킴
@@ -767,7 +784,7 @@ public class SystemUI extends JFrame implements Runnable{
         timerZeroState = 1;
 
         //timer를 리셋시켰으니 그 화면을 표시
-//        showTimer();
+        showTimer();
     }
 
     private void showAlarm() {
