@@ -117,6 +117,8 @@ public class SystemUI extends JFrame implements Runnable{
         timeDB=TimeDB.getInstance();
         timeDB.startUpdateTime();
 
+        alarm=Alarm.getInstance();
+
         //연도의 초기값은 2010
         timeDB.setMonthMap(2010);
         monthMap=timeDB.getMonthMap();
@@ -176,7 +178,7 @@ public class SystemUI extends JFrame implements Runnable{
                 } else if (currentMode.equals("Stopwatch")) {
                     //stopwatch가 동작중이고 현재 조정가능한 상태가 아닐때 adjust버튼을 누르면 레코드 가능
                     //if (stopwatchRunState == 1) {
-                        reqRecordStopwatch();
+                    reqRecordStopwatch();
                     //}
                 }
                 //모드 셀렉터상태일때에 관한 조건문도 필요 <<유스케이스를 추가해야하나?
@@ -739,15 +741,13 @@ public class SystemUI extends JFrame implements Runnable{
 
     //현재 adjust페이즈일경우 그걸 종료시키는것
     private void endAdjustTime() {
-        //if(monthMap.get(month)<day){
-        //    day=monthMap.get(month);
-        //}
+        if(monthMap.get(month)<day){
+            day=monthMap.get(month);
+        }
         //timeDB에 현재 수정한 year, month, day, hour, minute을 전달 second는 전달해 봤자 0으로 초기화
         String currntTime = year + " " + month + " " + day + " " + hour + " " + minute;
 
-        timeDB.pauseTimeDB();
         timeDB.setTime(currntTime);
-        timeDB.startUpdateTime();
 
         //그리고 adjustState=false로 만들며 phase종료
         if (timekeepingAdjustState) {
@@ -811,15 +811,39 @@ public class SystemUI extends JFrame implements Runnable{
         card3.setVisible(false);
         //gui에서 변해야 하는 값을 일단 슈도코드로 << 틀린게 있을수도 있음
         //어....알람에 loop를 하기로 안했던것같은데 << 기억이 나지 않음
-        if(!(lblFourth.getText().equals("[√] checked")||(lblFourth.getText().equals("[ ] checked")))) {
-            lblSecond.setVisible(true);
-            lblThird.setVisible(true);
-            lblFourth.setVisible(true);
+
+        if (alaramAdjustState==true) {
+            if (!(lblFourth.getText().equals("[√] checked") || (lblFourth.getText().equals("[ ] checked")))) {
+                lblSecond.setVisible(true);
+                lblThird.setVisible(true);
+                lblFourth.setVisible(true);
+
+                if (cursorState == 0) {
+                    strr = String.format("[%02d]:%02d:%02d", hour, minute, second);
+                    lblTime.setText(strr);
+                }
+                else if (cursorState == 1) {
+                    strr = String.format("%02d:[%02d]:%02d", hour, minute, second);
+                    lblTime.setText(strr);
+                }
+                else if (cursorState == 2) {
+                    strr = String.format("%02d:%02d:[%02d]", hour, minute, second);
+                    lblTime.setText(strr);
+                }
+                else
+                    strr = String.format("%02d:%02d:%02d", hour,minute,second);
+                lblTime.setText(strr);
+            }
+            else {
+                lblSecond.setVisible(false);
+                lblThird.setVisible(false);
+                lblFourth.setVisible(true);
+            }
         }
-        else {
-            lblSecond.setVisible(false);
-            lblThird.setVisible(false);
-            lblFourth.setVisible(true);
+        else{
+            if(alarmList.size()==0)
+                lblTime.setText("No Set Alarm");
+
         }
     }
 
@@ -854,7 +878,11 @@ public class SystemUI extends JFrame implements Runnable{
         //만약 알람리스트에 알람이 가득 차있을경우
 
         //알람에서 알람리스트를 가져옴
-        alarmList=alarm.getAlarmList();
+        try {
+            alarmList = alarm.getAlarmList();
+        } catch (NullPointerException e){
+            lblFirst.setText("AlarmAdjust");
+        }
 
         if (alarmList.size() >= 4) {
             //알람을 더이상 추가할수없다는 메세지 출력하기
@@ -874,7 +902,11 @@ public class SystemUI extends JFrame implements Runnable{
     //알람 수정을 끝낼때 동작되는 메서드
     private void endAddAlarm() {
         //알람에 현재 수정한 알람을 집어넣음
-        alarm.addAlarm(hour, minute); //<<알람에 전달해주는 인자는 임의로 선택한것
+        try {
+            alarm.addAlarm(hour, minute); //<<알람에 전달해주는 인자는 임의로 선택한것
+        } catch (NullPointerException e){
+
+        }
 
         this.alaramAdjustState = false;
         alarmCanAddState = false;
@@ -899,7 +931,7 @@ public class SystemUI extends JFrame implements Runnable{
                 //alarm.deleteAlarm();
             }
         } catch (NullPointerException e){
-            lblTime.setText("No Set Alarm");
+
         }
 
         //일단 자연스럽게 맨 마지막에 showAlarm을 삽입<< 여기도 필요없을것같긴한데?
@@ -991,7 +1023,7 @@ public class SystemUI extends JFrame implements Runnable{
 //        stopwatchZeroState = stopwatch.getZeroSate();
 
         //현재 스탑워치의 시간이 0이고 << 스탑워치의 시간이 0이 아닐때 reset을 시켜줘야하는게 아닌가 싶음
-            //스탑워치가 동작중이라면 일단 pause시킴
+        //스탑워치가 동작중이라면 일단 pause시킴
         if (stopwatchRunState == 1) {
             stopwatch.pauseStopwatch();
         }
@@ -1039,7 +1071,7 @@ public class SystemUI extends JFrame implements Runnable{
 
         //현재 자바 자체저긍로 longClickListener가 없어서 고민
         //모드셀럭터의 맨 처음화면은 TimeKeeping으로 해놓음
-      currentMode="ModeSelector";
+        currentMode="ModeSelector";
         modeSelectorCurrentMode = "TimeKeeping";
         lblFirst.setText(modeSelectorCurrentMode);
         lblSecond.setVisible(false);
@@ -1218,7 +1250,7 @@ public class SystemUI extends JFrame implements Runnable{
         //dayOfWeek=요일은 유저가 설정 불가능 << 알아서 계산해주는게 좋을듯
         if (cursorState == 0) {
             hour++;
-            if (hour > 24) {
+            if (hour > 23) {
                 hour = 0;
             }
         } else if (cursorState == 1) {
