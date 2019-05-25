@@ -4,10 +4,13 @@ public class Alarm  {
     List<String> alarmList = new ArrayList<String>();
     private TimeDB timeDB;
     private String alarm; //알람 울리는지 상태 확인
+    String[] time_array;
     private int alarmHour; //최대 23시까지 알람 설정 가능
     private int alarmMinute; //최대 59분까지 알람 설정 가능
     private int currentAlarm=0;
     //private String currtime="2019 05 24 01 00 00"; //테스트용 현재시간
+    private int currHour;
+    private int currMinute;
     private boolean alarmState = false; //알람 부저 스테이트
 
     //싱글턴위해 추가
@@ -70,7 +73,10 @@ public class Alarm  {
     public boolean buzzAlarm() {
         timeDB=TimeDB.getInstance();
         String currtime = timeDB.getTime();
-        String currHM = currtime.substring(11,16); //String으로 받은 현재시간에서 시분만 추출
+        time_array = currtime.split(" ");
+        currHour = Integer.parseInt(time_array[3]);
+        currMinute = Integer.parseInt(time_array[4]);
+        String currHM = (currHour+" "+currMinute); //String으로 받은 현재시간에서 시분만 추출
         for(int i=0;i<alarmList.size();i++) {
             if (currHM.equals(alarmList.get(i))) {
                 alarmState = true; //현재 알람과 현재시간이 동일하면 알람상태를 true로 바꾸고

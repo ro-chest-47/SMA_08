@@ -168,7 +168,6 @@ public class SystemUI extends JFrame implements Runnable{
                     //알람모드에서 알람이 울리고 있는 경우 stopAlarm이 가능
                     //알람모드의 어떤 상태이던지 간에 stopAlarm이 먼저임
                     //즉 알람을 설정하는 상태여도 알람이 울리면 어떤 버튼을 누르던지 알람을 끔
-                    reqAddAlarm();
                     if (buzzByAlarm) {
                         reqStopAlarm();
                     }
@@ -902,7 +901,6 @@ public class SystemUI extends JFrame implements Runnable{
         }
 
         //알람 수정 가능하면 알람 추가
-        endAddAlarm();
     }
 
     //알람 수정을 끝낼때 동작되는 메서드
@@ -1049,9 +1047,8 @@ public class SystemUI extends JFrame implements Runnable{
         //다음 tide를 가져와 현재 타이드에 적용시킴
         tide.getNextTide();
 
-        //다음 tide를 요청했으니 show로 보여주기
 //        lblSecond.setText(currentTide);
-        showTide();
+        //showTide();getNextTide에서 실행
     }
 
     public void showMoonphase() {
@@ -1300,6 +1297,7 @@ public class SystemUI extends JFrame implements Runnable{
                 second = 0;
             }
         }*/
+        alarm.addAlarm(hour,minute);
     }
 
     //모드셀렉터모드에서 다음 모드를 요청하기위한 메서드
