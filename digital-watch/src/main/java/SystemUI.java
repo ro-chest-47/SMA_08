@@ -809,42 +809,28 @@ public class SystemUI extends JFrame implements Runnable{
         card1.setVisible(true);
         card2.setVisible(false);
         card3.setVisible(false);
-        //gui에서 변해야 하는 값을 일단 슈도코드로 << 틀린게 있을수도 있음
-        //어....알람에 loop를 하기로 안했던것같은데 << 기억이 나지 않음
 
-        if (alaramAdjustState==true) {
-            if (!(lblFourth.getText().equals("[√] checked") || (lblFourth.getText().equals("[ ] checked")))) {
-                lblSecond.setVisible(true);
-                lblThird.setVisible(true);
-                lblFourth.setVisible(true);
-
-                if (cursorState == 0) {
-                    strr = String.format("[%02d]:%02d:%02d", hour, minute, second);
-                    lblTime.setText(strr);
-                }
-                else if (cursorState == 1) {
-                    strr = String.format("%02d:[%02d]:%02d", hour, minute, second);
-                    lblTime.setText(strr);
-                }
-                else if (cursorState == 2) {
-                    strr = String.format("%02d:%02d:[%02d]", hour, minute, second);
-                    lblTime.setText(strr);
-                }
-                else
-                    strr = String.format("%02d:%02d:%02d", hour,minute,second);
-                lblTime.setText(strr);
+        if (!(lblFourth.getText().equals("[√] checked") || (lblFourth.getText().equals("[ ] checked")))) { // 모드셀렉트가 아닐 경우
+            if (alaramAdjustState==true) { // 알람세팅중일 경우
+                lblFirst.setText("AlarmAdjust");
             }
-            else {
-                lblSecond.setVisible(false);
-                lblThird.setVisible(false);
-                lblFourth.setVisible(true);
+            else if (alaramAdjustState==false){ // 알람세팅중이 아닐 경우
+                if(alarmList.size()==0) { // 알람이 하나도 설정이 안된 경우
+                    lblTime.setText("NO ALARM");
+                }
             }
+            lblFirst.setVisible(true);
+            lblSecond.setVisible(true);
+            lblThird.setVisible(true);
+            lblFourth.setVisible(true);
         }
-        else{
-            if(alarmList.size()==0)
-                lblTime.setText("No Set Alarm");
+        else{ // 모드셀렉트일 경우
+            lblFirst.setVisible(true);
+            lblSecond.setVisible(false);
+            lblThird.setVisible(false);
+            lblFourth.setVisible(true);
+        }
 
-        }
     }
 
     //add Alarm시퀀스에서 사용되는건데 현재 코드상에서 딱히 들어갈곳이 없어보임
@@ -876,6 +862,7 @@ public class SystemUI extends JFrame implements Runnable{
     //alarm화면에서  adjust버튼을 누르면 실행
     private void reqAddAlarm() {
         //만약 알람리스트에 알람이 가득 차있을경우
+        alaramAdjustState=true;
 
         //알람에서 알람리스트를 가져옴
         try {
