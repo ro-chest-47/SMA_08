@@ -599,28 +599,32 @@ public class SystemUI extends JFrame implements Runnable{
 
         tm=timer.getTime();
         str=tm.split(" ");
-
-        if(lblFirst.getText().equals("AdjustTimer")){
-            if(cursorState==0){
-                strr=String.format("[%02d]:%02d:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
-                        Integer.parseInt(str[2]));
-                lblTime.setText(strr);
+        if(!lblTime.getText().equals("TimeKeeping")) {
+            if (lblFirst.getText().equals("AdjustTimer")) {
+                if (cursorState == 0) {
+                    strr = String.format("[%02d]:%02d:%02d", Integer.parseInt(str[0]), Integer.parseInt(str[1]),
+                            Integer.parseInt(str[2]));
+                    lblTime.setText(strr);
+                } else if (cursorState == 1) {
+                    strr = String.format("%02d:[%02d]:%02d", Integer.parseInt(str[0]), Integer.parseInt(str[1]),
+                            Integer.parseInt(str[2]));
+                    lblTime.setText(strr);
+                } else if (cursorState == 2) {
+                    strr = String.format("%02d:%02d:[%02d]", Integer.parseInt(str[0]), Integer.parseInt(str[1]),
+                            Integer.parseInt(str[2]));
+                    lblTime.setText(strr);
+                }
             }
-            else if(cursorState==1){
-                strr=String.format("%02d:[%02d]:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+            else
+                strr=String.format("%02d:%02d:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
                         Integer.parseInt(str[2]));
-                lblTime.setText(strr);
-            }
-            else if(cursorState==2){
-                strr=String.format("%02d:%02d:[%02d]",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
-                        Integer.parseInt(str[2]));
-                lblTime.setText(strr);
-            }
+            lblTime.setText(strr);
         }
-        else
-            strr=String.format("%02d:%02d:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
-                    Integer.parseInt(str[2]));
-        lblTime.setText(strr);
+        else{
+            lblSecond.setVisible(false);
+            lblThird.setVisible(false);
+            lblFourth.setVisible(true);
+        }
     }
 
     //전제조건도 다 맞춤
@@ -799,9 +803,16 @@ public class SystemUI extends JFrame implements Runnable{
         card3.setVisible(false);
         //gui에서 변해야 하는 값을 일단 슈도코드로 << 틀린게 있을수도 있음
         //어....알람에 loop를 하기로 안했던것같은데 << 기억이 나지 않음
-        lblSecond.setVisible(true);
-        lblThird.setVisible(true);
-        lblFourth.setVisible(true);
+        if(!(lblFourth.getText().equals("[√] checked")||(lblFourth.getText().equals("[ ] checked")))) {
+            lblSecond.setVisible(true);
+            lblThird.setVisible(true);
+            lblFourth.setVisible(true);
+        }
+        else {
+            lblSecond.setVisible(false);
+            lblThird.setVisible(false);
+            lblFourth.setVisible(true);
+        }
     }
 
     //add Alarm시퀀스에서 사용되는건데 현재 코드상에서 딱히 들어갈곳이 없어보임
@@ -907,15 +918,21 @@ public class SystemUI extends JFrame implements Runnable{
         card2.setVisible(false);
         card3.setVisible(false);
 
-        stopwatchDefaultRecord=stopwatch.getTime();
         str=stopwatchDefaultRecord.split(" ");
-        strr=String.format("%02d:%02d:%02d:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
-                Integer.parseInt(str[2]),Integer.parseInt(str[3]));
-        lblSecond.setText("REC "+strr);
+        if(!lblTime.getText().equals("TimeKeeping")) {
+            strr = String.format("%02d:%02d:%02d:%02d", Integer.parseInt(str[0]), Integer.parseInt(str[1]),
+                    Integer.parseInt(str[2]), Integer.parseInt(str[3]));
+            lblSecond.setText("REC " + strr);
+            lblSecond.setVisible(true);
+            lblFourth.setVisible(false);
+        }
+        else{
+            lblSecond.setVisible(false);
+            lblFourth.setVisible(true);
+        }
 
-        lblSecond.setVisible(true);
         lblThird.setVisible(false);
-        lblFourth.setVisible(false);
+
     }
 
     //스탑워치를 시작하자
@@ -1021,7 +1038,8 @@ public class SystemUI extends JFrame implements Runnable{
         lblFirst.setText(modeSelectorCurrentMode);
         lblSecond.setVisible(false);
         lblThird.setVisible(false);
-        lblFourth.setVisible(true);
+        lblFourth.setVisible(false);
+
         lblTime.setText("TimeKeeping");
         if (selectedModes.contains(modeSelectorCurrentMode)) {
             lblFourth.setText("[√] checked");
@@ -1031,6 +1049,7 @@ public class SystemUI extends JFrame implements Runnable{
             lblFourth.setText("[  ] unchecked");
         }
         //showModeSelectorTimeKeeping(); <<아마도?
+        lblFourth.setVisible(true);
     }
 
     //mode select화면에서 모드 셀렉트를 종료하고 빠져나올때 쓰는 메서드
@@ -1068,7 +1087,6 @@ public class SystemUI extends JFrame implements Runnable{
                 break;
         }
     }
-
 
     /*
     클래스 다이어그래에 없던 메서드들 추가
@@ -1251,7 +1269,7 @@ public class SystemUI extends JFrame implements Runnable{
                 lblTime.setText("TimeKeeping");
                 break;
             case "Timer":
-                lblTime.setText("Time");
+                lblTime.setText("Timer");
                 break;
             case "Alarm":
                 lblTime.setText("Alarm");
@@ -1335,6 +1353,15 @@ public class SystemUI extends JFrame implements Runnable{
                 strr=String.format("%02d:%02d:%02d:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
                         Integer.parseInt(str[2]),Integer.parseInt(str[3]));
                 lblTime.setText(strr);
+            }
+            else if(currentMode.equals("Alarm")) {
+                showAlarm();
+            }
+            else if(currentMode.equals("Tide")) {
+                showTide();
+            }
+            else if(currentMode.equals("Moonphase")) {
+                showMoonphase();
             }
             try {
                 t.sleep(10);
