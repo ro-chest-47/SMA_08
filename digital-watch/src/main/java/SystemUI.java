@@ -83,7 +83,7 @@ public class SystemUI extends JFrame implements Runnable{
     private int year;
     private int month;
     private int day;
-    private String dayOfWeek; //이거는 요일을 계산해주는 알고리즘을 만들어서 알아서 출력시키는게 좋을것같다는 생각
+    //private String dayOfWeek; //이거는 요일을 계산해주는 알고리즘을 만들어서 알아서 출력시키는게 좋을것같다는 생각
     private int hour;
     private int minute;
     private int second;
@@ -463,54 +463,46 @@ public class SystemUI extends JFrame implements Runnable{
         else str[1]="이걸 보고있다면 버그임";
 
         if(timekeepingAdjustState){
+            strr=String.format("%02d:%02d:%02d",hour,minute, second);
+            lblTime.setText(strr);
+            if(month==1) str[1]="JANUARY";
+            else if(month==2) str[1]="FEBRUARY";
+            else if(month==3) str[1]="MARCH";
+            else if(month==4) str[1]="APRIL";
+            else if(month==5) str[1]="MAY";
+            else if(month==6) str[1]="JUNE";
+            else if(month==7) str[1]="JULY";
+            else if(month==8) str[1]="AUGUST";
+            else if(month==9) str[1]="SEPTEMBER";
+            else if(month==10) str[1]="OCTOBER";
+            else if(month==11) str[1]="NOVEMBER";
+            else if(month==12) str[1]="DECEMBER";
+            lblSecond.setText(str[1]);
+            lblFourth.setText(Integer.toString(day));
             if(cursorState==0){
-                strr=String.format("%02d:%02d:%02d",Integer.parseInt(str[3]),Integer.parseInt(str[4]),
-                        Integer.parseInt(str[5]));
-                lblTime.setText(strr);
-                lblSecond.setText(str[1]);
-                lblThird.setText("["+str[0]+"]");
-                lblFourth.setText(str[2]);
+                lblThird.setText("["+year+"]");
             }
             else if(cursorState==1){
-                strr=String.format("%02d:%02d:%02d",Integer.parseInt(str[3]),Integer.parseInt(str[4]),
-                        Integer.parseInt(str[5]));
-                lblTime.setText(strr);
                 lblSecond.setText("["+str[1]+"]");
                 lblThird.setText(str[0]);
-                lblFourth.setText(str[2]);
             }
             else if(cursorState==2){
-                strr=String.format("%02d:%02d:%02d",Integer.parseInt(str[3]),Integer.parseInt(str[4]),
-                        Integer.parseInt(str[5]));
-                lblTime.setText(strr);
                 lblSecond.setText(str[1]);
-                lblThird.setText(str[0]);
-                lblFourth.setText("["+str[2]+"]");
+                lblFourth.setText("["+day+"]");
             }
             else if(cursorState==3){
-                strr=String.format("[%02d]:%02d:%02d",Integer.parseInt(str[3]),Integer.parseInt(str[4]),
-                        Integer.parseInt(str[5]));
+                strr=String.format("[%02d]:%02d:%02d",hour,minute, second);
                 lblTime.setText(strr);
-                lblSecond.setText(str[1]);
-                lblThird.setText(str[0]);
-                lblFourth.setText(str[2]);
+                lblFourth.setText(Integer.toString(day));
             }
             else if(cursorState==4){
-                strr=String.format("%02d:[%02d]:%02d",Integer.parseInt(str[3]),Integer.parseInt(str[4]),
-                        Integer.parseInt(str[5]));
+                strr=String.format("%02d:[%02d]:%02d",hour,minute, second);
                 lblTime.setText(strr);
-                lblSecond.setText(str[1]);
-                lblThird.setText(str[0]);
-                lblFourth.setText(str[2]);
             }
-            else if(cursorState==5){
-                strr=String.format("%02d:%02d:[%02d]",Integer.parseInt(str[3]),Integer.parseInt(str[4]),
-                        Integer.parseInt(str[5]));
+            /*else if(cursorState==5){
+                strr=String.format("%02d:%02d:[%02d]",hour,minute, second);
                 lblTime.setText(strr);
-                lblSecond.setText(str[1]);
-                lblThird.setText(str[0]);
-                lblFourth.setText(str[2]);
-            }
+            }*/
         }
         else {
             strr = String.format("%02d:%02d:%02d", Integer.parseInt(str[3]), Integer.parseInt(str[4]),
@@ -576,9 +568,9 @@ public class SystemUI extends JFrame implements Runnable{
                     minute = 0;
                 }
                 break;
-            case 5:
-                second = 0;
-                break;
+            //case 5:
+            //    second = 0;
+            //   break;
             default:
                 break;
         }
@@ -663,7 +655,8 @@ public class SystemUI extends JFrame implements Runnable{
         //Timekeeping모드에서 커서를 증가시켰을때
         if (currentMode.equals("TimeKeeping")) {
             //커서가 second에서 한단계 증가하면 year로 커서가 이동
-            if (cursorState > 5) {
+            //if (cursorState > 5) {
+            if (cursorState > 4) {//second로는 아예 못가게 수정
                 cursorState = 0;
             }
             //Timekeeing 모드동작을 수행했으므로 showTime()
@@ -723,8 +716,9 @@ public class SystemUI extends JFrame implements Runnable{
         year = Integer.parseInt(tmpArray[0]);
         month = Integer.parseInt(tmpArray[1]);
         day = Integer.parseInt(tmpArray[2]);
-        minute = Integer.parseInt(tmpArray[3]);
-        second = Integer.parseInt(tmpArray[4]);
+        hour = Integer.parseInt(tmpArray[3]);
+        minute = Integer.parseInt(tmpArray[4]);
+        second = Integer.parseInt(tmpArray[5]);
 
         //Adjsuttime으로 들어왔다면 timekeepingAdajsutState를 true로 바꾸고
         if (!timekeepingAdjustState) {
