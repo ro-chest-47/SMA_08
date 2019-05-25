@@ -1,15 +1,12 @@
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class Tide {
     private String currtime="2019 5 25 00 00 00"; //현재시간
     private String y = currtime.substring(0,4);
     private String m = currtime.substring(5,7);
     private String d = currtime.substring(8,10);
-    private int tide;
+    private int tideList[]={0,0,0};
     private int estide;
     private int wtide;
+    private int i;
     private int year, month, date;
     private int lunarYear, lunarMonth, lunarDate;
     private boolean leap;
@@ -301,7 +298,7 @@ public class Tide {
     }
 
     public String showTide() {
-        switch(tide){
+        switch(tideList[i]){
             case 0:
                 return tidegraphic0;
             case 1:
@@ -466,18 +463,32 @@ public class Tide {
                 estide = 13;
                 break;
         }
-        wtide = estide - 1;
-        tide = estide;
+        if(estide==0) {
+            wtide = 13;
+        }
+        else{
+            wtide = estide - 1;
+        }
+        tideList[0]=estide;
+        tideList[1]=estide;
+        tideList[2]=wtide;
     }
 
-    public void nextTide(){
-//        if(button2==0){
-//            tide=estide;
-//        }
-//        else if(button2==1){
-//            tide=wtide;
-//            button2=0;
-//        }
+    public void getNextTide(){
+        if (i==0){
+            i=1;
+        }
+        else if (i==1){
+            i=2;
+        }
+        else {
+            i=0;
+        }
+        showTide();
+    }
+
+    public int[] getTideList(){
+        return tideList;
     }
 }
 

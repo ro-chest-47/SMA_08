@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 
 /* 생각해볼문제
@@ -44,8 +45,8 @@ public class SystemUI extends JFrame implements Runnable{
 
 
     private ModeSelector modeSelector;
-    private Alarm[] alarmList;
-    private Tide[] tideList;
+    private List<String> alarmList = new ArrayList<String>();//알람 리스트
+    private int[] tideList;
     private Timer timer;
     private TimeKeeping timekeeping;
     private Alarm alarm;
@@ -815,10 +816,10 @@ public class SystemUI extends JFrame implements Runnable{
     //다음 알람을 요청하기 위한 메서드
     private void reqNextAlarm() {
         //알람에서 가져온 알람리스트를 저장
-        //alarmList=alarm.getAlarmList();/
+        alarmList=alarm.getAlarmList();
 
         //알람리스트의 크기가 1보다 클경우 << 알람리스트에 알람이 존재할 경우
-        if (alarmList.length > 1) {
+        if (alarmList.size() > 1) {
             //알람에서 다음 알람을 가져와서(리턴값 존재) 내부에 표시를 해야하는데....
             //이걸 어떻게 해야할까
             //일단 showAlarm으로 맨 하단의 hour와 minute을 표시하고
@@ -837,9 +838,9 @@ public class SystemUI extends JFrame implements Runnable{
         //만약 알람리스트에 알람이 가득 차있을경우
 
         //알람에서 알람리스트를 가져옴
-        //alarmList=alarm.getAlarmList();
+        alarmList=alarm.getAlarmList();
 
-        if (alarmList.length >= 4) {
+        if (alarmList.size() >= 4) {
             //알람을 더이상 추가할수없다는 메세지 출력하기
             alarmCanAddState = false;
             alaramAdjustState = false;
@@ -850,14 +851,14 @@ public class SystemUI extends JFrame implements Runnable{
             alaramAdjustState = true;
         }
 
-        //여기서는 showAlarm이 필요없을것같긴한데 일단 심심하므로 추가
-        showAlarm();
+        //알람 수정 가능하면 알람 추가
+        endAddAlarm();
     }
 
     //알람 수정을 끝낼때 동작되는 메서드
     private void endAddAlarm() {
         //알람에 현재 수정한 알람을 집어넣음
-        //Alarm.addAlarm(hour, minute); <<알람에 전달해주는 인자는 임의로 선택한것
+        alarm.addAlarm(hour, minute); //<<알람에 전달해주는 인자는 임의로 선택한것
 
         this.alaramAdjustState = false;
         alarmCanAddState = false;
@@ -873,14 +874,13 @@ public class SystemUI extends JFrame implements Runnable{
 
         //알람에 아무것도 설정되어있지 않은경우 nullpointexception임
         try {
-
-            if (alarmList.length == 0) {
+            if (alarmList.size() == 0) {
                 //알람리스트에 아무것도 없다면 에러를 출력
             }
             //알람리스트에 아무것도 없는게 아닌 뭐라도 있다면
             else {
                 //현재 있는 알람을 제거하라고 시킴
-                //alarm.deleteAlarm()   ;
+                //alarm.deleteAlarm();
             }
         } catch (NullPointerException e){
             lblTime.setText("No Set Alarm");
@@ -894,7 +894,7 @@ public class SystemUI extends JFrame implements Runnable{
     private void reqStopAlarm() {
         //근데 이게 이미 리스너쪽에서 한번 조건문을 통과한거라 여기쓴 조건이 별로 의미가 없음 << 궁금하면 확인할것
         if (buzzByAlarm) {
-            //alarm.stopAlarm();
+            alarm.stopAlarm();
         }
 
         //알람을 껐으니 알람스테이트도 false로
@@ -991,14 +991,13 @@ public class SystemUI extends JFrame implements Runnable{
     //현재 타이드는 String[]으로 하기로 함
     private void reqNextTide() {
         //tidelist를 가져와 현재 system의 tidelist에 적용시키고 <<굳이 tidelist를 가져올 필요가 있을까?라는 의문
-        //tideList=tide.getTideList();
+        tideList=tide.getTideList();
         //다음 tide를 가져와 현재 타이드에 적용시킴
-        //currentTide=tide.getNextTide();
+        tide.getNextTide();
 
         //다음 tide를 요청했으니 show로 보여주기
 //        lblSecond.setText(currentTide);
         showTide();
-
     }
 
     public void showMoonphase() {
