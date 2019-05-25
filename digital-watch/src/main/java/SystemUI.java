@@ -69,7 +69,7 @@ public class SystemUI extends JFrame implements Runnable{
     private boolean timekeepingAdjustState = false; //timekeeping에서 adjust버튼을 누를경우 state가 true로 바뀌어 시간을 조정중임을 알림
     private boolean timerAdjustState = false; //timer에서 adjust버튼을 누를경우 state가 true로 바뀌면서 timer조정가능
     private int timerRunState = 0; //시퀀스다이어그램상에서 int이길래 일단 int로 설정 근데 boolean이 더 맞는것같음
-    private int timerZeroState = 0; //startTimer에서 등장하는 변수 << boolean이여야 할것같은데 일단 int
+    private int timerZeroState = 1; //startTimer에서 등장하는 변수 << boolean이여야 할것같은데 일단 int
     private boolean alaramAdjustState = false; //alarm에서 adjust버튼을 누를경우 state가 true로 바뀌면서 alarm조정가능
     private boolean alarmCanAddState = false; //alarm에 alarm을 더 추가시킬 수 있을경우
     private boolean stopwatchAdjustState = false; //stopwatch를 조정중일때
@@ -302,11 +302,11 @@ public class SystemUI extends JFrame implements Runnable{
                         //뭔가 들어갈게 있겠지
                     }
                     //현재 timer가 zero이고 adjust단계가 아닐경우
-                    if (timerZeroState == 0 && !timerAdjustState) {
+                    if (timerZeroState == 1 && !timerAdjustState) {
                         reqResetTimer();
                     }
                     //zero가 아니고 adjust단계도 아닐경우
-                    else if (timerZeroState == 1 && !timerAdjustState) {
+                    else if (timerZeroState == 0 && !timerAdjustState) {
                         reqPauseTimer();
                     }
                 } else if (currentMode.equals("Alarm")) {
@@ -594,16 +594,13 @@ public class SystemUI extends JFrame implements Runnable{
         if(!lblTime.getText().equals("TimeKeeping")) {
             if (lblFirst.getText().equals("AdjustTimer")) {
                 if (cursorState == 0) {
-                    strr = String.format("[%02d]:%02d:%02d", Integer.parseInt(str[0]), Integer.parseInt(str[1]),
-                            Integer.parseInt(str[2]));
+                    strr = String.format("[%02d]:%02d:%02d", hour, minute, second);
                     lblTime.setText(strr);
                 } else if (cursorState == 1) {
-                    strr = String.format("%02d:[%02d]:%02d", Integer.parseInt(str[0]), Integer.parseInt(str[1]),
-                            Integer.parseInt(str[2]));
+                    strr = String.format("%02d:[%02d]:%02d",hour, minute, second);
                     lblTime.setText(strr);
                 } else if (cursorState == 2) {
-                    strr = String.format("%02d:%02d:[%02d]", Integer.parseInt(str[0]), Integer.parseInt(str[1]),
-                            Integer.parseInt(str[2]));
+                    strr = String.format("%02d:%02d:[%02d]", hour, minute, second);
                     lblTime.setText(strr);
                 }
             }
@@ -1167,14 +1164,15 @@ public class SystemUI extends JFrame implements Runnable{
     //이부분 조금 이상한것같은데 시퀀스 다이어그램에서 timer가 동작중이여야 퍼즈를  시작하는게 아닌감
     private void reqPauseTimer() {
         //timer로부터 현재 값이 zero인지 확인하고
-        //timerZeroState=timer.getZeroState();
+        timerZeroState=timer.getZeroState();
         //timer로부터 현재 timer가 동작중인지 확인하고
-        //timerRunState=timer.getRunState();
+        timerRunState=timer.getRunState();
 
         //timer가 0이고 동작중이지 않을경우 조건문 실행
-        if (timerZeroState == 0 && timerRunState == 0) {
-            //timer.pauseTimer();
+        if (timerZeroState == 0 && timerRunState == 1) {
+            timer.pauseTimer();
         }
+        timerRunState=0;
     }
 
     //increaseTimer 이름을 increaseTimerTime으로 바꿈
