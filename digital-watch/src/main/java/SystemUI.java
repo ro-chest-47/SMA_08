@@ -119,6 +119,7 @@ public class SystemUI extends JFrame implements Runnable{
 
         //연도의 초기값은 2010
         timeDB.setMonthMap(2010);
+        monthMap=timeDB.getMonthMap();
 
         moonphase=Moonphase.getInstance();  // 임시로 가져온 객체
         tide=Tide.getInstance();  // 임시로 가져온 객체
@@ -485,7 +486,7 @@ public class SystemUI extends JFrame implements Runnable{
             }
             else if(cursorState==1){
                 lblSecond.setText("["+str[1]+"]");
-                lblThird.setText(str[0]);
+                lblThird.setText(Integer.toString(year));
             }
             else if(cursorState==2){
                 lblSecond.setText(str[1]);
@@ -623,6 +624,14 @@ public class SystemUI extends JFrame implements Runnable{
         lblFirst.setText("AdjustTimer");
         timerRunState = timer.getRunState();
 
+        String currentTime = timer.getTime();
+        String[] tmpArray = currentTime.split(" ");
+
+        //Stirng으로 받아온 현재 시간을 int값으로 파싱해서 저장하자
+        hour = Integer.parseInt(tmpArray[0]);
+        minute = Integer.parseInt(tmpArray[1]);
+        second = Integer.parseInt(tmpArray[2]);
+
         //timer가 작동중일경우 일단 동작중인 timer를 pause시킴
         if (timerRunState == 1) {
             //타이머의 퍼즈타이머를 작동 시키고 runstat=0으로 만들어야함
@@ -695,6 +704,7 @@ public class SystemUI extends JFrame implements Runnable{
 
         //마지막으로 timer adjust를 끝냈으니 adjust단계가 종료되었다는 의미
         this.timerAdjustState = false;
+        cursorState=0;
 
         //Timer쪽 동작이 끝났으니 timer를 보여주자
         lblFirst.setText("Timer");
@@ -729,6 +739,9 @@ public class SystemUI extends JFrame implements Runnable{
 
     //현재 adjust페이즈일경우 그걸 종료시키는것
     private void endAdjustTime() {
+        //if(monthMap.get(month)<day){
+        //    day=monthMap.get(month);
+        //}
         //timeDB에 현재 수정한 year, month, day, hour, minute을 전달 second는 전달해 봤자 0으로 초기화
         String currntTime = year + " " + month + " " + day + " " + hour + " " + minute;
 
@@ -738,6 +751,7 @@ public class SystemUI extends JFrame implements Runnable{
         if (timekeepingAdjustState) {
             this.timekeepingAdjustState = false;
         }
+        cursorState=0;
 
         //역시 showTime으로 gui업데이트
         showTime();
