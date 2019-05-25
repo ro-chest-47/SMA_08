@@ -469,22 +469,22 @@ public class Tide {
         else{
             wtide = estide - 1;
         }
-        tideList[0]=estide;
-        tideList[1]=estide;
-        tideList[2]=wtide;
+        tideList[0]=estide; //동해
+        tideList[1]=estide; //남해
+        tideList[2]=wtide; //서해
     }
 
-    public void getNextTide(){
+    public String getNextTide(){
         if (i==0){
-            i=1;
+            i=1; //동해면 남해로
         }
         else if (i==1){
-            i=2;
+            i=2; //남해면 서해로
         }
         else {
-            i=0;
+            i=0; //서해면 동해로
         }
-        showTide();
+        return showTide();
     }
 
     public int[] getTideList(){
