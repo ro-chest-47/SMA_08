@@ -1048,35 +1048,46 @@ public class SystemUI extends JFrame implements Runnable{
     //다이어그램 수정필요 넘겨줘야하는 값이 늘어났음
     //모드셀렉트를 종료할때 바뀐모드들중 맨 앞의 값을 가져와서 그에 맞는 화면을 출력해줌
     private void endSelectMode() {
-        modeSelector.setSettingModeList(selectedModes);
-        modeSelector.setCreateList(createModeList);
-        modeSelector.setDeleteList(deleteModeList);
-        currentMode=modeSelector.getModeList().get(0);
-
-        lblFirst.setText(currentMode);
-
-        switch (currentMode){
-            case "TimeKeeping":
-                showTime();
-                break;
-            case "Timer":
-                showTimer();
-                break;
-            case "Stopwatch":
-                showStopwatch();
-                break;
-            case "Alarm":
-                showAlarm();
-                break;
-            case "Tide":
-                showTide();
-                break;
-            case "Moonphase":
-                showMoonphase();
-                break;
-            default:
-                break;
+        //현재 설정한 모드의  개수가 4개가 아닐경우
+        if(selectedModes.size()!=4){
+            lblTime.setText("Mode not 4");
+            lblFirst.setText("Mode");
+            lblThird.setText("[]unchecked");
         }
+        //설정한 모드의 개수가 4개라면
+        else{
+            modeSelector.setSettingModeList(selectedModes);
+            modeSelector.setCreateList(createModeList);
+            modeSelector.setDeleteList(deleteModeList);
+            currentMode=modeSelector.getModeList().get(0);
+
+            lblFirst.setText(currentMode);
+
+            switch (currentMode){
+                case "TimeKeeping":
+                    showTime();
+                    break;
+                case "Timer":
+                    showTimer();
+                    break;
+                case "Stopwatch":
+                    showStopwatch();
+                    break;
+                case "Alarm":
+                    showAlarm();
+                    break;
+                case "Tide":
+                    showTide();
+                    break;
+                case "Moonphase":
+                    showMoonphase();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
     }
 
     /*
