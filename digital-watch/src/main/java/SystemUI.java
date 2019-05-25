@@ -136,7 +136,6 @@ public class SystemUI extends JFrame implements Runnable{
                     //adjust 페이즈가 아닐경우 adjusttime으로 진행
                     if (!timekeepingAdjustState) {
                         //currnetMode가 timekeeping일경우 adjust버튼을 누른다면
-                        lblFirst.setText("AdjustTime");
                         reqAdjustTime(); //으로 진행
                     }
                     //adjust페이즈 일경우 adjustbuttofn을 누르면 adjust페이즈를 종료
@@ -442,6 +441,66 @@ public class SystemUI extends JFrame implements Runnable{
         lblSecond.setVisible(true);
         lblThird.setVisible(true);
         lblFourth.setVisible(true);
+
+        tm=timeDB.getTime(); //이렇게 해야되는데 안불러와짐
+        str=tm.split(" ");
+        strr=String.format("%02d:%02d:%02d",Integer.parseInt(str[3]),Integer.parseInt(str[4]),Integer.parseInt(str[5]));
+        lblTime.setText(strr);
+
+//        if(lblFirst.getText().equals("AdjustTimer")){
+//            if(cursorState==0){
+//                strr=String.format("[%02d]:%02d:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+//                        Integer.parseInt(str[2]));
+//                lblTime.setText(strr);
+//            }
+//            else if(cursorState==1){
+//                strr=String.format("%02d:[%02d]:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+//                        Integer.parseInt(str[2]));
+//                lblTime.setText(strr);
+//            }
+//            else if(cursorState==2){
+//                strr=String.format("%02d:%02d:[%02d]",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+//                        Integer.parseInt(str[2]));
+//                lblTime.setText(strr);
+//            }
+//            else if(cursorState==3){
+//                strr=String.format("%02d:%02d:[%02d]",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+//                        Integer.parseInt(str[2]));
+//                lblTime.setText(strr);
+//            }
+//            else if(cursorState==4){
+//                strr=String.format("%02d:%02d:[%02d]",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+//                        Integer.parseInt(str[2]));
+//                lblTime.setText(strr);
+//            }
+//            else if(cursorState==5){
+//                strr=String.format("%02d:%02d:[%02d]",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+//                        Integer.parseInt(str[2]));
+//                lblTime.setText(strr);
+//            }
+//        }
+//        else
+//            strr=String.format("%02d:%02d:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+//                    Integer.parseInt(str[2]));
+//        lblTime.setText(strr);
+
+        if(str[1].equals("1")) str[1]="JANUARY";
+        else if(str[1].equals("2")) str[1]="FEBRUARY";
+        else if(str[1].equals("3")) str[1]="MARCH";
+        else if(str[1].equals("4")) str[1]="APRIL";
+        else if(str[1].equals("5")) str[1]="MAY";
+        else if(str[1].equals("6")) str[1]="JUNE";
+        else if(str[1].equals("7")) str[1]="JULY";
+        else if(str[1].equals("8")) str[1]="AUGUST";
+        else if(str[1].equals("9")) str[1]="SEPTEMBER";
+        else if(str[1].equals("10")) str[1]="OCTOBER";
+        else if(str[1].equals("11")) str[1]="NOVEMBER";
+        else if(str[1].equals("12")) str[1]="DECEMBER";
+        else str[1]="이걸 보고있다면 버그임";
+
+        lblSecond.setText(str[1]);
+        lblThird.setText(str[0]);
+        lblFourth.setText(str[2]);
     }
 
     //현재 커서 위치에 있는 값을 증가시킴
@@ -514,14 +573,37 @@ public class SystemUI extends JFrame implements Runnable{
         lblSecond.setVisible(false);
         lblThird.setVisible(false);
         lblFourth.setVisible(false);
-        lblTime.setText(timer.getTime());
+
+        tm=timer.getTime();
+        str=tm.split(" ");
+
+        if(lblFirst.getText().equals("AdjustTimer")){
+            if(cursorState==0){
+                strr=String.format("[%02d]:%02d:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+                        Integer.parseInt(str[2]));
+                lblTime.setText(strr);
+            }
+            else if(cursorState==1){
+                strr=String.format("%02d:[%02d]:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+                        Integer.parseInt(str[2]));
+                lblTime.setText(strr);
+            }
+            else if(cursorState==2){
+                strr=String.format("%02d:%02d:[%02d]",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+                        Integer.parseInt(str[2]));
+                lblTime.setText(strr);
+            }
+        }
+        else
+            strr=String.format("%02d:%02d:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+                    Integer.parseInt(str[2]));
+        lblTime.setText(strr);
     }
 
     //전제조건도 다 맞춤
     //adjustsate=false일경우 진행되는 상황
     private void reqSetTimer() {
         lblFirst.setText("AdjustTimer");
-
         timerRunState = timer.getRunState();
 
         //timer가 작동중일경우 일단 동작중인 timer를 pause시킴
@@ -566,7 +648,7 @@ public class SystemUI extends JFrame implements Runnable{
             if (cursorState > 2) {
                 cursorState = 0;
             }
-            //Tiemr에서 동작을 수행했으므로 showTimer()
+            //Timer에서 동작을 수행했으므로 showTimer()
             showTimer();
         }
         //Alarm모드에서 커서 증가
@@ -603,6 +685,7 @@ public class SystemUI extends JFrame implements Runnable{
 
     //adjust time 상태로 진입
     private void reqAdjustTime() {
+        lblFirst.setText("AdjustTime");
         //timekeeping모드에서 adjust버튼을 누르면 이쪽으로
         //timeDB.getTime()메서드 실행
         //getTime으로 읽어온 값들을 저장시킴 넘어오는 값은 second까지
@@ -800,11 +883,19 @@ public class SystemUI extends JFrame implements Runnable{
         card1.setVisible(true);
         card2.setVisible(false);
         card3.setVisible(false);
+
+        tm=stopwatch.getTime();
+        str=tm.split(" ");
+        strr=String.format("%02d:%02d:%02d:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+                Integer.parseInt(str[2]),Integer.parseInt(str[3]));
+        lblTime.setText(strr);
+
         stopwatchDefaultRecord=stopwatch.getTime();
         str=stopwatchDefaultRecord.split(" ");
         strr=String.format("%02d:%02d:%02d:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
                 Integer.parseInt(str[2]),Integer.parseInt(str[3]));
         lblSecond.setText("REC "+strr);
+
         lblSecond.setVisible(true);
         lblThird.setVisible(false);
         lblFourth.setVisible(false);
@@ -1216,39 +1307,13 @@ public class SystemUI extends JFrame implements Runnable{
         while(true) {
 
             if(currentMode.equals("TimeKeeping")) {
-
-                tm=timeDB.getTime(); //이렇게 해야되는데 안불러와짐
-                str=tm.split(" ");
-                strr=String.format("%02d:%02d:%02d",Integer.parseInt(str[3]),Integer.parseInt(str[4]),Integer.parseInt(str[5]));
-                lblTime.setText(strr);
-                if(str[1].equals("1")) str[1]="JANUARY";
-                else if(str[1].equals("2")) str[1]="FEBURARY";
-                else if(str[1].equals("3")) str[1]="MARCH";
-                else if(str[1].equals("4")) str[1]="APRIL";
-                else if(str[1].equals("5")) str[1]="MAY";
-                else if(str[1].equals("6")) str[1]="JUNE";
-                else if(str[1].equals("7")) str[1]="JULY";
-                else if(str[1].equals("8")) str[1]="AUGUST";
-                else if(str[1].equals("9")) str[1]="SEPTEMBER";
-                else if(str[1].equals("10")) str[1]="OCTOBER";
-                else if(str[1].equals("11")) str[1]="NOVEMBER";
-                else if(str[1].equals("12")) str[1]="DECEMBER";
-                else str[1]="이걸 보고있다면 버그임";
-
-                lblSecond.setText(str[1]);
-                lblThird.setText(str[0]);
-                lblFourth.setText(str[2]);
+                showTime();
             }
             else if(currentMode.equals("Timer")) {
-                tm=timer.getTime();
-                lblTime.setText(tm);
+                showTimer();
             }
             else if(currentMode.equals("Stopwatch")) {
-                tm=stopwatch.getTime();
-                str=tm.split(" ");
-                strr=String.format("%02d:%02d:%02d:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
-                        Integer.parseInt(str[2]),Integer.parseInt(str[3]));
-                lblTime.setText(strr);
+                showStopwatch();
             }
             try {
                 t.sleep(10);
