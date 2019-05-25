@@ -101,11 +101,9 @@ public class SystemUI extends JFrame implements Runnable{
 
 
     public SystemUI() {
-
         Path currentRelativePath = Paths.get("");
         String s = currentRelativePath.toAbsolutePath().toString();
         System.out.println("Current relative path is: " + s);
-
         //각월에 맞는 day를 초기화
         //이 값을 TimeDB로 부터 가져오는것으로 바꿈 << 이 값을 대체 어디서 가져와야할까? 일단은 timekeeping이랑  관련된곳
 
@@ -170,6 +168,7 @@ public class SystemUI extends JFrame implements Runnable{
                     //알람모드에서 알람이 울리고 있는 경우 stopAlarm이 가능
                     //알람모드의 어떤 상태이던지 간에 stopAlarm이 먼저임
                     //즉 알람을 설정하는 상태여도 알람이 울리면 어떤 버튼을 누르던지 알람을 끔
+                    reqAddAlarm();
                     if (buzzByAlarm) {
                         reqStopAlarm();
                     }
@@ -1060,7 +1059,7 @@ public class SystemUI extends JFrame implements Runnable{
         card2.setVisible(false);
         card3.setVisible(true);
 
-        img=new ImageIcon(moonphase.showMoonphase());
+        img=new ImageIcon(moonphase.showMoonphase()); // 달 모양 표시
         lblMoon.setIcon(img);
         lblMoon.setVisible(true);
 
@@ -1349,8 +1348,7 @@ public class SystemUI extends JFrame implements Runnable{
         card1.setVisible(false);
         card2.setVisible(true);
         card3.setVisible(false);
-
-        img=new ImageIcon((tide.showTide())); // 조수 모양 표시
+        img=new ImageIcon(tide.showTide()); // 조수 모양 표시
         lblTide.setIcon(img);
         lblTide.setVisible(true);
 

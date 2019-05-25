@@ -4,7 +4,7 @@ import java.text.ParseException;
 
 public class Moonphase {
     private String stdtime="2010 01 01 00 00 00"; //기준시간
-    private String currtime="2019 05 22 00 00 00"; //현재시간
+    //private String currtime="2019 05 22 00 00 00"; //현재시간
     private int moon; //달 분류번호
     private String moongraphic0 = ("./moongraphic/newmoon.jpg"); //삭(달안보임)의 그래픽 정보
     private String moongraphic1 = ("./moongraphic/waxingcrescent.jpg"); //초승달의 그래픽 정보
@@ -14,6 +14,7 @@ public class Moonphase {
     private String moongraphic5 = ("./moongraphic/waninggibbous.jpg"); //열이렛달의 그래픽 정보
     private String moongraphic6 = ("./moongraphic/lastquarter.jpg"); //하현달의 그래픽 정보
     private String moongraphic7 = ("./moongraphic/waningcrescent.jpg"); //그믐달의 그래픽 정보
+    private TimeDB timeDB;
 
 //    Moonphase(){
 //        this.calculateMoonphase();
@@ -41,6 +42,7 @@ public class Moonphase {
     }
 
     public String showMoonphase() {
+        calculateMoonphase();
         switch(moon){
             case 0: //계산한 달 분류번호가 0번이면
              return moongraphic0;
@@ -64,6 +66,8 @@ public class Moonphase {
 
     public void calculateMoonphase() {
         try { //String type을 Date type으로 캐스팅할때 생기는 예외의 예외처리
+            timeDB=TimeDB.getInstance();
+            String currtime = timeDB.getTime();
             SimpleDateFormat format = new SimpleDateFormat("yyyy MM dd kk mm ss"); //String type으로된 날짜를 계산할 Date type 생성
             Date CurrentDate = format.parse(currtime); //현재시간을 parse()를 통해 Date형으로 변환
             Date StandardDate = format.parse(stdtime); //기준시간을 parse()를 통해 Date형으로 변환

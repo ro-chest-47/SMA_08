@@ -1,12 +1,11 @@
 public class Tide {
-    private String currtime="2019 5 25 00 00 00"; //현재시간
-    private String y = currtime.substring(0,4);
-    private String m = currtime.substring(5,7);
-    private String d = currtime.substring(8,10);
+    //private String currtime="2019 05 25 00 00 00"; //현재시간
     private int tideList[]={0,0,0};
     private int estide;
     private int wtide;
-    private int i;
+    private TimeDB timeDB;
+    private int i,j,k;
+    String[] time_array;
     private int year, month, date;
     private int lunarYear, lunarMonth, lunarDate;
     private boolean leap;
@@ -298,7 +297,8 @@ public class Tide {
     }
 
     public String showTide() {
-        switch(tideList[i]){
+        calculateTide();
+        switch(tideList[k]){
             case 0:
                 return tidegraphic0;
             case 1:
@@ -332,9 +332,12 @@ public class Tide {
     }
 
     public void calculateTide() {
-        this.year = Integer.parseInt(y);
-        this.month = Integer.parseInt(m);
-        this.date = Integer.parseInt(d);
+        timeDB=TimeDB.getInstance();
+        String currtime = timeDB.getTime();
+        time_array = currtime.split(" ");
+        this.year = Integer.parseInt(time_array[0]);
+        this.month = Integer.parseInt(time_array[1]);
+        this.date = Integer.parseInt(time_array[2]);
 
         int[] dt = new int[221];
         int td1, td2, k11, td, td0, t1, t2, jcount, m2, m1, m0, w, ti1, tj1;
@@ -415,8 +418,9 @@ public class Tide {
         if (matchTable[lunarYear - 1881][12] > 2 & matchTable[lunarYear - 1881][m0] > 2) {
             leap = true;
         }
-        int i=(lunarDate+6)%15;
-        switch (i) {
+        int j=(lunarDate+6)%15;
+
+        switch (j) {
             case 0:
                 estide = 0;
                 break;
@@ -475,14 +479,14 @@ public class Tide {
     }
 
     public String getNextTide(){
-        if (i==0){
-            i=1; //동해면 남해로
+        if (k==0){
+            k=1; //동해면 남해로
         }
-        else if (i==1){
-            i=2; //남해면 서해로
+        else if (k==1){
+            k=2; //남해면 서해로
         }
         else {
-            i=0; //서해면 동해로
+            k=0; //서해면 동해로
         }
         return showTide();
     }
