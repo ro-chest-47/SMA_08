@@ -3,10 +3,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Tide {
-    private String currtime="2019 5 25 00 00 00"; //현재시간
-    private String y = currtime.substring(0,4);
-    private String m = currtime.substring(5,7);
-    private String d = currtime.substring(8,10);
+    //private String currtime="2019 5 25 00 00 00"; //현재시간
+    private TimeDB timeDB;
+
     private int tide;
     private int estide;
     private int wtide;
@@ -335,6 +334,11 @@ public class Tide {
     }
 
     public void calculateTide() {
+        timeDB=TimeDB.getInstance();
+        String currtime = timeDB.getTime();
+        String y = currtime.substring(0,4);
+        String m = currtime.substring(5,7);
+        String d = currtime.substring(8,10);
         this.year = Integer.parseInt(y);
         this.month = Integer.parseInt(m);
         this.date = Integer.parseInt(d);

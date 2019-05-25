@@ -2,12 +2,12 @@ import java.util.*;
 
 public class Alarm  {
     List<String> alarmList = new ArrayList<String>();
+    private TimeDB timeDB;
     private String alarm; //알람 울리는지 상태 확인
     private int alarmHour; //최대 23시까지 알람 설정 가능
     private int alarmMinute; //최대 59분까지 알람 설정 가능
     private int currentAlarm=0;
-    private String currtime="2019 05 24 01 00 00"; //테스트용 현재시간
-    private String currHM = currtime.substring(11,16); //String으로 받은 현재시간에서 시분만 추출
+    //private String currtime="2019 05 24 01 00 00"; //테스트용 현재시간
     private boolean buzzByAlarm = false; //알람 부저 스테이트
 
     //싱글턴위해 추가
@@ -77,6 +77,9 @@ public class Alarm  {
     } //입력한 알람번호의 알람을 지운다
 
     public void buzzAlarm() {
+        timeDB=TimeDB.getInstance();
+        String currtime = timeDB.getTime();
+        String currHM = currtime.substring(11,16); //String으로 받은 현재시간에서 시분만 추출
         for(int i=0;i<alarmList.size();i++) {
             if (currHM.equals(alarmList.get(i))) {
                 buzzByAlarm = true;
