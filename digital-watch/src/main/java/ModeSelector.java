@@ -90,6 +90,9 @@ public class ModeSelector {
         String returnString=null;
 
         switch (currentMode){
+            case "TimeKeeping":
+                returnString="Timer";
+                break;
             case "Timer":
                 returnString="Alarm";
                 break;
@@ -103,7 +106,7 @@ public class ModeSelector {
                 returnString="Moonphase";
                 break;
             case "Moonphase":
-                returnString="Timer";
+                returnString="TimeKeeping";
                 break;
         }
 

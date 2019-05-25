@@ -514,6 +514,7 @@ public class SystemUI extends JFrame implements Runnable{
         lblSecond.setVisible(false);
         lblThird.setVisible(false);
         lblFourth.setVisible(false);
+        lblTime.setText(timer.getTime());
     }
 
     //전제조건도 다 맞춤
@@ -544,7 +545,7 @@ public class SystemUI extends JFrame implements Runnable{
     //현재 커서를 바꿔주는 기능
     private void changeCursor() {
         //현재커서위치의 값
-        //curState=0=year   cursorState=1=month     cursorState=2=day
+        //curState=0=year   cursorState=1=month     cursorState=2=day << 이거랑 현재 다름
         //cursorState=3=hour    cursorState=4=minute    cursorState=5=second
 
         //일단 커서를 증가시키고
@@ -562,8 +563,8 @@ public class SystemUI extends JFrame implements Runnable{
         //Timer모드에서 커서를 증가시켰을때
         else if (currentMode.equals("Timer")) {
             //커서가 second에서 한단계 증가하면 hour로 커서가 이동
-            if (cursorState > 5) {
-                cursorState = 3;
+            if (cursorState > 2) {
+                cursorState = 0;
             }
             //Tiemr에서 동작을 수행했으므로 showTimer()
             showTimer();
@@ -596,6 +597,7 @@ public class SystemUI extends JFrame implements Runnable{
         this.timerAdjustState = false;
 
         //Timer쪽 동작이 끝났으니 timer를 보여주자
+        lblFirst.setText("Timer");
         showTimer();
     }
 
@@ -907,12 +909,12 @@ public class SystemUI extends JFrame implements Runnable{
         //현재 자바 자체저긍로 longClickListener가 없어서 고민
         //모드셀럭터의 맨 처음화면은 TimeKeeping으로 해놓음
       currentMode="ModeSelector";
-        modeSelectorCurrentMode = "Timer";
+        modeSelectorCurrentMode = "TimeKeeping";
         lblFirst.setText(modeSelectorCurrentMode);
         lblSecond.setVisible(false);
         lblThird.setVisible(false);
         lblFourth.setVisible(true);
-        lblTime.setText("Timer");
+        lblTime.setText("TimeKeeping");
         if (selectedModes.contains(modeSelectorCurrentMode)) {
             lblFourth.setText("[√] checked");
         }
@@ -926,11 +928,37 @@ public class SystemUI extends JFrame implements Runnable{
     //mode select화면에서 모드 셀렉트를 종료하고 빠져나올때 쓰는 메서드
     //modeslect화면을 종료할때 modeselect에 바뀐 모드들을 적용하기 위해 modeselect에 현재 선택된 모드들을 보냄
     //다이어그램 수정필요 넘겨줘야하는 값이 늘어났음
+    //모드셀렉트를 종료할때 바뀐모드들중 맨 앞의 값을 가져와서 그에 맞는 화면을 출력해줌
     private void endSelectMode() {
         modeSelector.setSettingModeList(selectedModes);
         modeSelector.setCreateList(createModeList);
         modeSelector.setDeleteList(deleteModeList);
-        currentMode="TimeKeeping";
+        currentMode=modeSelector.getModeList().get(0);
+
+        lblFirst.setText(currentMode);
+
+        switch (currentMode){
+            case "TimeKeeping":
+                showTime();
+                break;
+            case "Timer":
+                showTimer();
+                break;
+            case "Stopwatch":
+                showStopwatch();
+                break;
+            case "Alarm":
+                showAlarm();
+                break;
+            case "Tide":
+                showTide();
+                break;
+            case "Moonphase":
+                showMoonphase();
+                break;
+            default:
+                break;
+        }
     }
 
 
@@ -1060,6 +1088,9 @@ public class SystemUI extends JFrame implements Runnable{
                 second = 0;
             }
         }
+        timer.setTimer(hour+" "+minute+" "+second);
+
+        showTimer();
     }
 
     //알람의 increaseTime을 수정 하는 동작이 살짝 다름
