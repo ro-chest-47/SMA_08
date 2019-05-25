@@ -19,16 +19,12 @@ public class Timer extends Thread {
 
 	private class Buzzer extends Thread{
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		private int i =0;
 		public void run() {
-			while(true) {
+			for(int i =0;i<3; i++) {
 				toolkit.beep();
-				i++;
 				try {
 					Thread.sleep(1000);
-				}catch (InterruptedException e) {break;}
-				if(i == 3)
-					break;
+				}catch (InterruptedException e) {}
 			}
 
 		}
@@ -128,6 +124,7 @@ public class Timer extends Thread {
 		if(hours<0) {
 			setTimer("0 0 0");
 			buzzTimer();
+			pauseTimer();
 		}
 
 	}
