@@ -295,7 +295,7 @@ public class Tide {
             {2, 2, 1, 2, 1, 2, 1, 2, 1, 1, 2, 1, 0},
             {2, 2, 1, 2, 2, 1, 2, 3, 2, 1, 1, 2, 1}};
 
-    public String showTide() {
+    public String getTide() {
         calculateTide();
         switch(tideList[k]){
             case 0:
@@ -480,17 +480,17 @@ public class Tide {
     public String getNextTide(){
         if (k==0){
             k=1; //동해면 남해로
-            showTide();
+            getTide();
             return sea="South Sea";
         }
         else if (k==1){
             k=2; //남해면 서해로
-            showTide();
+            getTide();
             return sea="West Sea";
         }
         else {
             k=0; //서해면 동해로
-            showTide();
+            getTide();
             return sea="East Sea";
         }
     }
