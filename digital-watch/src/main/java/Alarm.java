@@ -2,7 +2,7 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-public class Alarm  {
+public class Alarm extends Thread  {
     List<String> alarmList = new ArrayList<String>();
     private TimeDB timeDB;
     private String alarm; //알람 울리는지 상태 확인
@@ -14,10 +14,12 @@ public class Alarm  {
     private int currHour;
     private int currMinute;
     private int currSecond;
-    private boolean alarmState = false; //알람 부저 스테이트
+    private static boolean alarmState = false; //알람 부저 스테이트
 
     //싱글턴위해 추가
     private static Alarm instance;
+
+    private Thread thread;
 
 //    Alarm(){
 //        this.showAlarm();
@@ -42,6 +44,7 @@ public class Alarm  {
         currHour=0;
         currMinute=0;
         alarmState = false; //알람 부저 스테이트
+
     }
 
     //싱글턴위해 추가
@@ -76,7 +79,9 @@ public class Alarm  {
 
     public void addAlarm(int alarmHour, int alarmMinute, int index) {
         //alarm=(alarmHour+" "+alarmMinute);
+
         alarmList.set(index,alarmHour+" "+alarmMinute+" "+"0");
+
         //buzzAlarm();
         //알람 설정하면 바로 알람 울리는지 확인
     }
@@ -87,6 +92,7 @@ public class Alarm  {
 
     public void deleteAlarm(int index) {
         alarmList.set(index,null);
+
     } //입력한 알람번호의 알람을 지운다
 
     public boolean buzzAlarm() {
@@ -97,18 +103,30 @@ public class Alarm  {
         currMinute = Integer.parseInt(time_array[4]);
         currSecond = Integer.parseInt(time_array[5]);
         String currHM = (currHour+" "+currMinute+" "+currSecond); //String으로 받은 현재시간에서 시분초 추출
-        for(int i=0;i<4;i++) {
-            if (currHM.equals(alarmList.get(i))) {
-                alarmState = true; //현재 알람과 현재시간이 동일하면 알람상태를 true로 바꾸고
-                System.out.println(i+" 알람이지롱");
-                Toolkit toolkit = Toolkit.getDefaultToolkit();
-                toolkit.beep();
+        if(alarmState==false) {
+            for (int i = 0; i < 4; i++) {
+                if (currHM.equals(alarmList.get(i))) {
+                    alarmState = true; //현재 알람과 현재시간이 동일하면 알람상태를 true로 바꾸고
+                    //System.out.println(alarmState);
+                    //System.out.println(i + " 알람이지롱");
+                }
             }
         }
         return alarmState; //알람상태를 리턴
     }
 
+    public void buzzBuzzer(){
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        toolkit.beep();
+    }
+
+    public void startAlarm(){
+        thread = new Alarm();
+        thread.start();
+    }
+
     public boolean stopAlarm() {
+
         alarmState = false; //alarmState가 false로 변경한다
         return alarmState;
         //buzzAlarm();
@@ -116,6 +134,22 @@ public class Alarm  {
 
     public List<String> getAlarmList(){
         return alarmList;
+    }
+
+    public void run(){
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        while(true){
+
+            try {
+                buzzAlarm();
+                //System.out.println(alarmState);
+                if(alarmState == true) {
+                    toolkit.beep();
+                }
+                Thread.sleep(500);
+            }catch(InterruptedException e){break;}
+
+        }
     }
 
 }
