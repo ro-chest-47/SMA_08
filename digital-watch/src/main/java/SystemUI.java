@@ -68,7 +68,7 @@ public class SystemUI extends JFrame implements Runnable{
     private ArrayList<String> createModeList = new ArrayList<>(); //생성해야할 리스트를 전달
     private TimeDB timeDB; //System이 TimeDB에서 값을 받아오는게 존재
     private boolean timekeepingAdjustState = false; //timekeeping에서 adjust버튼을 누를경우 state가 true로 바뀌어 시간을 조정중임을 알림
-    private boolean timeisChanged = false; //adjustTime 바로 끝낼 때 위한 State
+    private String tmptm; //adjustTime 바로 끝낼 때 위한 변수
     private boolean timerAdjustState = false; //timer에서 adjust버튼을 누를경우 state가 true로 바뀌면서 timer조정가능
     private int timerRunState = 0; //시퀀스다이어그램상에서 int이길래 일단 int로 설정 근데 boolean이 더 맞는것같음
     private int timerZeroState = 1; //startTimer에서 등장하는 변수 << boolean이여야 할것같은데 일단 int
@@ -720,7 +720,7 @@ public class SystemUI extends JFrame implements Runnable{
         //timekeeping모드에서 adjust버튼을 누르면 이쪽으로
         //timeDB.getTime()메서드 실행
         //getTime으로 읽어온 값들을 저장시킴 넘어오는 값은 second까지
-        String currentTime = timeDB.getTime();
+        String currentTime = tmptm =timeDB.getTime();
         String[] tmpArray = currentTime.split(" ");
 
         //Stirng으로 받아온 현재 시간을 int값으로 파싱해서 저장하자
@@ -748,23 +748,18 @@ public class SystemUI extends JFrame implements Runnable{
         //timeDB에 현재 수정한 year, month, day, hour, minute을 전달 second는 전달해 봤자 0으로 초기화
         String currntTime = year + " " + month + " " + day + " " + hour + " " + minute +" "+ second;
 
-        /*if(currntTime.equals(tm)){
-            timeisChanged = false;
-        }
-        else timeisChanged = true;
+        if(!currntTime.equals(tmptm)) {
 
-        if(timeisChanged==true) {
-*/
             timeDB.pauseTimeDB();
             timeDB.setTime(currntTime);
             timeDB.startUpdateTime();
 
-            //그리고 adjustState=false로 만들며 phase종료
-            if (timekeepingAdjustState) {
-                this.timekeepingAdjustState = false;
-            }
             cursorState = 0;
-       // }
+       }
+        //그리고 adjustState=false로 만들며 phase종료
+        if (timekeepingAdjustState) {
+            this.timekeepingAdjustState = false;
+        }
         //역시 showTime으로 gui업데이트
         showTime();
 
