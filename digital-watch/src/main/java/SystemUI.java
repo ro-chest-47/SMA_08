@@ -818,26 +818,25 @@ public class SystemUI extends JFrame implements Runnable{
         card3.setVisible(false);
         //gui에서 변해야 하는 값을 일단 슈도코드로 << 틀린게 있을수도 있음
         //어....알람에 loop를 하기로 안했던것같은데 << 기억이 나지 않음
+        lblThird.setVisible(true);
+        lblThird.setText("index");
 
         if (alaramAdjustState==true) {
             if (!(lblFourth.getText().equals("[√] checked") || (lblFourth.getText().equals("[ ] checked")))) {
-                lblSecond.setVisible(true);
-                lblThird.setVisible(true);
-                lblFourth.setVisible(true);
-
+                lblSecond.setVisible(false);
+                lblFourth.setVisible(false);
                 if (cursorState == 0) {
-                    strr = String.format("[%02d]:%02d:%02d", hour, minute, second);
+                    strr = String.format("[%02d]:%02d", hour, minute);
                     lblTime.setText(strr);
                 }
                 else if (cursorState == 1) {
-                    strr = String.format("%02d:[%02d]:%02d", hour, minute, second);
+                    strr = String.format("%02d:[%02d]", hour, minute);
                     lblTime.setText(strr);
                 }
             }
             else {
                 lblSecond.setVisible(false);
-                lblThird.setVisible(false);
-                lblFourth.setVisible(true);
+                lblFourth.setVisible(false);
             }
         }
         else{
