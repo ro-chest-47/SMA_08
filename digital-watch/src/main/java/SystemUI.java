@@ -121,6 +121,7 @@ public class SystemUI extends JFrame implements Runnable{
         timeDB.startUpdateTime();
 
         alarm=Alarm.getInstance();
+        currentAlarm=alarm.getAlarmList().get(0);
 
         //연도의 초기값은 2010
         timeDB.setMonthMap(2010);
@@ -821,17 +822,13 @@ public class SystemUI extends JFrame implements Runnable{
         card3.setVisible(false);
 
         lblThird.setVisible(true);
-        lblThird.setText("index");
+        lblThird.setText("["+Integer.toString(alarmIndex+1)+"/4]");
 
         //맨처음 알람리스트에서 알람을 가져옴
         alarmList=alarm.getAlarmList();
 
-        //알람리스트에 아무것도 없는 경우 알람 없다 출력하고 그냥 끝
-        if(alarmList.size()==0){
-            lblTime.setText("No Alarm");
-        }
         //알람리스트에 뭔가가 있고 알람이 울린다면
-        else if(alarmList.size()>0 && buzzByAlarm){
+        if(alarmList.size()>0 && buzzByAlarm){
             lblTime.setText("Buzz!");
         }
         //알람리스트에 뭔가가 있고 알람이 울리지 않는다면
@@ -842,7 +839,8 @@ public class SystemUI extends JFrame implements Runnable{
         //알람이 조정모드일경우
         if (alaramAdjustState) {
             if (!(lblFourth.getText().equals("[√] checked") || (lblFourth.getText().equals("[ ] checked")))) {
-                lblSecond.setVisible(false);
+                lblSecond.setVisible(true);
+                lblSecond.setText("");
                 lblFourth.setVisible(false);
                 if (cursorState == 0) {
                     strr = String.format("[%02d]:%02d", hour, minute);
@@ -860,14 +858,13 @@ public class SystemUI extends JFrame implements Runnable{
         }
         //알람이 조정모드가 아닌경우
         else{
-            if(alarmList.size()==0) {
-                lblTime.setText("No Set Alarm");
-            }
-            else if((alarmList.size()>0) && (buzzByAlarm==true)) {
-                lblTime.setText("BUZZ!");
+            if(currentAlarm==null){ //설정된 알람이 없을 경우
+                lblTime.setText("No Alarm");
             }
             else {
-                strr = String.format("%02d:%02d", hour, minute);
+                strr = String.format("%02d:%02d",
+                        Integer.parseInt(currentAlarm.split(" ")[0]),
+                        Integer.parseInt(currentAlarm.split(" ")[1]));
                 lblTime.setText(strr);
             }
         }
@@ -887,7 +884,7 @@ public class SystemUI extends JFrame implements Runnable{
 
         //알람리스트의 크기가 1보다 클경우 << 알람리스트에 알람이 존재할 경우
         if (alarmList.size() > 1) {
-            if(alarmIndex>=4) {
+            if(alarmIndex>=3) {
                 alarmIndex = 0;
                 currentAlarm=alarmList.get(alarmIndex);
             }
@@ -911,8 +908,10 @@ public class SystemUI extends JFrame implements Runnable{
             lblFirst.setText("AlarmAdjust");
         }
 
-        if (alarmList.size() >= 4) {
+        if (alarmList.get(0)!=null&&alarmList.get(1)!=null&&alarmList.get(2)!=null&&alarmList.get(3)!=null) {
             //알람을 더이상 추가할수없다는 메세지 출력하기
+            lblSecond.setVisible(true);
+            lblSecond.setText("NO MORE ALARM");
             alarmCanAddState = false;
             alaramAdjustState = false;
         }
@@ -921,7 +920,6 @@ public class SystemUI extends JFrame implements Runnable{
             alarmCanAddState = true;
             alaramAdjustState = true;
         }
-
         //알람 수정 가능하면 알람 추가
     }
 
@@ -945,21 +943,12 @@ public class SystemUI extends JFrame implements Runnable{
     private void reqDeleteAlarm() {
         //현재 알람리스트에 설정된 알람들을 불러옴
         //alarmList=alarm.getAlarmList();
-
         //알람에 아무것도 설정되어있지 않은경우 nullpointexception임
-        try {
-            if (alarmList.size() == 0) {
-                //알람리스트에 아무것도 없다면 에러를 출력
-            }
-            //알람리스트에 아무것도 없는게 아닌 뭐라도 있다면
-            else {
-                //현재 있는 알람을 제거하라고 시킴
-                //alarm.deleteAlarm();
-            }
-        } catch (NullPointerException e){
-
-        }
-
+        alarm.deleteAlarm(alarmIndex);
+        alarmList= alarm.getAlarmList();
+        currentAlarm=alarmList.get(alarmIndex);
+        lblSecond.setVisible(true);
+        lblSecond.setText("");
         //일단 자연스럽게 맨 마지막에 showAlarm을 삽입<< 여기도 필요없을것같긴한데?
         showAlarm();
     }
@@ -1068,7 +1057,7 @@ public class SystemUI extends JFrame implements Runnable{
     //현재 타이드는 String[]으로 하기로 함
     private void reqNextTide() {
         //tidelist를 가져와 현재 system의 tidelist에 적용시키고 <<굳이 tidelist를 가져올 필요가 있을까?라는 의문
-        tideList=tide.getTideList();
+//        tideList=tide.getTideList();
         //다음 tide를 가져와 현재 타이드에 적용시킴
         lblThird.setText(tide.getNextTide());
         //showTide();getNextTide에서 실행
@@ -1320,7 +1309,9 @@ public class SystemUI extends JFrame implements Runnable{
                 second = 0;
             }
         }*/
-        alarm.addAlarm(hour,minute);
+        alarm.addAlarm(hour,minute,alarmIndex);
+        alarmList= alarm.getAlarmList();
+        currentAlarm=alarmList.get(alarmIndex);
     }
 
     //모드셀렉터모드에서 다음 모드를 요청하기위한 메서드

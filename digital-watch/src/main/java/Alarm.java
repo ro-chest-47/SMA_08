@@ -27,6 +27,10 @@ public class Alarm  {
 
     private Alarm(){
         alarmList = new ArrayList<String>();
+        alarmList.add(0,"0 4");
+        alarmList.add(1,"23 10");
+        alarmList.add(2,null);
+        alarmList.add(3,"5 5");
         alarm="";
         time_array=null;
         alarmHour=0; //최대 23시까지 알람 설정 가능
@@ -68,9 +72,9 @@ public class Alarm  {
 //        } //알람이 있으면 현재 알람을 출력
 //    }
 
-    public void addAlarm(int alarmHour, int alarmMinute) {
+    public void addAlarm(int alarmHour, int alarmMinute, int index) {
         //alarm=(alarmHour+" "+alarmMinute);
-        alarmList.add(alarmHour+" "+alarmMinute+" "+"0");
+        alarmList.set(index,alarmHour+" "+alarmMinute+" "+"0");
         //buzzAlarm();
         //알람 설정하면 바로 알람 울리는지 확인
     }
@@ -79,8 +83,8 @@ public class Alarm  {
         //currentAlarm=input; //입력한 알람번호의 알람을 표시
     }
 
-    public void deleteAlarm(int currentAlarm) {
-        alarmList.remove(currentAlarm);
+    public void deleteAlarm(int index) {
+        alarmList.set(index,null);
     } //입력한 알람번호의 알람을 지운다
 
     public boolean buzzAlarm() {
