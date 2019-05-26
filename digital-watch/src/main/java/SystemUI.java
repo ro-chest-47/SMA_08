@@ -1058,7 +1058,7 @@ public class SystemUI extends JFrame implements Runnable{
         showTide();
     }
 
-    public void showMoonphase() {
+    private void showMoonphase() {
         card1.setVisible(false);
         card2.setVisible(false);
         card3.setVisible(true);
@@ -1074,7 +1074,7 @@ public class SystemUI extends JFrame implements Runnable{
 
     //현재모드 말고 다른 모드를 선택하고 싶을때 실행
     //mode select화면으로 진입하는 메서드 모드버튼을 3초간 누르면 들어감
-    public void reqModeSelect() {
+    private void reqModeSelect() {
         card1.setVisible(true);
         card2.setVisible(false);
         card3.setVisible(false);
