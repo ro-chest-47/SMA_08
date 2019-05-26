@@ -55,6 +55,7 @@ public class SystemUI extends JFrame implements Runnable{
     private Moonphase moonphase;
     private int userInput; //int값인지 불확실
     private String currentMode = "TimeKeeping"; //원래 int값인데 String으로 일단 수정
+    private String currentTide;
     private boolean buzzByAlarm = false; //알람 부저 스테이트
 
     private Thread t;
@@ -821,8 +822,10 @@ public class SystemUI extends JFrame implements Runnable{
         card2.setVisible(false);
         card3.setVisible(false);
 
+        lblSecond.setVisible(false);
         lblThird.setVisible(true);
         lblThird.setText("["+Integer.toString(alarmIndex+1)+"/4]");
+        lblFourth.setVisible(false);
 
         //맨처음 알람리스트에서 알람을 가져옴
         alarmList=alarm.getAlarmList();
@@ -844,7 +847,6 @@ public class SystemUI extends JFrame implements Runnable{
             }
             else {
                 lblSecond.setVisible(false);
-                lblFourth.setVisible(false);
             }
         }
         //알람이 조정모드가 아닌경우
@@ -1054,8 +1056,8 @@ public class SystemUI extends JFrame implements Runnable{
         //tidelist를 가져와 현재 system의 tidelist에 적용시키고 <<굳이 tidelist를 가져올 필요가 있을까?라는 의문
 //        tideList=tide.getTideList();
         //다음 tide를 가져와 현재 타이드에 적용시킴
-        lblThird.setText(tide.getNextTide());
-        //showTide();getNextTide에서 실행
+        currentTide=(tide.getNextTide());
+        showTide();
     }
 
     public void showMoonphase() {
@@ -1358,6 +1360,7 @@ public class SystemUI extends JFrame implements Runnable{
         img=new ImageIcon(tide.showTide()); // 조수 모양 표시
         lblTide.setIcon(img);
         lblTide.setVisible(true);
+        lblThird.setText(currentTide);
 
         lblSecond.setVisible(false);
         lblThird.setVisible(true);
