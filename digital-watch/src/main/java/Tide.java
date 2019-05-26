@@ -3,6 +3,7 @@ public class Tide {
     private int tideList[]={0,0,0};
     private int estide;
     private int wtide;
+    private String sea;
     private TimeDB timeDB;
     private int i,j,k;
     String[] time_array;
@@ -481,14 +482,19 @@ public class Tide {
     public String getNextTide(){
         if (k==0){
             k=1; //동해면 남해로
+            showTide();
+            return sea="South Sea";
         }
         else if (k==1){
             k=2; //남해면 서해로
+            showTide();
+            return sea="West Sea";
         }
         else {
             k=0; //서해면 동해로
+            showTide();
+            return sea="East Sea";
         }
-        return showTide();
     }
 
     public int[] getTideList(){
