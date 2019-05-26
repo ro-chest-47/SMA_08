@@ -697,9 +697,9 @@ public class SystemUI extends JFrame implements Runnable{
     private void endSetTimer() {
         //timdDB에다가 현재 설정한 timer값을 전달해줌
 
-        //	public TimeDB() {  <<참고용
-        //		setTime("2010 01 01 00 00");
-        //	}
+        //   public TimeDB() {  <<참고용
+        //      setTime("2010 01 01 00 00");
+        //   }
         String setTimeString = hour+" "+minute+" "+second;
 
         //timeDB에 현재 시간정보를 넘겨줌
@@ -755,7 +755,7 @@ public class SystemUI extends JFrame implements Runnable{
             timeDB.startUpdateTime();
 
             cursorState = 0;
-       }
+        }
         //그리고 adjustState=false로 만들며 phase종료
         if (timekeepingAdjustState) {
             this.timekeepingAdjustState = false;
