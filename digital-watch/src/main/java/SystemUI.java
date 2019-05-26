@@ -93,6 +93,8 @@ public class SystemUI extends JFrame implements Runnable{
     private HashMap<Integer, Integer> monthMap = new HashMap<>(); //각 월에 맞는 day를 매핑시켜준 hashmap << 근데 윤달을 계산하면 달라질수도있음 timekeeping에 들어가야하는게 아닌가 싶긴한데....
     private int modeFlag=0; //어떤 모드에서든지 4번 누르면 모드셀렉터화면으로 가게 하기 위한 flag임
     private ImageIcon img;
+    private String currentAlarm;
+    private int alarmIndex=0;
 
     public static void main(String[] args) {
         SystemUI systemUI = new SystemUI();
@@ -337,6 +339,7 @@ public class SystemUI extends JFrame implements Runnable{
              */
                     //alarm모드인데 현재 알람 조정상태일경우 reset버튼을 누르면 현재 설정하려고하는 알람을 00:00:00으로 초기화???
                     else if (alaramAdjustState && !buzzByAlarm) {
+                        currentAlarm="0 0 0";
                         //(대충 알람을 시간을 0으로 초기화한다는 내용)
                     }
                 } else if (currentMode.equals("Stopwatch")) {
@@ -860,8 +863,12 @@ public class SystemUI extends JFrame implements Runnable{
             if(alarmList.size()==0) {
                 lblTime.setText("No Set Alarm");
             }
-            if((alarmList.size()>0) && (buzzByAlarm==true)) {
+            else if((alarmList.size()>0) && (buzzByAlarm==true)) {
                 lblTime.setText("BUZZ!");
+            }
+            else {
+                strr = String.format("%02d:%02d", hour, minute);
+                lblTime.setText(strr);
             }
         }
     }
@@ -876,18 +883,19 @@ public class SystemUI extends JFrame implements Runnable{
     private void reqNextAlarm() {
         //알람에서 가져온 알람리스트를 저장
         alarmList=alarm.getAlarmList();
+        currentAlarm=alarmList.get(alarmIndex);
 
         //알람리스트의 크기가 1보다 클경우 << 알람리스트에 알람이 존재할 경우
         if (alarmList.size() > 1) {
-            //알람에서 다음 알람을 가져와서(리턴값 존재) 내부에 표시를 해야하는데....
-            //이걸 어떻게 해야할까
-            //일단 showAlarm으로 맨 하단의 hour와 minute을 표시하고
-            //다른 메서드를 통해 알람 상단의 다른 알람을 표시할까 << 이게 showAlarmSetting()인가?
-            //alarm.getNextList();
-            //ex) textViewTopAlarmHour.setText(nextAlarmTextHour); <<슈도코드
-            //      textViewTopAlarmMinute.setTExT(newAlarmTextMinute);
+            if(alarmIndex>=4) {
+                alarmIndex = 0;
+                currentAlarm=alarmList.get(alarmIndex);
+            }
+            else {
+                alarmIndex++;
+                currentAlarm=alarmList.get(alarmIndex);
+            }
         }
-
         //메서드의 마지막을 showAlarm으로 장식
         showAlarm();
     }

@@ -11,6 +11,7 @@ public class Alarm  {
     //private String currtime="2019 05 24 01 00 00"; //테스트용 현재시간
     private int currHour;
     private int currMinute;
+    private int currSecond;
     private boolean alarmState = false; //알람 부저 스테이트
 
     //싱글턴위해 추가
@@ -25,6 +26,16 @@ public class Alarm  {
 //    }
 
     private Alarm(){
+        alarmList = new ArrayList<String>();
+        alarm="";
+        time_array=null;
+        alarmHour=0; //최대 23시까지 알람 설정 가능
+        alarmMinute=0; //최대 59분까지 알람 설정 가능
+        currentAlarm=0;
+        //private String currtime="2019 05 24 01 00 00"; //테스트용 현재시간
+        currHour=0;
+        currMinute=0;
+        alarmState = false; //알람 부저 스테이트
     }
 
     //싱글턴위해 추가
@@ -59,7 +70,7 @@ public class Alarm  {
 
     public void addAlarm(int alarmHour, int alarmMinute) {
         //alarm=(alarmHour+" "+alarmMinute);
-        alarmList.add(alarmHour+" "+alarmMinute);
+        alarmList.add(alarmHour+" "+alarmMinute+" "+"0");
         //buzzAlarm();
         //알람 설정하면 바로 알람 울리는지 확인
     }
@@ -78,7 +89,8 @@ public class Alarm  {
         time_array = currtime.split(" ");
         currHour = Integer.parseInt(time_array[3]);
         currMinute = Integer.parseInt(time_array[4]);
-        String currHM = (currHour+" "+currMinute); //String으로 받은 현재시간에서 시분만 추출
+        currSecond = Integer.parseInt(time_array[5]);
+        String currHM = (currHour+" "+currMinute+" "+currSecond); //String으로 받은 현재시간에서 시분초 추출
         for(int i=0;i<alarmList.size();i++) {
             if (currHM.equals(alarmList.get(i))) {
                 alarmState = true; //현재 알람과 현재시간이 동일하면 알람상태를 true로 바꾸고
