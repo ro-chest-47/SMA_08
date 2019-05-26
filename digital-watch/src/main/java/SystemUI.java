@@ -122,6 +122,7 @@ public class SystemUI extends JFrame implements Runnable{
         timeDB.startUpdateTime();
 
         alarm=Alarm.getInstance();
+        alarm.startAlarm();
         currentAlarm=alarm.getAlarmList().get(0);
 
         //연도의 초기값은 2010
