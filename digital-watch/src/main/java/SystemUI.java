@@ -409,8 +409,7 @@ public class SystemUI extends JFrame implements Runnable{
                     }
                     //alarm상태이고 alarm설정상태일경우 start버튼을 누르면 알람을 설정할수 있게
                     else if (alaramAdjustState && !buzzByAlarm) {
-                        //increaseAlarmTime(); endAddAlarm에서 increaseAlarmTime() 실행
-                        endAddAlarm();
+                        increaseAlarmTime();
                     }
                 } else if (currentMode.equals("Stopwatch")) {
                     //stopwatch가 조정가능상태가 아닐경우 start가능
@@ -914,13 +913,13 @@ public class SystemUI extends JFrame implements Runnable{
     //알람 수정을 끝낼때 동작되는 메서드
     private void endAddAlarm() {
         //알람에 현재 수정한 알람을 집어넣음
-        try {
-            increaseAlarmTime(); //알람시간을 받아서 설정
-        } catch (NullPointerException e){
+//        try {
+//            increaseAlarmTime(); //알람시간을 받아서 설정
+//        } catch (NullPointerException e){
+//
+//        }
 
-        }
-
-        this.alaramAdjustState = false;
+        alaramAdjustState = false;
         alarmCanAddState = false;
 
         //여기도 showAlarm이 필요 없을것 같긴한데 일단 넣음
