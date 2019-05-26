@@ -930,6 +930,7 @@ public class SystemUI extends JFrame implements Runnable{
         alaramAdjustState = false;
         alarmCanAddState = false;
 
+        cursorState = 0;
         //여기도 showAlarm이 필요 없을것 같긴한데 일단 넣음
         showAlarm();
     }
