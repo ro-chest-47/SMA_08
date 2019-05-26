@@ -811,6 +811,7 @@ public class SystemUI extends JFrame implements Runnable{
     }
 
     private void showAlarm() {
+        buzzByAlarm=alarm.buzzAlarm(); //알람체킹을 항상 하도록 미리 켜놓고 시작
         card1.setVisible(true);
         card2.setVisible(false);
         card3.setVisible(false);
@@ -846,9 +847,12 @@ public class SystemUI extends JFrame implements Runnable{
             }
         }
         else{
-            if(alarmList.size()==0)
+            if(alarmList.size()==0) {
                 lblTime.setText("No Set Alarm");
-
+            }
+            if((alarmList.size()>0) && (buzzByAlarm==true)) {
+                lblTime.setText("BUZZ!");
+            }
         }
     }
 

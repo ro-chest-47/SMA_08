@@ -59,7 +59,8 @@ public class Alarm  {
     public void addAlarm(int alarmHour, int alarmMinute) {
         alarm=(alarmHour+" "+alarmMinute);
         alarmList.add(alarmHour+" "+alarmMinute);
-        //알람 설정
+        buzzAlarm();
+        //알람 설정하면 바로 알람 울리는지 확인
     }
 
     public void nextAlarm() {
