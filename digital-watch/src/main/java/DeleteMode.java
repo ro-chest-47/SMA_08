@@ -1,3 +1,5 @@
+import sun.awt.geom.AreaOp;
+
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
@@ -20,16 +22,20 @@ public class DeleteMode {
             //일단 String값을 비교하도록  설정
             switch (deleteList.get(i)){
                 case "TimeKeeping":
-                        //
+                        TimeKeeping.deleteInstance();
                     break;
                 case "Timer":
-                    //
+                    Timer timer= Timer.getInstance();
+                    timer.pauseTimer();
+                    Timer.deleteInstance();
                     break;
                 case "Alarm":
                     Alarm.deleteInstance();
                     break;
                 case "Stopwatch":
-                    //
+                    Stopwatch stopwatch=Stopwatch.getInstance();
+                    stopwatch.pauseStopwatch();
+                    Stopwatch.deleteInstance();
                     break;
                 case "Tide":
                     Tide.deleteInstance();

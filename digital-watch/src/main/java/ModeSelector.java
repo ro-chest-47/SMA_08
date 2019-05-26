@@ -16,15 +16,15 @@ public class ModeSelector {
     새로 추가된 필드
      */
     //create및 delete모드
-    private CreateMode createMode;
-    private DeleteMode deleteMode;
+    private CreateMode createMode = new CreateMode();
+    private DeleteMode deleteMode = new DeleteMode();
 //    private ArrayList<String> defaultModeList = new ArrayList<>();
 
 
     public ModeSelector(){
-
-        createMode= new CreateMode();
-        deleteMode=new DeleteMode();
+//
+//        createMode= new CreateMode();
+//        deleteMode=new DeleteMode();
     }
 
     public ModeSelector(String mode1, String mode2, String mode3, String mode4){
@@ -108,9 +108,11 @@ public class ModeSelector {
 
     public void setCreateList(ArrayList<String> createList){
         this.createList=createList;
+        createMode.setCreateList(this.createList);
     }
 
     public void setDeleteList(ArrayList<String> deleteList){
         this.deleteList=deleteList;
+        deleteMode.setDeleteList(this.deleteList);
     }
 }

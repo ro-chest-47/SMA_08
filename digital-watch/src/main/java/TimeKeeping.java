@@ -5,22 +5,36 @@ public class TimeKeeping {
 	private int hour;
 	private int minute;
 	private int second;
-	
+
+	private static TimeKeeping instance;
+
 	private TimeKeeping(TimeDB timeDB) {
 		setTime(timeDB.getTime());
 	}
 
 	private TimeKeeping() {
-
 	}
 
-	public static TimeKeeping getInstance() {
-		return LazyHolder.INSTANCE;
+	public static TimeKeeping getInstance(){
+		if(instance==null){
+			instance=new TimeKeeping();
+		}
+		return instance;
 	}
-	
-	private static class LazyHolder{
-		private static final TimeKeeping INSTANCE = new TimeKeeping();
+
+	public static void deleteInstance(){
+		instance=null;
 	}
+
+
+
+//	public static TimeKeeping getInstance() {
+//		return LazyHolder.INSTANCE;
+//	}
+//
+//	private static class LazyHolder{
+//		private static final TimeKeeping INSTANCE = new TimeKeeping();
+//	}
 
 	
 	public void setTime(String time) {

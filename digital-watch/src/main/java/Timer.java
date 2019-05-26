@@ -31,22 +31,44 @@ public class Timer extends Thread {
 
 	}
 
-	private Timer() {
+//	private Timer() {
+//		setTimer("0 0 0");
+//	}
+//
+//	private Timer(String time) {
+//		setTimer(time);
+//	}
+//
+//	public static Timer getInstance() {
+//		return LazyHolder.INSTANCE;
+//	}
+//
+//	private static class LazyHolder{
+//		private static final Timer INSTANCE = new Timer();
+//	}
+private static Timer instance;
+
+	private Timer(){
 		setTimer("0 0 0");
 	}
 
-	private Timer(String time) {
+	private Timer(String time){
 		setTimer(time);
 	}
 
-	public static Timer getInstance() {
-		return LazyHolder.INSTANCE;
+	public static Timer getInstance(){
+		if(instance==null){
+			instance=new Timer();
+		}
+		return instance;
 	}
 
-	private static class LazyHolder{
-		private static final Timer INSTANCE = new Timer();
+	public static void deleteInstance(){
+		instance=null;
 	}
-/*
+
+
+	/*
 	public void startUpdateTime(Thread timeThread) {
 		timeThread.start();
 	}*/

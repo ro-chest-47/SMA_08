@@ -1,3 +1,5 @@
+import javafx.scene.paint.Stop;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -16,21 +18,39 @@ public class Stopwatch implements Runnable {
 	private Stopwatch runnable;
 	private ScheduledExecutorService service;
 
-	private Stopwatch() {
+	private static Stopwatch instance;
 
+	private Stopwatch() {
+		hours=0;
+		minutes=0;
+		seconds=0;
+		runState=0;
+		zeroState=0;
+		times=0;
+	}
+
+	public static Stopwatch getInstance(){
+		if(instance==null){
+			instance=new Stopwatch();
+		}
+		return instance;
+	}
+
+	public static void deleteInstance(){
+		instance=null;
 	}
 
 	private Stopwatch(String time) {
 		setStopwatch(time);
 	}
 
-	public static Stopwatch getInstance() {
-		return LazyHolder.INSTANCE;
-	}
-
-	private static class LazyHolder {
-		private static final Stopwatch INSTANCE = new Stopwatch();
-	}
+//	public static Stopwatch getInstance() {
+//		return LazyHolder.INSTANCE;
+//	}
+//
+//	private static class LazyHolder {
+//		private static final Stopwatch INSTANCE = new Stopwatch();
+//	}
 
 	/*    public void startUpdateTime(Thread timeThread) {
             timeThread.start();

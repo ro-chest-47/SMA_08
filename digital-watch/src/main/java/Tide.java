@@ -1,6 +1,6 @@
 public class Tide {
     //private String currtime="2019 05 25 00 00 00"; //현재시간
-    private int tideList[]={0,0,0};
+    private int[] tideList={0,0,0};
     private int estide;
     private int wtide;
     private String sea;
@@ -32,6 +32,23 @@ public class Tide {
     public final int LUNAR_MONTH = 5;
     public final int LUNAR_DATE = 6;
     public final int IS_YUNDAL = 7;
+
+
+    private static Tide instance;
+
+    private Tide(){
+    }
+
+    public static Tide getInstance(){
+        if(instance==null){
+            instance=new Tide();
+        }
+        return instance;
+    }
+
+    public static void deleteInstance(){
+        instance=null;
+    }
 
     private final int[][] matchTable = {
             // 1881
@@ -277,25 +294,6 @@ public class Tide {
             {2, 2, 3, 2, 2, 1, 1, 2, 1, 1, 2, 1, 2},
             {2, 2, 1, 2, 1, 2, 1, 2, 1, 1, 2, 1, 0},
             {2, 2, 1, 2, 2, 1, 2, 3, 2, 1, 1, 2, 1}};
-
-    private static Tide instance;
-//
-//    private Tide(){
-//        this.calculateTide();
-//        this.nextTide();
-//        this.showTide();
-//    }
-//
-    public static Tide getInstance(){
-        if(instance==null){
-            instance=new Tide();
-        }
-        return instance;
-    }
-
-    public static void deleteInstance(){
-        instance=null;
-    }
 
     public String showTide() {
         calculateTide();
