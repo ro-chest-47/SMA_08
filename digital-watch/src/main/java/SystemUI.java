@@ -746,13 +746,13 @@ public class SystemUI extends JFrame implements Runnable{
         //timeDB에 현재 수정한 year, month, day, hour, minute을 전달 second는 전달해 봤자 0으로 초기화
         String currntTime = year + " " + month + " " + day + " " + hour + " " + minute +" "+ second;
 
-        if(currntTime.equals(timeDB.getTime())){
+        /*if(currntTime.equals(tm)){
             timeisChanged = false;
         }
         else timeisChanged = true;
 
         if(timeisChanged==true) {
-
+*/
             timeDB.pauseTimeDB();
             timeDB.setTime(currntTime);
             timeDB.startUpdateTime();
@@ -762,7 +762,7 @@ public class SystemUI extends JFrame implements Runnable{
                 this.timekeepingAdjustState = false;
             }
             cursorState = 0;
-        }
+       // }
         //역시 showTime으로 gui업데이트
         showTime();
 
