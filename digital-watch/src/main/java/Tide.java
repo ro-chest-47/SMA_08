@@ -330,7 +330,7 @@ public class Tide {
         return null;
     }
 
-    public void calculateTide() {
+    private void calculateTide() {
         timeDB=TimeDB.getInstance();
         String currtime = timeDB.getTime();
         time_array = currtime.split(" ");
