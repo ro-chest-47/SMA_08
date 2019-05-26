@@ -816,12 +816,28 @@ public class SystemUI extends JFrame implements Runnable{
         card1.setVisible(true);
         card2.setVisible(false);
         card3.setVisible(false);
-        //gui에서 변해야 하는 값을 일단 슈도코드로 << 틀린게 있을수도 있음
-        //어....알람에 loop를 하기로 안했던것같은데 << 기억이 나지 않음
+
         lblThird.setVisible(true);
         lblThird.setText("index");
 
-        if (alaramAdjustState==true) {
+        //맨처음 알람리스트에서 알람을 가져옴
+        alarmList=alarm.getAlarmList();
+
+        //알람리스트에 아무것도 없는 경우 알람 없다 출력하고 그냥 끝
+        if(alarmList.size()==0){
+            lblTime.setText("No Alarm");
+        }
+        //알람리스트에 뭔가가 있고 알람이 울린다면
+        else if(alarmList.size()>0 && buzzByAlarm){
+            lblTime.setText("Buzz!");
+        }
+        //알람리스트에 뭔가가 있고 알람이 울리지 않는다면
+        else if(alarmList.size()>0 && !buzzByAlarm){
+
+        }
+
+        //알람이 조정모드일경우
+        if (alaramAdjustState) {
             if (!(lblFourth.getText().equals("[√] checked") || (lblFourth.getText().equals("[ ] checked")))) {
                 lblSecond.setVisible(false);
                 lblFourth.setVisible(false);
@@ -839,6 +855,7 @@ public class SystemUI extends JFrame implements Runnable{
                 lblFourth.setVisible(false);
             }
         }
+        //알람이 조정모드가 아닌경우
         else{
             if(alarmList.size()==0) {
                 lblTime.setText("No Set Alarm");

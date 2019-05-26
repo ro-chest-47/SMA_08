@@ -28,7 +28,7 @@ public class CreateMode {
                     Timer.getInstance();
                     break;
                 case "Alarm":
-                    //Alarm.getInstance;
+                    Alarm.getInstance();
                     break;
                 case "Stopwatch":
                     Stopwatch.getInstance();

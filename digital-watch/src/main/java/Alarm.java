@@ -25,7 +25,16 @@ public class Alarm  {
 //    }
 
     private Alarm(){
-
+        alarmList = new ArrayList<String>();
+        alarm="";
+        time_array=null;
+        alarmHour=0; //최대 23시까지 알람 설정 가능
+        alarmMinute=0; //최대 59분까지 알람 설정 가능
+        currentAlarm=0;
+        //private String currtime="2019 05 24 01 00 00"; //테스트용 현재시간
+        currHour=0;
+        currMinute=0;
+        alarmState = false; //알람 부저 스테이트
     }
 
     //싱글턴위해 추가
@@ -39,6 +48,7 @@ public class Alarm  {
 
     //싱글턴위해 추가
     public static void deleteInstance(){
+
         instance=null;
     }
 

@@ -26,7 +26,7 @@ public class DeleteMode {
                     //
                     break;
                 case "Alarm":
-                    //Alarm.getInstance();
+                    Alarm.deleteInstance();
                     break;
                 case "Stopwatch":
                     //
