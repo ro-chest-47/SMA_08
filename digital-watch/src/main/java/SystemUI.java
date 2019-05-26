@@ -827,17 +827,8 @@ public class SystemUI extends JFrame implements Runnable{
         //맨처음 알람리스트에서 알람을 가져옴
         alarmList=alarm.getAlarmList();
 
-        //알람리스트에 뭔가가 있고 알람이 울린다면
-        if(alarmList.size()>0 && buzzByAlarm){
-            lblTime.setText("Buzz!");
-        }
-        //알람리스트에 뭔가가 있고 알람이 울리지 않는다면
-        else if(alarmList.size()>0 && !buzzByAlarm){
-
-        }
-
         //알람이 조정모드일경우
-        if (alaramAdjustState) {
+        if (alaramAdjustState &&!buzzByAlarm) {
             if (!(lblFourth.getText().equals("[√] checked") || (lblFourth.getText().equals("[ ] checked")))) {
                 lblSecond.setVisible(true);
                 lblSecond.setText("");
@@ -867,6 +858,10 @@ public class SystemUI extends JFrame implements Runnable{
                         Integer.parseInt(currentAlarm.split(" ")[1]));
                 lblTime.setText(strr);
             }
+        }
+        //알람리스트에 뭔가가 있고 알람이 울린다면
+        if(buzzByAlarm){
+            lblTime.setText("Buzz!");
         }
     }
 
@@ -1184,7 +1179,7 @@ public class SystemUI extends JFrame implements Runnable{
     private void addModetoList() {
 
         selectedModes.add(modeSelectorCurrentMode);
-        System.out.print("selectedModeList : ");
+//        System.out.print("selectedModeList : ");
         for(int i=0;i<selectedModes.size();i++){
             System.out.print(selectedModes.get(i)+" ");
         }
@@ -1430,6 +1425,7 @@ public class SystemUI extends JFrame implements Runnable{
             else if(currentMode.equals("Moonphase")) {
                 showMoonphase();
             }
+            alarm.buzzAlarm();
             try {
                 t.sleep(10);
             } catch (InterruptedException e) {

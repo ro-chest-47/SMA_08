@@ -1,4 +1,6 @@
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class Alarm  {
     List<String> alarmList = new ArrayList<String>();
@@ -27,10 +29,10 @@ public class Alarm  {
 
     private Alarm(){
         alarmList = new ArrayList<String>();
-        alarmList.add(0,"0 4");
-        alarmList.add(1,"23 10");
+        alarmList.add(0,null);
+        alarmList.add(1,null);
         alarmList.add(2,null);
-        alarmList.add(3,"5 5");
+        alarmList.add(3,null);
         alarm="";
         time_array=null;
         alarmHour=0; //최대 23시까지 알람 설정 가능
@@ -95,9 +97,12 @@ public class Alarm  {
         currMinute = Integer.parseInt(time_array[4]);
         currSecond = Integer.parseInt(time_array[5]);
         String currHM = (currHour+" "+currMinute+" "+currSecond); //String으로 받은 현재시간에서 시분초 추출
-        for(int i=0;i<alarmList.size();i++) {
+        for(int i=0;i<4;i++) {
             if (currHM.equals(alarmList.get(i))) {
                 alarmState = true; //현재 알람과 현재시간이 동일하면 알람상태를 true로 바꾸고
+                System.out.println(i+" 알람이지롱");
+                Toolkit toolkit = Toolkit.getDefaultToolkit();
+                toolkit.beep();
             }
         }
         return alarmState; //알람상태를 리턴

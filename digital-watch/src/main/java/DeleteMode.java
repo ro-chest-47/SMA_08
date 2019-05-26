@@ -26,7 +26,9 @@ public class DeleteMode {
                     break;
                 case "Timer":
                     Timer timer= Timer.getInstance();
-                    timer.pauseTimer();
+                    if(timer.getRunState()==1){
+                        timer.pauseTimer();
+                    }
                     Timer.deleteInstance();
                     break;
                 case "Alarm":
@@ -34,7 +36,9 @@ public class DeleteMode {
                     break;
                 case "Stopwatch":
                     Stopwatch stopwatch=Stopwatch.getInstance();
-                    stopwatch.pauseStopwatch();
+                    if(stopwatch.getRunState()==1){
+                        stopwatch.pauseStopwatch();
+                    }
                     Stopwatch.deleteInstance();
                     break;
                 case "Tide":
