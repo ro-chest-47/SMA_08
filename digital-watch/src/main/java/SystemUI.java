@@ -950,12 +950,13 @@ public class SystemUI extends JFrame implements Runnable{
     //알람이 울릴때 stopAlarm을 누르면 알람이 정지됨
     private void reqStopAlarm() {
         //근데 이게 이미 리스너쪽에서 한번 조건문을 통과한거라 여기쓴 조건이 별로 의미가 없음 << 궁금하면 확인할것
-        if (buzzByAlarm) {
-            alarm.stopAlarm();
-        }
+//        if (buzzByAlarm) {
+//            alarm.stopAlarm();
+//        }
 
         //알람을 껐으니 알람스테이트도 false로
-        this.buzzByAlarm = false;
+        //this.buzzByAlarm = false;
+        buzzByAlarm=alarm.stopAlarm();
 
         //필요없지만 매우자연스러운 showAlarm삽입
         showAlarm();
@@ -965,6 +966,8 @@ public class SystemUI extends JFrame implements Runnable{
         card1.setVisible(true);
         card2.setVisible(false);
         card3.setVisible(false);
+
+
 
         str=stopwatchDefaultRecord.split(" ");
         if(!lblTime.getText().equals("TimeKeeping")) {
@@ -1050,9 +1053,7 @@ public class SystemUI extends JFrame implements Runnable{
         //tidelist를 가져와 현재 system의 tidelist에 적용시키고 <<굳이 tidelist를 가져올 필요가 있을까?라는 의문
         tideList=tide.getTideList();
         //다음 tide를 가져와 현재 타이드에 적용시킴
-        tide.getNextTide();
-
-//        lblSecond.setText(currentTide);
+        lblThird.setText(tide.getNextTide());
         //showTide();getNextTide에서 실행
     }
 

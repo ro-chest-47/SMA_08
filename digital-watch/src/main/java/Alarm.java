@@ -29,6 +29,7 @@ public class Alarm  {
     }
 
     //싱글턴위해 추가
+
     public static Alarm getInstance(){
         if(instance==null){
             instance=new Alarm();
@@ -57,9 +58,9 @@ public class Alarm  {
 //    }
 
     public void addAlarm(int alarmHour, int alarmMinute) {
-        alarm=(alarmHour+" "+alarmMinute);
+        //alarm=(alarmHour+" "+alarmMinute);
         alarmList.add(alarmHour+" "+alarmMinute);
-        buzzAlarm();
+        //buzzAlarm();
         //알람 설정하면 바로 알람 울리는지 확인
     }
 
@@ -86,9 +87,10 @@ public class Alarm  {
         return alarmState; //알람상태를 리턴
     }
 
-    public void stopAlarm() {
+    public boolean stopAlarm() {
         alarmState = false; //alarmState가 false로 변경한다
-        buzzAlarm();
+        return alarmState;
+        //buzzAlarm();
     }
 
     public List<String> getAlarmList(){
