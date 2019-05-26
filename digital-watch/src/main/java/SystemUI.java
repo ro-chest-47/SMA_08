@@ -928,6 +928,9 @@ public class SystemUI extends JFrame implements Runnable{
 //        } catch (NullPointerException e){
 //
 //        }
+        alarm.addAlarm(hour,minute,alarmIndex);
+        alarmList= alarm.getAlarmList();
+        currentAlarm=alarmList.get(alarmIndex);
 
         alaramAdjustState = false;
         alarmCanAddState = false;
@@ -1306,9 +1309,7 @@ public class SystemUI extends JFrame implements Runnable{
                 second = 0;
             }
         }*/
-        alarm.addAlarm(hour,minute,alarmIndex);
-        alarmList= alarm.getAlarmList();
-        currentAlarm=alarmList.get(alarmIndex);
+
     }
 
     //모드셀렉터모드에서 다음 모드를 요청하기위한 메서드
