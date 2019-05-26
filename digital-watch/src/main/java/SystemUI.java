@@ -1067,7 +1067,7 @@ public class SystemUI extends JFrame implements Runnable{
         card2.setVisible(false);
         card3.setVisible(true);
 
-        img=new ImageIcon(moonphase.showMoonphase()); // 달 모양 표시
+        img=new ImageIcon(moonphase.getMoonphase()); // 달 모양 표시
         lblMoon.setIcon(img);
         lblMoon.setVisible(true);
 
@@ -1357,7 +1357,7 @@ public class SystemUI extends JFrame implements Runnable{
         card1.setVisible(false);
         card2.setVisible(true);
         card3.setVisible(false);
-        img=new ImageIcon(tide.showTide()); // 조수 모양 표시
+        img=new ImageIcon(tide.getTide()); // 조수 모양 표시
         lblTide.setIcon(img);
         lblTide.setVisible(true);
         lblThird.setText(currentTide);
