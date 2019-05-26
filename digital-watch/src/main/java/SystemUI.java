@@ -46,7 +46,6 @@ public class SystemUI extends JFrame implements Runnable{
 
     private ModeSelector modeSelector;
     private List<String> alarmList = new ArrayList<String>();//알람 리스트
-    private int[] tideList;
     private Timer timer;
     private TimeKeeping timekeeping;
     private Alarm alarm;
@@ -75,7 +74,6 @@ public class SystemUI extends JFrame implements Runnable{
     private int timerZeroState = 1; //startTimer에서 등장하는 변수 << boolean이여야 할것같은데 일단 int
     private boolean alaramAdjustState = false; //alarm에서 adjust버튼을 누를경우 state가 true로 바뀌면서 alarm조정가능
     private boolean alarmCanAddState = false; //alarm에 alarm을 더 추가시킬 수 있을경우
-    private boolean stopwatchAdjustState = false; //stopwatch를 조정중일때
     private int stopwatchRunState = 0; //시퀀스다이어그램상에서 int이길래 일단 int로 설정 근데 boolean이 더 맞는것같음
     private int stopwatchZeroState = 1; // 제로스테이트가 시퀀스다이어그램상에서는 존재 왠지 boolean으로 하고싶음
     private String stopwatchDefaultRecord="00 00 00 00";
@@ -86,7 +84,6 @@ public class SystemUI extends JFrame implements Runnable{
     private int year;
     private int month;
     private int day;
-    //private String dayOfWeek; //이거는 요일을 계산해주는 알고리즘을 만들어서 알아서 출력시키는게 좋을것같다는 생각
     private int hour;
     private int minute;
     private int second;
@@ -1397,10 +1394,6 @@ public class SystemUI extends JFrame implements Runnable{
         else if(currentMode.equals("Moonphase")) {
             showMoonphase();
         }
-    }
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
     }
 
     @Override

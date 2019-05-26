@@ -495,8 +495,8 @@ public class Tide {
         }
     }
 
-    public int[] getTideList(){
-        return tideList;
-    }
+//    public int[] getTideList(){
+//        return tideList;
+//    }
 }
 

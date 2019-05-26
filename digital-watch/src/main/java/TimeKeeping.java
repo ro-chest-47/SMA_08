@@ -8,10 +8,6 @@ public class TimeKeeping {
 
 	private static TimeKeeping instance;
 
-	private TimeKeeping(TimeDB timeDB) {
-		setTime(timeDB.getTime());
-	}
-
 	private TimeKeeping() {
 	}
 

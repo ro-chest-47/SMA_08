@@ -62,21 +62,6 @@ public class Alarm extends Thread  {
         instance=null;
     }
 
-//     테스트용 코드
-//    public static void main(String[] args) {
-//        new Alarm();
-//    }
-
-
-//    public void showAlarm() {
-//        if(alarmList.size()<1){
-//            System.out.println("NO ALARM");
-//        } //알람 배열에 설정된 알람이 없으면 알람 없음을 출력
-//        else{
-//            System.out.println(alarmList.get(currentAlarm));
-//        } //알람이 있으면 현재 알람을 출력
-//    }
-
     public void addAlarm(int alarmHour, int alarmMinute, int index) {
         //alarm=(alarmHour+" "+alarmMinute);
 
@@ -86,9 +71,6 @@ public class Alarm extends Thread  {
         //알람 설정하면 바로 알람 울리는지 확인
     }
 
-    public void nextAlarm() {
-        //currentAlarm=input; //입력한 알람번호의 알람을 표시
-    }
 
     public void deleteAlarm(int index) {
         alarmList.set(index,null);
@@ -113,11 +95,6 @@ public class Alarm extends Thread  {
             }
         }
         return alarmState; //알람상태를 리턴
-    }
-
-    public void buzzBuzzer(){
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        toolkit.beep();
     }
 
     public void startAlarm(){
