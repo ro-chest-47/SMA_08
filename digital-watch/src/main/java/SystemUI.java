@@ -685,8 +685,8 @@ public class SystemUI extends JFrame implements Runnable{
         //만약 second까지 조정가능하다면 굳이 따로 할필요 없음
         //Timer와 동일하게 때문에 || currentMode.equals("Alarm") 하면됨
         else if (currentMode.equals("Alarm")) {
-            if (cursorState > 4) {
-                cursorState = 3;
+            if (cursorState > 1) {
+                cursorState = 0;
             }
             //Alarm에서 동작을 수행했으므로 showAlarm();
             showAlarm();
@@ -838,13 +838,6 @@ public class SystemUI extends JFrame implements Runnable{
                     strr = String.format("%02d:[%02d]:%02d", hour, minute, second);
                     lblTime.setText(strr);
                 }
-                else if (cursorState == 2) {
-                    strr = String.format("%02d:%02d:[%02d]", hour, minute, second);
-                    lblTime.setText(strr);
-                }
-                else
-                    strr = String.format("%02d:%02d:%02d", hour,minute,second);
-                lblTime.setText(strr);
             }
             else {
                 lblSecond.setVisible(false);
