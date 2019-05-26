@@ -53,7 +53,7 @@ public class SystemUI extends JFrame implements Runnable{
     private Stopwatch stopwatch;
     private Tide tide;
     private Moonphase moonphase;
-    private int userInput; //int값인지 불확실
+    //private int userInput; //int값인지 불확실
     private String currentMode = "TimeKeeping"; //원래 int값인데 String으로 일단 수정
     private String currentTide;
     private boolean buzzByAlarm = false; //알람 부저 스테이트
@@ -74,8 +74,7 @@ public class SystemUI extends JFrame implements Runnable{
     private int timerRunState = 0; //시퀀스다이어그램상에서 int이길래 일단 int로 설정 근데 boolean이 더 맞는것같음
     private int timerZeroState = 1; //startTimer에서 등장하는 변수 << boolean이여야 할것같은데 일단 int
     private boolean alaramAdjustState = false; //alarm에서 adjust버튼을 누를경우 state가 true로 바뀌면서 alarm조정가능
-    private boolean alarmCanAddState = false; //alarm에 alarm을 더 추가시킬 수 있을경우
-    private boolean stopwatchAdjustState = false; //stopwatch를 조정중일때
+    //private boolean alarmCanAddState = false; //alarm에 alarm을 더 추가시킬 수 있을경우
     private int stopwatchRunState = 0; //시퀀스다이어그램상에서 int이길래 일단 int로 설정 근데 boolean이 더 맞는것같음
     private int stopwatchZeroState = 1; // 제로스테이트가 시퀀스다이어그램상에서는 존재 왠지 boolean으로 하고싶음
     private String stopwatchDefaultRecord="00 00 00 00";
@@ -910,12 +909,12 @@ public class SystemUI extends JFrame implements Runnable{
             //알람을 더이상 추가할수없다는 메세지 출력하기
             lblSecond.setVisible(true);
             lblSecond.setText("NO MORE ALARM");
-            alarmCanAddState = false;
+            //alarmCanAddState = false;
             alaramAdjustState = false;
         }
         //만약 알람리스트에 있는 알람이 4개가 아닐경우(알람을 더 넣을수 있을경우)
         else {
-            alarmCanAddState = true;
+            //alarmCanAddState = true;
             alaramAdjustState = true;
         }
         //알람 수정 가능하면 알람 추가
@@ -934,7 +933,7 @@ public class SystemUI extends JFrame implements Runnable{
         currentAlarm=alarmList.get(alarmIndex);
 
         alaramAdjustState = false;
-        alarmCanAddState = false;
+        //alarmCanAddState = false;
 
         cursorState = 0;
         //여기도 showAlarm이 필요 없을것 같긴한데 일단 넣음
@@ -1070,7 +1069,7 @@ public class SystemUI extends JFrame implements Runnable{
         card2.setVisible(false);
         card3.setVisible(true);
 
-        img=new ImageIcon(moonphase.showMoonphase()); // 달 모양 표시
+        img=new ImageIcon(moonphase.getMoonphase()); // 달 모양 표시
         lblMoon.setIcon(img);
         lblMoon.setVisible(true);
 
@@ -1360,7 +1359,7 @@ public class SystemUI extends JFrame implements Runnable{
         card1.setVisible(false);
         card2.setVisible(true);
         card3.setVisible(false);
-        img=new ImageIcon(tide.showTide()); // 조수 모양 표시
+        img=new ImageIcon(tide.getTide()); // 조수 모양 표시
         lblTide.setIcon(img);
         lblTide.setVisible(true);
         lblThird.setText(currentTide);

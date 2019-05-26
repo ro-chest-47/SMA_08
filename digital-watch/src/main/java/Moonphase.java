@@ -41,7 +41,7 @@ public class Moonphase {
         instance=null;
     }
 
-    public String showMoonphase() {
+    public String getMoonphase() {
         calculateMoonphase();
         switch(moon){
             case 0: //계산한 달 분류번호가 0번이면
