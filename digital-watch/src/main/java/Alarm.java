@@ -107,8 +107,8 @@ public class Alarm extends Thread  {
             for (int i = 0; i < 4; i++) {
                 if (currHM.equals(alarmList.get(i))) {
                     alarmState = true; //현재 알람과 현재시간이 동일하면 알람상태를 true로 바꾸고
-                    System.out.println(alarmState);
-                    System.out.println(i + " 알람이지롱");
+                    //System.out.println(alarmState);
+                    //System.out.println(i + " 알람이지롱");
                 }
             }
         }
@@ -142,7 +142,7 @@ public class Alarm extends Thread  {
 
             try {
                 buzzAlarm();
-                System.out.println(alarmState);
+                //System.out.println(alarmState);
                 if(alarmState == true) {
                     toolkit.beep();
                 }
