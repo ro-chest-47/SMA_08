@@ -20,5 +20,8 @@ sourceSets{
         java {
             srcDirs = ["testco"]
         }
+        reports {
+            junitXml.enabled = true
+        }
     }
 }
