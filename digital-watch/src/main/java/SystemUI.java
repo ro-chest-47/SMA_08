@@ -413,6 +413,7 @@ public class SystemUI extends JFrame implements Runnable{
                     }
                     //alarm상태이고 alarm설정상태일경우 start버튼을 누르면 알람을 설정할수 있게
                     else if (alaramAdjustState && !buzzByAlarm) {
+                        //increaseAlarmTime(); endAddAlarm에서 increaseAlarmTime() 실행
                         endAddAlarm();
                     }
                 } else if (currentMode.equals("Stopwatch")) {
