@@ -320,11 +320,11 @@ public class SystemUI extends JFrame implements Runnable{
                     }
                 } else if (currentMode.equals("Alarm")) {
                     //Alarm모드에서 reset버튼을 4번누를경우 Modeselect화면으로 전환
-                    modeFlag++;
-                    if(modeFlag==4){
-                        reqModeSelect();
-                        modeFlag=0;
-                    }
+//                    modeFlag++;
+//                    if(modeFlag==4){
+//                        reqModeSelect();
+//                        modeFlag=0;
+//                    }
 
                     //알람모드에서 알람이 울리고 있는 경우 stopAlarm이 가능
                     //알람모드의 어떤 상태이던지 간에 stopAlarm이 먼저임
@@ -865,12 +865,6 @@ public class SystemUI extends JFrame implements Runnable{
         if(buzzByAlarm){
             lblTime.setText("Buzz!");
         }
-    }
-
-    //add Alarm시퀀스에서 사용되는건데 현재 코드상에서 딱히 들어갈곳이 없어보임
-    //없어도 되는 메서드 일지도?
-    public void showAlarmSetting() {
-
     }
 
     //다음 알람을 요청하기 위한 메서드
