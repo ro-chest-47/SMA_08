@@ -282,18 +282,24 @@ public class SystemUI extends JFrame implements Runnable{
                 if (currentMode.equals("TimeKeeping")) {
 //                    reqModeSelect();
                     //timeKeeing모드에서 reset버튼을 4번누를경우 Modeselect화면으로 전환
-                    modeFlag++;
-                    if(modeFlag==4){
-                        reqModeSelect();
-                        modeFlag=0;
+                    if(!timekeepingAdjustState) {
+                        modeFlag++;
+                        if (modeFlag == 4) {
+
+                            reqModeSelect();
+                            modeFlag = 0;
+                        }
                     }
 
                 } else if (currentMode.equals("Timer")) {
                     //Timer모드에서 reset버튼을 4번누를경우 Modeselect화면으로 전환
-                    modeFlag++;
-                    if(modeFlag==4){
-                        reqModeSelect();
-                        modeFlag=0;
+                    if(!timerAdjustState) {
+                        modeFlag++;
+                        if (modeFlag == 4) {
+
+                            reqModeSelect();
+                            modeFlag = 0;
+                        }
                     }
                     //일단보류
 
