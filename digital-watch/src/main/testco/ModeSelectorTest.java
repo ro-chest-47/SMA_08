@@ -15,7 +15,7 @@ public class ModeSelectorTest {
         ArrayList<String> settingModeList= new ArrayList<String>();
         settingModeList.add("TimeKeeping");
         settingModeList.add("Timer");
-        settingModeList.add("Alarm");
+        settingModeList.add("Tide");
         settingModeList.add("Stopwatch");
 
         modeSelector.setSettingModeList(settingModeList);
