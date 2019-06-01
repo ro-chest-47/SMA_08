@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -93,6 +94,7 @@ public class SystemUI extends JFrame implements Runnable{
     private ImageIcon img;
     private String currentAlarm;
     private int alarmIndex=0;
+    private URL url;
 
     public static void main(String[] args) {
         SystemUI systemUI = new SystemUI();
@@ -1067,10 +1069,13 @@ public class SystemUI extends JFrame implements Runnable{
         card2.setVisible(false);
         card3.setVisible(true);
 
-        img=new ImageIcon(moonphase.getMoonphase()); // 달 모양 표시
+        url=getClass().getClassLoader().getResource(moonphase.getMoonphase());
+        if(url!=null)
+            img=new ImageIcon(url); // 달 모양 표시
+        else
+            img=new ImageIcon(moonphase.getMoonphase());
         lblMoon.setIcon(img);
         lblMoon.setVisible(true);
-
         lblSecond.setVisible(false);
         lblThird.setVisible(false);
         lblFourth.setVisible(false);
@@ -1357,7 +1362,12 @@ public class SystemUI extends JFrame implements Runnable{
         card1.setVisible(false);
         card2.setVisible(true);
         card3.setVisible(false);
-        img=new ImageIcon(tide.getTide()); // 조수 모양 표시
+         // 조수 모양 표시
+        url=getClass().getClassLoader().getResource(tide.getTide());
+        if(url!=null)
+            img=new ImageIcon(url); // 조수 모양 표시
+        else
+            img=new ImageIcon(tide.getTide());
         lblTide.setIcon(img);
         lblTide.setVisible(true);
         lblThird.setText(currentTide);
