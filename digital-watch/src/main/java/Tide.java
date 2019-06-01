@@ -11,20 +11,20 @@ public class Tide {
     private int lunarYear, lunarMonth, lunarDate;
     private boolean leap;
     private int lunarMonthDay[] = {31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    private String tidegraphic0 = ("./tidegraphic/t6.jpg"); //1물의 그래픽 정보
-    private String tidegraphic1 = ("./tidegraphic/t7.jpg"); //2물의 그래픽 정보
-    private String tidegraphic2 = ("./tidegraphic/t8.jpg"); //3물의 그래픽 정보
-    private String tidegraphic3 = ("./tidegraphic/t9.jpg"); //4물의 그래픽 정보
-    private String tidegraphic4 = ("./tidegraphic/t10.jpg"); //5물의 그래픽 정보
-    private String tidegraphic5 = ("./tidegraphic/t11.jpg");; //6물의 그래픽 정보
-    private String tidegraphic6 = ("./tidegraphic/t12.jpg"); //7물의 그래픽 정보
-    private String tidegraphic7 = ("./tidegraphic/t13.jpg"); //8물의 그래픽 정보
-    private String tidegraphic8 = ("./tidegraphic/t0.jpg"); //9물의 그래픽 정보
-    private String tidegraphic9 = ("./tidegraphic/t1.jpg"); //10물의 그래픽 정보
-    private String tidegraphic10 = ("./tidegraphic/t2.jpg"); //11물의 그래픽 정보
-    private String tidegraphic11 = ("./tidegraphic/t3.jpg"); //12물의 그래픽 정보
-    private String tidegraphic12 = ("./tidegraphic/t4.jpg"); //13물의 그래픽 정보
-    private String tidegraphic13 = ("./tidegraphic/t5.jpg"); //동해 남해는 14물과 조금 서해는 조금과 무시의 그래픽 정보
+    private String tidegraphic0 = ("tidegraphic/t6.JPG"); //1물의 그래픽 정보
+    private String tidegraphic1 = ("tidegraphic/t7.JPG"); //2물의 그래픽 정보
+    private String tidegraphic2 = ("tidegraphic/t8.JPG"); //3물의 그래픽 정보
+    private String tidegraphic3 = ("tidegraphic/t9.JPG"); //4물의 그래픽 정보
+    private String tidegraphic4 = ("tidegraphic/t10.JPG"); //5물의 그래픽 정보
+    private String tidegraphic5 = ("tidegraphic/t11.JPG");; //6물의 그래픽 정보
+    private String tidegraphic6 = ("tidegraphic/t12.JPG"); //7물의 그래픽 정보
+    private String tidegraphic7 = ("tidegraphic/t13.JPG"); //8물의 그래픽 정보
+    private String tidegraphic8 = ("tidegraphic/t0.JPG"); //9물의 그래픽 정보
+    private String tidegraphic9 = ("tidegraphic/t1.JPG"); //10물의 그래픽 정보
+    private String tidegraphic10 = ("tidegraphic/t2.JPG"); //11물의 그래픽 정보
+    private String tidegraphic11 = ("tidegraphic/t3.JPG"); //12물의 그래픽 정보
+    private String tidegraphic12 = ("tidegraphic/t4.JPG"); //13물의 그래픽 정보
+    private String tidegraphic13 = ("tidegraphic/t5.JPG"); //동해 남해는 14물과 조금 서해는 조금과 무시의 그래픽 정보
     public final int SOLAR_YEAR = 1;
     public final int SOLAR_MONTH = 2;
     public final int SOLAR_DATE = 3;
