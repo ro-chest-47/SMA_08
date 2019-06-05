@@ -31,7 +31,7 @@ jacoco {
     toolVersion = "0.7.5.201505241946"
 }
  
-test {
+unit {
     jacoco {
         enabled = true
         destinationFile = file("${buildDir}/jacoco/jacoco.exec") // 기본은 ${buildDir}/jacoco/test.exec
