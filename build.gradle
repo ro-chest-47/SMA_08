@@ -8,6 +8,19 @@ jacoco {
     reportsDir = file("${buildDir}/reports")
 }
 
+group 'test'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
 task coverageReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
     group = "Reporting"
     description = "Generate Jacoco coverage reports"
@@ -30,17 +43,4 @@ task coverageReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
         xml.enabled = true
         html.enabled = true
     }
-}
-
-group 'test'
-version '1.0-SNAPSHOT'
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
 }
