@@ -4,6 +4,10 @@ plugins {
 
 apply plugin: 'jacoco'
 
+jacoco {
+    reportsDir = file("${buildDir}/reports")
+}
+
 group 'test'
 version '1.0-SNAPSHOT'
 
