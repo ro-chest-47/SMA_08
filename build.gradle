@@ -21,26 +21,3 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
-task coverageReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
-    group = "test"
-    description = "Generate Jacoco coverage reports"
-
-    def coverageSourceDirs = ['src/main/java']
-
-    classDirectories = fileTree(
-            dir: "${buildDir}/classes/java/main",
-            excludes: ['**/R.class',
-                       '**/R$*.class',
-                       '**/BuildConfig.*',
-                       '**/Manifest*.*',
-                       'com/android/**/*.class']
-    )
-
-    sourceDirectories = files(coverageSourceDirs)
-    executionData = files("${buildDir}/jacoco/testDebugUnitTest.exec")
-
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-}
