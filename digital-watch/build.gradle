@@ -32,7 +32,7 @@ sourceSets{
 /* add jacoco plugin for code coverage */
 
 task coverageReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
-    group = "Reporting"
+    group = "test"
     description = "Generate Jacoco coverage reports"
 
     def coverageSourceDirs = ['src/main/java']
