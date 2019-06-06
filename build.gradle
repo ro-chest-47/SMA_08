@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'jacoco'
 }
 
 apply plugin: 'jacoco'
@@ -17,12 +18,9 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
-ext{
-    jacocoVersion = '0.7.5.201505241946'
-}
-
 jacoco {
-    toolVersion = jacocoVersion
+    toolVersion = 0.8.3
+    reportsDir = file("$buildDir/Report")
 }
 
 jacocoTestReport{
