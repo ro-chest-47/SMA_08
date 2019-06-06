@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'jacoco'
 }
 
 group 'MODELING-8'
@@ -25,3 +26,13 @@ sourceSets{
 
 /* add jacoco plugin for code coverage */
 
+jacoco {
+    toolVersion = "0.8.3"
+    reportsDir = file("$buildDir/Report")
+}
+
+jacocoTestReport{
+    reports{
+        xml.enabled = true
+    }
+}
