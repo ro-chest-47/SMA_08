@@ -2,6 +2,12 @@ plugins {
     id 'java'
 }
 
+apply plugin: 'jacoco'
+
+jacoco {
+    reportsDir = file("${buildDir}/reports")
+}
+
 group 'MODELING-8'
 version '1.0-SNAPSHOT'
 
@@ -24,3 +30,27 @@ sourceSets{
 }
 
 /* add jacoco plugin for code coverage */
+
+task coverageReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports"
+
+    def coverageSourceDirs = ['src/main/java']
+
+    classDirectories = fileTree(
+            dir: "${buildDir}/classes/java/main",
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/BuildConfig.*',
+                       '**/Manifest*.*',
+                       'com/android/**/*.class']
+    )
+
+    sourceDirectories = files(coverageSourceDirs)
+    executionData = files("${buildDir}/jacoco/testDebugUnitTest.exec")
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
