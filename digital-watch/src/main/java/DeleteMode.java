@@ -4,7 +4,6 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
 public class DeleteMode {
-//    private String[] deleteList;
     private ArrayList<String> deleteList;
 
     //현재 삭제해야 하는 모드들을 저장해놓는 메서드

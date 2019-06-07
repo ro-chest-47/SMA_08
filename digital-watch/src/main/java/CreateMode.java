@@ -2,7 +2,6 @@ import java.sql.Time;
 import java.util.ArrayList;
 
 public class CreateMode {
-//    private String[] createList;
     private ArrayList<String> createList;
 
     //현재 생성해야하는 모드들이 createList에 저장
