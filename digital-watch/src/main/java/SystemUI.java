@@ -1439,6 +1439,7 @@ public class SystemUI extends JFrame implements Runnable{
                 t.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
         }
     }

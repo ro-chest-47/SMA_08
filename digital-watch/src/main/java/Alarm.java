@@ -115,7 +115,7 @@ public class Alarm extends Thread  {
 
     public void run(){
         Toolkit toolkit = Toolkit.getDefaultToolkit();
-        while(true){
+        while(!Thread.currentThread().isInterrupted()){
 
             try {
                 buzzAlarm();
@@ -124,7 +124,9 @@ public class Alarm extends Thread  {
                     toolkit.beep();
                 }
                 Thread.sleep(500);
-            }catch(InterruptedException e){break;}
+            }catch(InterruptedException e){
+                Thread.currentThread().interrupt();
+            }
 
         }
     }
