@@ -18,7 +18,7 @@ public class Timer extends Thread {
 	private int time =0;
 
 	private class Buzzer extends Thread{
-		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		private Toolkit toolkit = Toolkit.getDefaultToolkit();
 		public void run() {
 			for(int i =0;i<3; i++) {
 				toolkit.beep();
