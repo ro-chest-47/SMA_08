@@ -64,7 +64,7 @@ public class Moonphase {
         return null;
     }
 
-    private void calculateMoonphase() {
+    public void calculateMoonphase() {
         try { //String type을 Date type으로 캐스팅할때 생기는 예외의 예외처리
             timeDB=TimeDB.getInstance();
             String currtime = timeDB.getTime();
