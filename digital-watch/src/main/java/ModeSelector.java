@@ -2,15 +2,8 @@ import java.util.ArrayList;
 
 //현재 선택된 모드정보들을 갖고 있음
 public class ModeSelector {
-//    private String[] settingModeList;
-//    private String[] createList;
-//    private String[] deleteList;
     //String[]에서 arraylist로 수정
     private ArrayList<String> settingModeList= new ArrayList<>(); //현재 선택된 모드들의 list(최대 4개)
-    private ArrayList<String> createList = new ArrayList<>(); //생성해야하는 리스트들
-    private ArrayList<String> deleteList = new ArrayList<>(); //삭제해야 하는 리스트들
-
-
 
     /*
     새로 추가된 필드
@@ -18,7 +11,6 @@ public class ModeSelector {
     //create및 delete모드
     private CreateMode createMode = new CreateMode();
     private DeleteMode deleteMode = new DeleteMode();
-//    private ArrayList<String> defaultModeList = new ArrayList<>();
 
 
     public ModeSelector(){
@@ -107,12 +99,10 @@ public class ModeSelector {
     }
 
     public void setCreateList(ArrayList<String> createList){
-        this.createList=createList;
-        createMode.setCreateList(this.createList);
+        createMode.setCreateList(createList);
     }
 
     public void setDeleteList(ArrayList<String> deleteList){
-        this.deleteList=deleteList;
-        deleteMode.setDeleteList(this.deleteList);
+        deleteMode.setDeleteList(deleteList);
     }
 }
