@@ -3,10 +3,10 @@ import java.util.*;
 import java.util.List;
 
 public class Alarm extends Thread  {
-    List<String> alarmList = new ArrayList<String>();
+    private List<String> alarmList = new ArrayList<String>();
     private TimeDB timeDB;
     private String alarm; //알람 울리는지 상태 확인
-    String[] time_array;
+    private String[] time_array;
     private int alarmHour; //최대 23시까지 알람 설정 가능
     private int alarmMinute; //최대 59분까지 알람 설정 가능
     private int currentAlarm=0;

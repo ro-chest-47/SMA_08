@@ -6,7 +6,7 @@ public class Tide {
     private String sea;
     private TimeDB timeDB;
     private int i,j,k;
-    String[] time_array;
+    private String[] time_array;
     private int year, month, date;
     private int lunarYear, lunarMonth, lunarDate;
     private boolean leap;
