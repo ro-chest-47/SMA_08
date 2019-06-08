@@ -3,6 +3,10 @@ import java.util.ArrayList;
 
 public class CreateMode {
 
+    public CreateMode(){
+
+    }
+
     //현재 생성해야하는 모드들이 createList에 저장
     public void setCreateList(ArrayList<String> createList) {
         createModeByList(createList);
