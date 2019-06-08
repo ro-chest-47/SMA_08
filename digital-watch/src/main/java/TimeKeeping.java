@@ -46,7 +46,7 @@ public class TimeKeeping {
 	}
 	
 	public String getTime() {
-		String time= Integer.toString(year)+" "+Integer.toString(month)+" "+Integer.toString(day)+" "+Integer.toString(hour)+" "+Integer.toString(minute)+" "+Integer.toString(second);
+		String time= year+" "+month+" "+day+" "+hour+" "+minute+" "+second;
 		
 		return time;
 	}
