@@ -15,7 +15,7 @@ public class TimeDB extends Thread{
 	private TimeDB runnable;
 	private ScheduledExecutorService service;
 
-	private int time =0;
+	private int times =0;
 
 	private HashMap<Integer, Integer> monthMap = new HashMap<>();
 
@@ -49,13 +49,13 @@ public class TimeDB extends Thread{
 
 	public void setTime(String time) {
 
-		String[] times = time.split("\\s");
+		String[] timeS = time.split("\\s");
 
-		this.year=Integer.parseInt(times[0]);
-		this.month=Integer.parseInt(times[1]);
-		this.day=Integer.parseInt(times[2]);
-		this.hour=Integer.parseInt(times[3]);
-		this.minute=Integer.parseInt(times[4]);
+		this.year=Integer.parseInt(timeS[0]);
+		this.month=Integer.parseInt(timeS[1]);
+		this.day=Integer.parseInt(timeS[2]);
+		this.hour=Integer.parseInt(timeS[3]);
+		this.minute=Integer.parseInt(timeS[4]);
 		this.second=0;
 
 		setMonthMap(this.year);
@@ -65,15 +65,17 @@ public class TimeDB extends Thread{
 	public void setMonthMap(int year) {
 		//그레고리력 규칙 참고
 		if(year%4==0) {
-			if(year%100!=0)
+			if(year%100!=0) {
 				monthMap.put(2, 29);
+			}
 			else {
-				if(year%400==0)
+				if(year%400==0) {
 					monthMap.put(2, 29);
-				else monthMap.put(2, 28);
+				}
+				else {monthMap.put(2, 28);}
 			}
 		}
-		else monthMap.put(2, 28);
+		else {monthMap.put(2, 28);}
 		monthMap.put(1, 31);
 
 		monthMap.put(3, 31);
@@ -100,9 +102,9 @@ public class TimeDB extends Thread{
 
 	//	@Override
 	public void updateTime() {
-		this.time++;
-		if(this.time==100) {
-			this.time=0;
+		this.times++;
+		if(this.times==100) {
+			this.times=0;
 			this.second++;
 		}
 		if(this.second==60) {

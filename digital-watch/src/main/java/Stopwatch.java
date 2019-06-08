@@ -65,18 +65,18 @@ public class Stopwatch implements Runnable {
 	}
 
 	public String getTime() {
-		String time = Integer.toString(this.hours) + " " + Integer.toString(this.minutes) + " " + Integer.toString(this.seconds) + " " + Integer.toString(this.times);
+		String time = hours + " " + minutes+ " " +seconds+ " " + times;
 
 		return time;
 	}
 
 	public void setStopwatch(String time) {
-		String[] times = time.split("\\s");
+		String[] timeS = time.split("\\s");
 
-		this.hours = Integer.parseInt(times[0]);
-		this.minutes = Integer.parseInt(times[1]);
-		this.seconds = Integer.parseInt(times[2]);
-		this.times = Integer.parseInt(times[3]);
+		this.hours = Integer.parseInt(timeS[0]);
+		this.minutes = Integer.parseInt(timeS[1]);
+		this.seconds = Integer.parseInt(timeS[2]);
+		this.times = Integer.parseInt(timeS[3]);
 	}
 
 	public void startStopwatch() {
@@ -97,8 +97,9 @@ public class Stopwatch implements Runnable {
 	public void pauseStopwatch() {
 		service.shutdown();
 		this.runState = 0;
-		if (getTime().equals("0 0 0 0"))
+		if (getTime().equals("0 0 0 0")) {
 			zeroState = 1;
+		}
 	}
 
 	public void resetStopwatch() {

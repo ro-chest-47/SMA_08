@@ -15,9 +15,9 @@ public class Timer extends Thread {
 	private Timer runnable;
 	private ScheduledExecutorService service;
 
-	private int time =0;
+	private int times =0;
 
-	private class Buzzer extends Thread{
+	private static class Buzzer extends Thread{
 		private Toolkit toolkit = Toolkit.getDefaultToolkit();
 		public void run() {
 			for(int i =0;i<3; i++) {
@@ -84,7 +84,7 @@ private static Timer instance;
 	}
 
 	public String getTime() {
-		String time= Integer.toString(hours)+" "+Integer.toString(minutes)+" "+Integer.toString(seconds);
+		String time= hours +" "+minutes+" "+seconds;
 
 		return time;
 	}
@@ -93,16 +93,17 @@ private static Timer instance;
 		service.shutdown();
 		//System.out.println(this.getTime());
 		this.runState=0;
-		if(this.getTime().equals("0 0 0"))
-			zeroState=1;
+		if(this.getTime().equals("0 0 0")) {
+			zeroState = 1;
+		}
 	}
 
 	public void setTimer(String time) {
-		String[] times = time.split("\\s");
+		String[] timeS = time.split("\\s");
 
-		this.hours=Integer.parseInt(times[0]);
-		this.minutes=Integer.parseInt(times[1]);
-		this.seconds=Integer.parseInt(times[2]);
+		this.hours=Integer.parseInt(timeS[0]);
+		this.minutes=Integer.parseInt(timeS[1]);
+		this.seconds=Integer.parseInt(timeS[2]);
 
 		if(time.equals("0 0 0")) {
 			zeroState=1;
@@ -131,9 +132,9 @@ private static Timer instance;
 	}
 
 	public void updateTime() {
-		this.time++;
-		if(this.time==10) {
-			this.time=0;
+		this.times++;
+		if(this.times==10) {
+			this.times=0;
 			this.seconds--;
 		}
 
