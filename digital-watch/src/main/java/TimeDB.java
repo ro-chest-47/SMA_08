@@ -32,11 +32,28 @@ public class TimeDB extends Thread{
         monthMap.put(10, 31);
         monthMap.put(11, 30);
         monthMap.put(12, 31);*/
-		setTime("2010 1 1 0 0");
+		//setTime("2010 1 1 0 0");
+		year=2010;
+		month=1;
+		day=1;
+		hour=0;
+		minute=0;
+		second=0;
+
+		setMonthMap(year);
 	}
 
 	private TimeDB(String time) {
-		setTime(time);
+		String[] timeS = time.split("\\s");
+
+		year=Integer.parseInt(timeS[0]);
+		month=Integer.parseInt(timeS[1]);
+		day=Integer.parseInt(timeS[2]);
+		hour=Integer.parseInt(timeS[3]);
+		minute=Integer.parseInt(timeS[4]);
+		second=0;
+
+		setMonthMap(year);
 	}
 
 	public static TimeDB getInstance() {

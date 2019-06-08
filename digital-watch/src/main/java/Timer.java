@@ -51,11 +51,25 @@ public class Timer extends Thread {
 private static Timer instance;
 
 	private Timer(){
-		setTimer("0 0 0");
+
+		hours = 0;
+		minutes=0;
+		seconds=0;
+
+		zeroState=1;
 	}
 
 	private Timer(String time){
-		setTimer(time);
+		String[] timeS = time.split("\\s");
+
+		hours=Integer.parseInt(timeS[0]);
+		minutes=Integer.parseInt(timeS[1]);
+		seconds=Integer.parseInt(timeS[2]);
+
+		if(time.equals("0 0 0")) {
+			zeroState=1;
+		}
+		else {zeroState=0;}
 	}
 
 	public static Timer getInstance(){

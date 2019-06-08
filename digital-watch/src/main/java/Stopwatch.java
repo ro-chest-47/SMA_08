@@ -41,21 +41,14 @@ public class Stopwatch implements Runnable {
 	}
 
 	private Stopwatch(String time) {
-		setStopwatch(time);
+		String[] timeS = time.split("\\s");
+
+		hours = Integer.parseInt(timeS[0]);
+		minutes = Integer.parseInt(timeS[1]);
+		seconds = Integer.parseInt(timeS[2]);
+		times = Integer.parseInt(timeS[3]);
 	}
 
-//	public static Stopwatch getInstance() {
-//		return LazyHolder.INSTANCE;
-//	}
-//
-//	private static class LazyHolder {
-//		private static final Stopwatch INSTANCE = new Stopwatch();
-//	}
-
-	/*    public void startUpdateTime(Thread timeThread) {
-            timeThread.start();
-        }
-    */
 	public int getRunState() {
 		return runState;
 	}
