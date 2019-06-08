@@ -1410,7 +1410,7 @@ public class SystemUI extends JFrame implements Runnable{
     public void run() {
         int i=0;
         // TODO Auto-generated method stub
-        while(true) {
+        while(!Thread.currentThread().isInterrupted()) {
 
             if(currentMode.equals("TimeKeeping")) {
                 showTime();
