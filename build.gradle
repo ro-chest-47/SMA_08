@@ -1,6 +1,9 @@
 plugins {
     id 'java'
+    id 'jacoco'
 }
+
+apply plugin: 'jacoco'
 
 group 'test'
 version '1.0-SNAPSHOT'
@@ -13,4 +16,15 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+jacoco {
+    toolVersion = "0.8.3"
+    reportsDir = file("$buildDir/Report")
+}
+
+jacocoTestReport{
+    reports{
+        xml.enabled = true
+    }
 }
