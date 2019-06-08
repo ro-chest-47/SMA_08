@@ -1,12 +1,12 @@
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -263,17 +263,6 @@ public class SystemUI extends JFrame implements Runnable{
         });
         //mode버튼을 길게 눌렀을때 <<일단 고민만해보기, 스레드 써야할것같아서 고민이 많아짐
         //자바 자체적으로 longClickListener가 없음
-        btnMode.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                super.mouseReleased(e);
-            }
-        });
 
         btnReset.addActionListener(new ActionListener() {
             @Override
@@ -464,35 +453,85 @@ public class SystemUI extends JFrame implements Runnable{
         tm=timeDB.getTime();
         str=tm.split(" ");
 
-        if(str[1].equals("1")) str[1]="JANUARY";
-        else if(str[1].equals("2")) str[1]="FEBRUARY";
-        else if(str[1].equals("3")) str[1]="MARCH";
-        else if(str[1].equals("4")) str[1]="APRIL";
-        else if(str[1].equals("5")) str[1]="MAY";
-        else if(str[1].equals("6")) str[1]="JUNE";
-        else if(str[1].equals("7")) str[1]="JULY";
-        else if(str[1].equals("8")) str[1]="AUGUST";
-        else if(str[1].equals("9")) str[1]="SEPTEMBER";
-        else if(str[1].equals("10")) str[1]="OCTOBER";
-        else if(str[1].equals("11")) str[1]="NOVEMBER";
-        else if(str[1].equals("12")) str[1]="DECEMBER";
-        else str[1]="이걸 보고있다면 버그임";
+        if(str[1].equals("1")){
+            str[1]="JANUARY";
+        }
+        else if(str[1].equals("2")){
+            str[1]="FEBRUARY";
+        }
+        else if(str[1].equals("3")){
+            str[1]="MARCH";
+        }
+        else if(str[1].equals("4")){
+            str[1]="APRIL";
+        }
+        else if(str[1].equals("5")){
+            str[1]="MAY";
+        }
+        else if(str[1].equals("6")){
+            str[1]="JUNE";
+        }
+        else if(str[1].equals("7")){
+            str[1]="JULY";
+        }
+        else if(str[1].equals("8")){
+            str[1]="AUGUST";
+        }
+        else if(str[1].equals("9")){
+            str[1]="SEPTEMBER";
+        }
+        else if(str[1].equals("10")){
+            str[1]="OCTOBER";
+        }
+        else if(str[1].equals("11")){
+            str[1]="NOVEMBER";
+        }
+        else if(str[1].equals("12")){
+            str[1]="DECEMBER";
+        }
+        else{
+            str[1]="이걸 보고있다면 버그임";
+        }
 
         if(timekeepingAdjustState){
             strr=String.format("%02d:%02d:%02d",hour,minute, second);
             lblTime.setText(strr);
-            if(month==1) str[1]="JANUARY";
-            else if(month==2) str[1]="FEBRUARY";
-            else if(month==3) str[1]="MARCH";
-            else if(month==4) str[1]="APRIL";
-            else if(month==5) str[1]="MAY";
-            else if(month==6) str[1]="JUNE";
-            else if(month==7) str[1]="JULY";
-            else if(month==8) str[1]="AUGUST";
-            else if(month==9) str[1]="SEPTEMBER";
-            else if(month==10) str[1]="OCTOBER";
-            else if(month==11) str[1]="NOVEMBER";
-            else if(month==12) str[1]="DECEMBER";
+            if(month==1){
+                str[1]="JANUARY";
+            }
+            else if(month==2){
+                str[1]="FEBRUARY";
+            }
+            else if(month==3){
+                str[1]="MARCH";
+            }
+            else if(month==4){
+                str[1]="APRIL";
+            }
+            else if(month==5){
+                str[1]="MAY";
+            }
+            else if(month==6){
+                str[1]="JUNE";
+            }
+            else if(month==7){
+                str[1]="JULY";
+            }
+            else if(month==8){
+                str[1]="AUGUST";
+            }
+            else if(month==9){
+                str[1]="SEPTEMBER";
+            }
+            else if(month==10){
+                str[1]="OCTOBER";
+            }
+            else if(month==11){
+                str[1]="NOVEMBER";
+            }
+            else if(month==12){
+                str[1]="DECEMBER";
+            }
             lblSecond.setText(str[1]);
             lblFourth.setText(Integer.toString(day));
             if(cursorState==0){
@@ -620,9 +659,10 @@ public class SystemUI extends JFrame implements Runnable{
                     lblTime.setText(strr);
                 }
             }
-            else
+            else{
                 strr=String.format("%02d:%02d:%02d",Integer.parseInt(str[0]),Integer.parseInt(str[1]),
                         Integer.parseInt(str[2]));
+            }
             lblTime.setText(strr);
         }
         else{
@@ -1070,10 +1110,12 @@ public class SystemUI extends JFrame implements Runnable{
         card3.setVisible(true);
 
         url=getClass().getClassLoader().getResource(moonphase.getMoonphase());
-        if(url!=null)
-            img=new ImageIcon(url); // 달 모양 표시
-        else
-            img=new ImageIcon(moonphase.getMoonphase());
+        if(url!=null) {
+            img = new ImageIcon(url); // 달 모양 표시
+        }
+        else {
+            img = new ImageIcon(moonphase.getMoonphase());
+        }
         lblMoon.setIcon(img);
         lblMoon.setVisible(true);
         lblSecond.setVisible(false);
@@ -1364,10 +1406,12 @@ public class SystemUI extends JFrame implements Runnable{
         card3.setVisible(false);
          // 조수 모양 표시
         url=getClass().getClassLoader().getResource(tide.getTide());
-        if(url!=null)
-            img=new ImageIcon(url); // 조수 모양 표시
-        else
-            img=new ImageIcon(tide.getTide());
+        if(url!=null) {
+            img = new ImageIcon(url); // 조수 모양 표시
+        }
+        else {
+            img = new ImageIcon(tide.getTide());
+        }
         lblTide.setIcon(img);
         lblTide.setVisible(true);
         lblThird.setText(currentTide);
