@@ -76,11 +76,11 @@ private static Timer instance;
 	}*/
 
 	public int getRunState() {
-		return this.runState;
+		return runState;
 	}
 
 	public int getZeroState() {
-		return this.zeroState;
+		return zeroState;
 	}
 
 	public String getTime() {
@@ -92,8 +92,8 @@ private static Timer instance;
 	public void pauseTimer() {
 		service.shutdown();
 		//System.out.println(this.getTime());
-		this.runState=0;
-		if(this.getTime().equals("0 0 0")) {
+		runState=0;
+		if(getTime().equals("0 0 0")) {
 			zeroState = 1;
 		}
 	}
@@ -132,19 +132,19 @@ private static Timer instance;
 	}
 
 	public void updateTime() {
-		this.times++;
-		if(this.times==10) {
-			this.times=0;
-			this.seconds--;
+		times++;
+		if(times==10) {
+			times=0;
+			seconds--;
 		}
 
 		if(seconds<0) {
-			this.seconds+=60;
-			this.minutes--;
+			seconds+=60;
+			minutes--;
 		}
 		if(minutes<0) {
-			this.minutes+=60;
-			this.hours--;
+			minutes+=60;
+			hours--;
 		}
 		if(hours<0) {
 			setTimer("0 0 0");

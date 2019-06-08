@@ -57,11 +57,11 @@ public class Stopwatch implements Runnable {
         }
     */
 	public int getRunState() {
-		return this.runState;
+		return runState;
 	}
 
 	public int getZeroSate() {
-		return this.zeroState;
+		return zeroState;
 	}
 
 	public String getTime() {
@@ -73,10 +73,10 @@ public class Stopwatch implements Runnable {
 	public void setStopwatch(String time) {
 		String[] timeS = time.split("\\s");
 
-		this.hours = Integer.parseInt(timeS[0]);
-		this.minutes = Integer.parseInt(timeS[1]);
-		this.seconds = Integer.parseInt(timeS[2]);
-		this.times = Integer.parseInt(timeS[3]);
+		hours = Integer.parseInt(timeS[0]);
+		minutes = Integer.parseInt(timeS[1]);
+		seconds = Integer.parseInt(timeS[2]);
+		times = Integer.parseInt(timeS[3]);
 	}
 
 	public void startStopwatch() {
@@ -84,7 +84,7 @@ public class Stopwatch implements Runnable {
 		runnable = new Stopwatch(getTime());
 		thread = new Thread(runnable);
 		service.scheduleAtFixedRate(runnable, 0, 10, TimeUnit.MILLISECONDS);
-		this.runState = 1;
+		runState = 1;
 		//startUpdateTime(thread);
 	}
 
@@ -96,7 +96,7 @@ public class Stopwatch implements Runnable {
 
 	public void pauseStopwatch() {
 		service.shutdown();
-		this.runState = 0;
+		runState = 0;
 		if (getTime().equals("0 0 0 0")) {
 			zeroState = 1;
 		}
@@ -108,18 +108,18 @@ public class Stopwatch implements Runnable {
 	}
 
 	public void updateTime() {
-		this.times++;
-		if (this.times == 100) {
-			this.times = 0;
-			this.seconds++;
+		times++;
+		if (times == 100) {
+			times = 0;
+			seconds++;
 		}
-		if (this.seconds == 60) {
-			this.seconds = 0;
-			this.minutes++;
+		if (seconds == 60) {
+			seconds = 0;
+			minutes++;
 		}
-		if (this.minutes == 60) {
-			this.minutes = 0;
-			this.hours++;
+		if (minutes == 60) {
+			minutes = 0;
+			hours++;
 		}
 	}
 

@@ -51,14 +51,14 @@ public class TimeDB extends Thread{
 
 		String[] timeS = time.split("\\s");
 
-		this.year=Integer.parseInt(timeS[0]);
-		this.month=Integer.parseInt(timeS[1]);
-		this.day=Integer.parseInt(timeS[2]);
-		this.hour=Integer.parseInt(timeS[3]);
-		this.minute=Integer.parseInt(timeS[4]);
-		this.second=0;
+		year=Integer.parseInt(timeS[0]);
+		month=Integer.parseInt(timeS[1]);
+		day=Integer.parseInt(timeS[2]);
+		hour=Integer.parseInt(timeS[3]);
+		minute=Integer.parseInt(timeS[4]);
+		second=0;
 
-		setMonthMap(this.year);
+		setMonthMap(year);
 
 	}
 
@@ -97,40 +97,40 @@ public class TimeDB extends Thread{
 	}
 
 	public HashMap<Integer, Integer> getMonthMap(){
-		return this.monthMap;
+		return monthMap;
 	}
 
 	//	@Override
 	public void updateTime() {
-		this.times++;
-		if(this.times==100) {
-			this.times=0;
-			this.second++;
+		times++;
+		if(times==100) {
+			times=0;
+			second++;
 		}
-		if(this.second==60) {
-			this.second=0;
-			this.minute++;
+		if(second==60) {
+			second=0;
+			minute++;
 		}
-		if(this.minute==60) {
-			this.minute=0;
-			this.hour++;
+		if(minute==60) {
+			minute=0;
+			hour++;
 		}
-		if(this.hour==24) {
-			this.hour=0;
-			this.day++;
+		if(hour==24) {
+			hour=0;
+			day++;
 		}
 
-		if(this.day > monthMap.get(this.month)) {
-			this.day= 1;
-			this.month++;
+		if(day > monthMap.get(month)) {
+			day= 1;
+			month++;
 		}
-		if(this.month > 12) {
-			this.month=1;
-			this.year++;
-			setMonthMap(this.year);
+		if(month > 12) {
+			month=1;
+			year++;
+			setMonthMap(year);
 		}
-		if(this.year > 2100) {
-			this.year= 2100;
+		if(year > 2100) {
+			year= 2100;
 			thread.interrupt();
 		}
 
