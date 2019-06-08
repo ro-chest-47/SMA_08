@@ -108,7 +108,7 @@ private static Timer instance;
 		if(time.equals("0 0 0")) {
 			zeroState=1;
 		}
-		else zeroState=0;
+		else {zeroState=0;}
 	}
 
 	public void startTimer() {
