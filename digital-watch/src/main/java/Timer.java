@@ -101,9 +101,9 @@ private static Timer instance;
 	public void setTimer(String time) {
 		String[] timeS = time.split("\\s");
 
-		this.hours=Integer.parseInt(timeS[0]);
-		this.minutes=Integer.parseInt(timeS[1]);
-		this.seconds=Integer.parseInt(timeS[2]);
+		hours=Integer.parseInt(timeS[0]);
+		minutes=Integer.parseInt(timeS[1]);
+		seconds=Integer.parseInt(timeS[2]);
 
 		if(time.equals("0 0 0")) {
 			zeroState=1;
