@@ -34,16 +34,14 @@ public class ModeSelector {
     //현재 ModeSelector에 ui쪽에서 선택한 모드들을 list로 저장시킴
     //Sring[]에서 ArrayList로 변경했음
     public void setSettingModeList(ArrayList<String> settingModeList){
-        this.settingModeList=settingModeList;
-//         createMode.setCreateList(createList);
-//         deleteMode.setDeleteList(deleteList);
+        this.settingModeList= (ArrayList<String>) settingModeList.clone();
     }
 
     //ArrayList로 수정함
     //근데 시스템쪽에서 현재설정된 모드를 계속 유지하는상태<< selectedModeList라는 이름으로
     //이게 굳이 필요한지 잘 모르겠음 << 일단 왔다갔다 하는게 그럴듯하긴함
     public ArrayList<String> getModeList(){
-        return this.settingModeList;
+        return (ArrayList<String>) this.settingModeList.clone();
     }
 
     public String getNextMode(String currentMode) {
